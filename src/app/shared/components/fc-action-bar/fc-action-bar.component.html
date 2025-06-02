@@ -1,0 +1,100 @@
+<div
+  class="action-bar flex gap-3 rounded-lg bg-light-low px-3 py-1 text-xs @container dark:bg-dark-low">
+  <div
+    class="flex flex-1 items-center gap-3"
+    [ngClass]="{ 'order-last justify-end': actionButtonAlign == 'right' }">
+    <button
+      *ngIf="isHasBackButton"
+      type="button"
+      (click)="back()"
+      class="btn-back rounded-lg bg-light-high p-2 hover:bg-light-lowest dark:bg-dark-high dark:shadow-[inset_-1px_-1px_4px_rgba(255,255,255,0.2)] dark:drop-shadow-[3px_3px_5px_rgba(0,0,0,0.3)] dark:hover:bg-dark-low"
+      tooltipPosition="bottom"
+      pTooltip="Back"
+      [showDelay]="1000">
+      <fa-icon [fixedWidth]="true" [icon]="faChevronLeft"></fa-icon>
+    </button>
+    <ng-container *ngFor="let actionButton of actionButtons">
+      <button
+        *ngIf="!actionButton.route && !actionButton.hidden"
+        type="button"
+        class="btn-action hidden gap-1 rounded-lg p-2 hover:bg-light-lowest @lg:flex dark:hover:bg-dark-lowest"
+        (click)="actionButton.action()"
+        [ngClass]="{ 'opacity-50': actionButton.loading }">
+        <fa-icon
+          [icon]="faSpinner"
+          [spin]="true"
+          [fixedWidth]="true"
+          *ngIf="actionButton.loading"></fa-icon>
+        <fa-icon
+          [icon]="actionButton.icon"
+          *ngIf="!actionButton.loading"></fa-icon>
+        {{ actionButton.label }}
+      </button>
+      <a *ngIf="actionButton.route" [routerLink]="actionButton.route">
+        <div
+          class="flex gap-1 rounded-lg p-2 hover:bg-light-lowest dark:hover:bg-dark-lowest">
+          <fa-icon [fixedWidth]="true" [icon]="actionButton.icon"></fa-icon>
+          {{ actionButton.label }}
+        </div>
+      </a>
+    </ng-container>
+    <button
+      *ngIf="hiddenActionButtons.length > 0"
+      type="button"
+      class="flex gap-1 rounded-lg p-2 hover:bg-light-lowest dark:hover:bg-dark-lowest">
+      <fa-icon [fixedWidth]="true" [icon]="faEllipsisVertical"></fa-icon>
+    </button>
+  </div>
+  <div class="flex items-center gap-2">
+    <ng-container *ngFor="let filterButton of filterButtons">
+      <button
+        (click)="filterButton.action()"
+        type="button"
+        class="btn-filter p-2-filter rounded-lg bg-light-high hover:bg-light-lowest dark:bg-dark-high dark:shadow-[inset_-1px_-1px_4px_rgba(255,255,255,0.2)] dark:drop-shadow-[3px_3px_5px_rgba(0,0,0,0.3)] dark:hover:bg-dark-low"
+        [ngClass]="{
+          'hidden md:block': filterButton.mobileHidden
+        }"
+        tooltipPosition="bottom"
+        [pTooltip]="filterButton.label">
+        <fa-icon [fixedWidth]="true" [icon]="filterButton.icon"></fa-icon>
+      </button>
+    </ng-container>
+    <button
+      type="button"
+      title="more"
+      class="btn-elipsis rounded-lg bg-light-high p-2 hover:bg-light-lowest @lg:hidden dark:bg-dark-high dark:shadow-[inset_-1px_-1px_4px_rgba(255,255,255,0.2)] dark:drop-shadow-[3px_3px_5px_rgba(0,0,0,0.3)] dark:hover:bg-dark-low"
+      [ngClass]="{ hidden: !isHasMoreButton }"
+      (click)="op.toggle($event)"
+      tooltipPosition="bottom"
+      pTooltip="More">
+      <fa-icon [fixedWidth]="true" [icon]="faEllipsisVertical"></fa-icon>
+    </button>
+  </div>
+</div>
+
+<p-overlayPanel #op>
+  <div class="min-w-[12rem] bg-light-highest dark:bg-dark-high">
+    <ng-container *ngFor="let actionButton of actionButtons">
+      <button
+        *ngIf="!actionButton.route && !actionButton.hidden"
+        type="button"
+        [title]="actionButton.label"
+        class="flex w-full gap-2 rounded-lg p-2 text-dark-lowest hover:bg-light-lowest dark:text-light-lowest dark:hover:bg-dark-lowest"
+        (click)="actionButton.action()"
+        [ngClass]="{
+          'opacity-50': actionButton.loading
+        }"
+        [disabled]="actionButton.loading">
+        <fa-icon
+          [icon]="faSpinner"
+          [spin]="true"
+          [fixedWidth]="true"
+          *ngIf="actionButton.loading"></fa-icon>
+        <fa-icon
+          [icon]="actionButton.icon"
+          *ngIf="!actionButton.loading"></fa-icon>
+        {{ actionButton.label }}
+      </button>
+    </ng-container>
+  </div>
+</p-overlayPanel>

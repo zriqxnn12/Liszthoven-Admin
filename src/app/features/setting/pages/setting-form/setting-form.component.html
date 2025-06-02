@@ -1,0 +1,85 @@
+<div class="h-full flex-1 space-y-2 overflow-y-auto p-2 text-xs">
+  <!-- <div>
+    <h3 class="mb-2 font-bold">Date</h3>
+    <div class="grid gap-1">
+      <button
+        type="button"
+        class="flex items-center gap-2 rounded-md p-2 text-left hover:bg-gray-100 dark:hover:bg-dark-low"
+        (click)="formConfig.today = !formConfig.today; onChangeConfig()">
+        <div class="flex-1">
+          <h5 class="title text-xs">Date Set Today</h5>
+          <p class="text-gray-400">Initial date into today</p>
+        </div>
+        <div class="switch relative">
+          <div
+            [ngClass]="{
+              ' bg-gray-100': !formConfig.today,
+              ' bg-blue-400': formConfig.today
+            }"
+            class="h-3 w-10 rounded-full bg-gray-400 opacity-60"></div>
+          <div
+            [ngClass]="{
+              'translate-x-0 bg-gray-100': !formConfig.today,
+              'translate-x-full bg-blue-400': formConfig.today
+            }"
+            class="absolute left-0 top-1/2 h-5 w-5 -translate-y-1/2 rounded-full shadow-md transition-all duration-500 ease-in-out"></div>
+        </div>
+      </button>
+    </div>
+  </div> -->
+  <div>
+    <h3 class="mb-2 font-bold">Time</h3>
+    <div class="grid gap-1">
+      <button
+        type="button"
+        class="flex items-center gap-2 rounded-md p-2 text-left hover:bg-gray-100 dark:hover:bg-dark-low"
+        (click)="formConfig.timeFormat = !formConfig.timeFormat">
+        <div class="flex-1">
+          <h5 class="title text-xs">Time Format</h5>
+          <p class="text-gray-400">Choose Time Format</p>
+        </div>
+        <fc-select-option
+          [options]="timeFormatOptions"
+          [optionValue]="'value'"
+          [optionLabel]="'label'"
+          [placeholder]="'Select Time Format'"
+          [desktopView]="'overlay'"
+          [mobileView]="'dialog'"
+          [hideCloseButton]="true"
+          [(ngModel)]="formConfig.timeFormat"
+          (onSelect)="onChangeConfig()"></fc-select-option>
+      </button>
+    </div>
+  </div>
+  <div>
+    <h3 class="mb-2 font-bold">Calculator</h3>
+    <div class="grid gap-1">
+      <button
+        type="button"
+        class="flex items-center gap-2 rounded-md p-2 text-left hover:bg-gray-100 dark:hover:bg-dark-low"
+        (click)="
+          formConfig.hideAfterCalculate = !formConfig.hideAfterCalculate;
+          onChangeConfig()
+        ">
+        <div class="flex-1">
+          <h5 class="title text-xs">Hide After Calculate</h5>
+          <p class="text-gray-400">Hide calculater after click '='</p>
+        </div>
+        <div class="switch relative">
+          <div
+            [ngClass]="{
+              ' bg-gray-100': !formConfig.hideAfterCalculate,
+              ' bg-blue-400': formConfig.hideAfterCalculate
+            }"
+            class="h-3 w-10 rounded-full bg-gray-400 opacity-60"></div>
+          <div
+            [ngClass]="{
+              'translate-x-0 bg-gray-100': !formConfig.hideAfterCalculate,
+              'translate-x-full bg-blue-400': formConfig.hideAfterCalculate
+            }"
+            class="absolute left-0 top-1/2 h-5 w-5 -translate-y-1/2 rounded-full shadow-md transition-all duration-500 ease-in-out"></div>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>

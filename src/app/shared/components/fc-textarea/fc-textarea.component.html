@@ -1,0 +1,18 @@
+<label
+  class="form-input flex flex-col rounded-lg border border-light-lowest bg-light-high p-2 focus-within:border-primary-light/50 dark:border-dark-lowest dark:bg-dark-low"
+  [for]="uniqueId">
+  <p
+    class="m-0 block p-0 text-2xs font-medium leading-5 text-dark-lowest dark:text-white/60">
+    {{ title }}
+  </p>
+  <textarea
+    class="m-0 w-full bg-light-high p-0 text-xs ring-0 focus:outline-none focus:ring-0 dark:bg-dark-low"
+    rows="5"
+    type="text"
+    [(ngModel)]="value"
+    [id]="uniqueId"
+    (input)="onValueChange(value)"
+    [disabled]="disabled"
+    [readonly]="readonly"
+    [placeholder]="placeholder"></textarea>
+</label>

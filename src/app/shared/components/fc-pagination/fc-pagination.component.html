@@ -1,0 +1,25 @@
+<div class="flex w-full items-center gap-3 text-xs @container">
+  <div class="flex-1 @sm:hidden">
+    <button
+      class="w-fit rounded-md p-2 hover:bg-slate-300 dark:hover:bg-dark-lowest"
+      (click)="onOpenPaginationDialog()">
+      {{ page }} of {{ totalPages }}
+    </button>
+  </div>
+  <button
+    class="rotate-180 rounded-md bg-slate-100 p-2 hover:bg-slate-300 dark:bg-dark-low dark:hover:bg-dark-lowest"
+    (click)="onPrevPage()">
+    <fa-icon [fixedWidth]="true" [icon]="faCaretRight"></fa-icon>
+  </button>
+  <button
+    type="button"
+    class="hidden flex-1 rounded-md bg-slate-100 p-2 text-center @sm:block dark:bg-dark-low dark:hover:bg-dark-lowest"
+    (click)="onOpenPaginationDialog()">
+    Page {{ page }} / {{ totalPages }}
+  </button>
+  <button
+    class="rounded-md bg-slate-100 p-2 hover:bg-slate-300 dark:bg-dark-low dark:hover:bg-dark-lowest"
+    (click)="onNextPage()">
+    <fa-icon [fixedWidth]="true" [icon]="faCaretRight"></fa-icon>
+  </button>
+</div>

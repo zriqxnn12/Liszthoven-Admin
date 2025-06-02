@@ -1,0 +1,68 @@
+<div
+  #targetEl
+  (click)="disabled || readonly ? '' : fcDialog.toggle($event)"
+  class="form-input flex items-center gap-1 rounded-lg border border-light-lowest bg-light-high p-2 dark:border-dark-lowest dark:bg-dark-low dark:hover:bg-dark-lowest"
+  [ngClass]="{ 'cursor-pointer': !disabled, 'opacity-50': disabled }">
+  <div class="flex flex-1 flex-col">
+    <p
+      *ngIf="title"
+      class="m-0 block p-0 text-2xs font-medium leading-5 text-dark-lowest dark:text-white/60">
+      {{ title }}
+    </p>
+    <p class="text-xs" *ngIf="value != null">
+      {{ valueLabel }}
+    </p>
+    <p class="text-xs dark:text-gray-400" *ngIf="value == null">
+      {{ placeholder }}
+    </p>
+  </div>
+  <div class="flex items-center gap-2" *ngIf="!disabled && !readonly">
+    <button
+      type="button"
+      (click)="onRemoveValue()"
+      *ngIf="value != null && !hideCloseButton">
+      <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>
+    </button>
+    <button>
+      <fa-icon [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
+    </button>
+  </div>
+</div>
+
+<fc-dialog
+  #fcDialog
+  [title]="title"
+  [desktopView]="desktopView"
+  [mobileView]="mobileView">
+  <div
+    class="flex w-full flex-col gap-2 bg-light-high py-2 text-dark-lowest dark:bg-dark-low dark:text-light-lowest">
+    <div class="search flex px-2" *ngIf="searchable">
+      <span class="p-input-icon-left w-full">
+        <input
+          pInputText
+          type="text"
+          class="p-input h-8 w-full text-xs"
+          [(ngModel)]="searchQuery"
+          [placeholder]="'Search ' + optionLabel" />
+        <i class="pi pi-search"></i>
+      </span>
+    </div>
+    <div
+      class="list h-[200px] min-w-[250px] overflow-auto rounded p-2 hover:border-transparent hover:ring-transparent">
+      <ng-container *ngFor="let option of showableOptions">
+        <button
+          (click)="onValueChange(option); fcDialog.toggle($event, targetEl)"
+          class="grid w-full cursor-pointer items-center gap-2 rounded-md border border-light-low bg-light-low p-2 text-left text-xs hover:border-primary-light dark:border-dark-low dark:bg-dark-high hover:dark:border-primary-light">
+          <p>{{ option[optionLabel] }}</p>
+        </button>
+      </ng-container>
+    </div>
+    <div class="px-2" *ngIf="pagination">
+      <fc-pagination
+        [rows]="1"
+        [page]="1"
+        [totalPages]="2"
+        [totalRecords]="100"></fc-pagination>
+    </div>
+  </div>
+</fc-dialog>

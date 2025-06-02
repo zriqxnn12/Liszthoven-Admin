@@ -1,0 +1,34 @@
+<div class="flex h-full gap-3 @container">
+  <div
+    class="flex h-full w-full flex-col gap-3 transition-all duration-700 ease-in-out @container">
+    <app-fc-action-bar
+      [actionButtons]="actionButtons"
+      [filterButtons]="filterButtons"></app-fc-action-bar>
+    <div class="body flex h-full w-full gap-3 overflow-y-auto text-xs">
+      <div class="w-full space-y-2 overflow-y-auto py-2">
+        <div
+          class="fc-animate-translate-up grid cursor-pointer grid-cols-1 items-center justify-between rounded-md border border-light-low bg-light-low p-3 hover:border-primary-light @lg:flex dark:border-dark-low dark:bg-dark-low hover:dark:border-primary-light">
+          <div class="grid flex-1 gap-1 space-y-1">
+            <div class="flex gap-3">
+              <fa-icon [fixedWidth]="true" [icon]="faUser"></fa-icon>
+              <p>Mohd Azriqin</p>
+            </div>
+            <div class="flex gap-3">
+              <fa-icon [fixedWidth]="true" [icon]="faPhone"></fa-icon>
+              <p>081371962017</p>
+            </div>
+            <div class="flex gap-3">
+              <fa-icon [fixedWidth]="true" [icon]="faLocationDot"></fa-icon>
+              <p>Perumahan KDA</p>
+            </div>
+          </div>
+          <div class="flex w-full justify-end @lg:w-[150px]">
+            <button type="button" class="btn btn-high">
+              <fa-icon [fixedWidth]="true" [icon]="faEye"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

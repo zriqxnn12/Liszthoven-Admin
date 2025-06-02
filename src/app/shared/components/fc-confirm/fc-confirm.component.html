@@ -1,0 +1,36 @@
+<div
+  class="fc-confirm confirmation fixed left-0 top-0"
+  *ngIf="showConfirmation == true">
+  <div
+    class="h-screen w-screen bg-black/5 [backdrop-filter:blur(3px)]"
+    (click)="showConfirmation = false"></div>
+  <div
+    class="group absolute left-1/2 top-3 w-[330px] -translate-x-1/2 space-y-2 rounded-md bg-light-low px-4 py-3 text-left text-xs transition duration-500 ease-in-out dark:bg-dark-low dark:text-gray-200">
+    <div class="body">
+      <div class="subject">
+        <p class="text-2xs font-semibold">{{ confirm.header }}</p>
+      </div>
+      <div class="message">
+        <p class="text-2xs [line-height:1]">{{ confirm.message }}</p>
+      </div>
+    </div>
+    <div class="footer flex items-center justify-end gap-3">
+      <button
+        type="button"
+        class="rounded-md border border-light-lowest bg-light-low px-3 py-1 text-xs hover:bg-light-lowest dark:border-dark-lowest dark:bg-dark-low dark:hover:bg-dark-lowest"
+        (click)="
+          confirm.reject ? confirm.reject() : ''; showConfirmation = false
+        ">
+        No
+      </button>
+      <button
+        type="button"
+        class="rounded-md px-3 py-1 text-xs dark:bg-dark-lowest/60 dark:hover:bg-dark-lowest"
+        (click)="
+          confirm.accept ? confirm.accept() : ''; showConfirmation = false
+        ">
+        Yes
+      </button>
+    </div>
+  </div>
+</div>

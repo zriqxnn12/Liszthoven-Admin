@@ -1,0 +1,60 @@
+<div class="h-full flex-1 space-y-2 overflow-y-auto p-2 text-xs">
+  <div>
+    <h3 class="mb-2 font-bold">Sidebar</h3>
+    <div class="grid gap-1">
+      <button
+        type="button"
+        class="flex items-center gap-2 rounded-md p-2 text-left hover:bg-gray-100 dark:hover:bg-dark-low"
+        (click)="
+          generalConfig.showSidebar = !generalConfig.showSidebar;
+          onUpdateGeneralConfig()
+        ">
+        <div class="flex-1">
+          <h5 class="title text-xs">Show Sidebar</h5>
+          <p class="text-gray-400">Initial sidebar show</p>
+        </div>
+        <div class="switch relative">
+          <div
+            [ngClass]="{
+              ' bg-gray-100': !generalConfig.showSidebar,
+              ' bg-blue-400': generalConfig.showSidebar
+            }"
+            class="h-3 w-10 rounded-full bg-gray-400 opacity-60"></div>
+          <div
+            [ngClass]="{
+              'translate-x-0 bg-gray-100': !generalConfig.showSidebar,
+              'translate-x-full bg-blue-400': generalConfig.showSidebar
+            }"
+            class="absolute left-0 top-1/2 h-5 w-5 -translate-y-1/2 rounded-full shadow-md transition-all duration-500 ease-in-out"></div>
+        </div>
+      </button>
+      <button
+        type="button"
+        class="flex items-center gap-2 rounded-md p-2 text-left hover:bg-gray-100 dark:hover:bg-dark-low"
+        (click)="
+          generalConfig.hideWhenRouteChange =
+            !generalConfig.hideWhenRouteChange;
+          onUpdateGeneralConfig()
+        ">
+        <div class="flex-1">
+          <h5 class="title text-xs">Hide When Change Page</h5>
+          <p class="text-gray-400">Initial sidebar hide when change page</p>
+        </div>
+        <div class="switch relative">
+          <div
+            [ngClass]="{
+              ' bg-gray-100': !generalConfig.hideWhenRouteChange,
+              ' bg-blue-400': generalConfig.hideWhenRouteChange
+            }"
+            class="h-3 w-10 rounded-full bg-gray-400 opacity-60"></div>
+          <div
+            [ngClass]="{
+              'translate-x-0 bg-gray-100': !generalConfig.hideWhenRouteChange,
+              'translate-x-full bg-blue-400': generalConfig.hideWhenRouteChange
+            }"
+            class="absolute left-0 top-1/2 h-5 w-5 -translate-y-1/2 rounded-full shadow-md transition-all duration-500 ease-in-out"></div>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>

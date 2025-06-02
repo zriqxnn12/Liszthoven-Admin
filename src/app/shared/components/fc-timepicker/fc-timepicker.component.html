@@ -1,0 +1,103 @@
+<div
+  #timeInput
+  class="form-input flex cursor-pointer items-center rounded-lg border border-light-lowest bg-light-high p-2 dark:border-dark-lowest dark:bg-dark-low dark:hover:bg-dark-lowest">
+  <div
+    class="flex flex-1 flex-col"
+    (click)="!disabled && !readonly ? op.toggle($event, timeInput) : ''">
+    <p
+      class="m-0 block p-0 text-2xs font-medium leading-5 text-dark-lowest dark:text-white/60">
+      {{ title }}
+    </p>
+    <p class="text-xs" *ngIf="value != null">
+      {{ value | date: 'HH:mm' }}
+    </p>
+    <p
+      class="text-xs dark:text-gray-400"
+      [ngClass]="{
+        invisible: placeholder == ''
+      }"
+      *ngIf="value == null; l">
+      {{ placeholder || 'placeholder' }}
+    </p>
+  </div>
+  <div class="flex items-center gap-2">
+    <button
+      type="button"
+      (click)="onRemoveValue()"
+      *ngIf="value != null && !disabled && !readonly">
+      <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>
+    </button>
+    <button
+      *ngIf="!disabled && !readonly"
+      type="button"
+      (click)="op.toggle($event, timeInput)">
+      <fa-icon [fixedWidth]="true" [icon]="faClock"></fa-icon>
+    </button>
+  </div>
+</div>
+<p-overlayPanel #op (onShow)="scrollToHour()">
+  <ng-template pTemplate>
+    <div class="space-y-2 bg-light-high dark:bg-dark-high dark:text-slate-300">
+      <div
+        class="grid h-[150px] w-[200px]"
+        [ngClass]="{
+          'grid-cols-2': !isHasDaytime,
+          'grid-cols-3': isHasDaytime
+        }">
+        <div #hourContainer class="grid h-full overflow-auto text-center">
+          <button
+            [id]="hour"
+            *ngFor="let hour of presetHour; let i = index"
+            class="h-fit p-1 hover:bg-primary-light hover:text-white hover:dark:bg-primary-dark"
+            [ngClass]="{
+              'bg-primary-light text-white dark:bg-primary-dark':
+                hour == selectedHour
+            }"
+            (click)="selectedHour = hour">
+            {{ hour }}
+          </button>
+          <div class="h-[118px]"></div>
+        </div>
+        <div #minuteContainer class="grid h-full overflow-auto text-center">
+          <button
+            [id]="minute"
+            *ngFor="let minute of presetMinute"
+            class="h-fit p-1 hover:bg-primary-light hover:text-white hover:dark:bg-primary-dark"
+            [ngClass]="{
+              'bg-primary-light text-white dark:bg-primary-dark':
+                minute == selectedMinute
+            }"
+            (click)="selectedMinute = minute">
+            {{ minute }}
+          </button>
+          <div class="h-[118px]"></div>
+        </div>
+        <div
+          #daytimeContainer
+          *ngIf="isHasDaytime"
+          class="overflow-auto text-center">
+          <button
+            [id]="dayTime.name"
+            *ngFor="let dayTime of presetDayTime"
+            class="h-fit w-full p-1 hover:bg-primary-light hover:text-white hover:dark:bg-primary-dark"
+            [ngClass]="{
+              'bg-primary-light text-white dark:bg-primary-dark':
+                dayTime.name == selectedDayTime
+            }"
+            (click)="selectedDayTime = dayTime.name">
+            {{ dayTime.name }}
+          </button>
+          <div class="h-[118px]"></div>
+        </div>
+      </div>
+      <div class="flex justify-end p-2 pt-0">
+        <button
+          type="button"
+          (click)="submit(); op.hide()"
+          class="rounded-md px-3 py-1 text-sm hover:bg-light-lowest hover:dark:bg-dark-lowest">
+          Apply
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</p-overlayPanel>
