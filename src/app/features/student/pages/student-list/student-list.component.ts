@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Student } from '@features/student/interfaces/student';
+import { StudentService } from '@features/student/services/student.service';
 import { SupplierService } from '@features/supplier/services/supplier.service';
 import {
   faBars,
@@ -14,7 +16,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FcFilterDialogService } from '@shared/components/fc-filter-dialog/services/fc-filter-dialog.service';
 import { DialogService } from 'primeng/dynamicdialog';
-import { Subject } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
 import { LayoutService } from 'src/app/layout/services/layout.service';
 
 @Component({
@@ -35,8 +37,10 @@ export class StudentListComponent {
     {
       label: 'Add',
       icon: faPlus,
-      route: [],
-      action: () => {},
+      route: ['/student/add'],
+      action: () => {
+        // this.navigateToAdd();
+      },
     },
   ];
 
@@ -60,6 +64,7 @@ export class StudentListComponent {
     },
   ];
 
+  students: Student[] = [];
   loading: boolean = false;
   totalRecords = 0;
   totalPages = 1;
@@ -69,16 +74,50 @@ export class StudentListComponent {
 
   constructor(
     private layoutService: LayoutService,
-    private supplierService: SupplierService,
     private router: Router,
     private route: ActivatedRoute,
     private fcFilterDialogService: FcFilterDialogService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private studentService: StudentService
   ) {
     this.layoutService.setHeaderConfig({
       title: 'Students',
       icon: '',
       showHeader: true,
     });
+  }
+
+  ngOnInit(): void {
+    this.loadData();
+  }
+
+  ngAfterContentInit(): void {}
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  loadData() {
+    this.loading = true;
+    this.studentService
+      .getStudents()
+      .pipe(take(1), takeUntil(this.destroy$))
+      .subscribe({
+        next: (res: any) => {
+          this.students = res.data.students;
+          this.loading = false;
+        },
+        error: (err: any) => {
+          this.loading = false;
+          this.layoutService.setSearchConfig({
+            loading: false,
+          });
+        },
+      });
+  }
+
+  navigateToDetail(student: Student) {
+    console.log(student);
+    this.router.navigate(['/student/view/', student.id]);
   }
 }

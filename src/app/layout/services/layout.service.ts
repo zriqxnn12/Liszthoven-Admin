@@ -67,10 +67,10 @@ export class LayoutService {
         route: '/student',
         name: 'Student',
       },
-      {
-        route: '/supplier',
-        name: 'Example Feature',
-      },
+      // {
+      //   route: '/supplier',
+      //   name: 'Example Feature',
+      // },
       {
         name: 'Sub menus',
         parentRoute: 'purchase',

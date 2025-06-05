@@ -36,17 +36,17 @@ export class LoginComponent implements OnInit {
 
   submit() {
     this.loading = true;
-    // this.authService.login(this.loginForm.value).subscribe({
-    //   next: (res: any) => {
-    //     this.loading = false;
-    //     if (res) {
-    //       this.router.navigate(['/']);
-    //     }
-    //   },
-    //   error: (err) => {
-    //     this.loading = false;
-    //   },
-    // });
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (res: any) => {
+        this.loading = false;
+        if (res) {
+          this.router.navigate(['/']);
+        }
+      },
+      error: (err) => {
+        this.loading = false;
+      },
+    });
     this.router.navigate(['/']);
   }
 }

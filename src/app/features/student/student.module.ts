@@ -10,6 +10,10 @@ import { SharedModule } from '@shared/shared.module';
 import { FcPaginationModule } from '@shared/components/fc-pagination/fc-pagination.module';
 import { FcInputTextModule } from '@shared/components/fc-input-text/fc-input-text.module';
 import { FcFilterDialogModule } from '@shared/components/fc-filter-dialog/fc-filter-dialog.module';
+import { FcInputNumberModule } from '@shared/components/fc-input-number/fc-input-number.module';
+import { FcDatepickerModule } from '@shared/components/fc-datepicker/fc-datepicker.module';
+import { FcFileInputModule } from '@shared/components/fc-file-input/fc-file-input.module';
+import { FcTextareaModule } from '@shared/components/fc-textarea/fc-textarea.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +28,11 @@ import { FcFilterDialogModule } from '@shared/components/fc-filter-dialog/fc-fil
     SharedModule,
     FcPaginationModule,
     FcInputTextModule,
+    FcInputNumberModule,
+    FcDatepickerModule,
+    FcInputNumberModule,
+    FcFileInputModule,
+    FcTextareaModule,
     FcFilterDialogModule,
   ],
 })

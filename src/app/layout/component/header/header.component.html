@@ -1,5 +1,5 @@
 <div class="@container">
-  <div class="flex flex-wrap @xl:flex-nowrap items-center gap-3 p-3 @xl:p-5">
+  <div class="flex flex-wrap items-center gap-3 p-3 @xl:flex-nowrap @xl:p-5">
     <div class="flex flex-1 items-center">
       <button
         [ngClass]="{
@@ -20,7 +20,7 @@
       *ngIf="!searchConfig.hide">
       <label
         for="searchInput"
-        class="relative w-full flex bg-light-low dark:bg-dark-low rounded-md text-xs items-center p-2 gap-1">
+        class="relative flex w-full items-center gap-1 rounded-md bg-light-low p-2 text-xs dark:bg-dark-low">
         <fa-icon
           class="dark:text-gray-600"
           [icon]="searchConfig.loading ? faCircleNotch : faSearch"
@@ -59,12 +59,12 @@
       <button
         (click)="userDrawer.toggle()"
         type="button"
-        class="fc-animate-translate-up flex overflow-hidden h-8 w-8 items-center justify-center rounded-full bg-primary-light text-2xs text-white dark:bg-primary-dark">
+        class="fc-animate-translate-up flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-primary-light text-2xs text-white dark:bg-primary-dark">
         <fa-icon *ngIf="false" [icon]="faUser"></fa-icon>
         <img
           *ngIf="true"
           class="h-full w-full object-cover"
-          src="/assets/images/placeholder/dummy-photo.png"
+          src="/assets/images/placeholder/dummy-photo.webp"
           alt=""
           srcset="" />
       </button>
@@ -78,7 +78,7 @@
 
 <fc-drawer #userDrawer [header]="false">
   <div
-    class="h-full w-full bg-light-high/80 dark:bg-dark-high/80 [backdrop-filter:blur(3px)] rounded-l-xl text-xs overflow-y-auto">
+    class="h-full w-full overflow-y-auto rounded-l-xl bg-light-high/80 text-xs [backdrop-filter:blur(3px)] dark:bg-dark-high/80">
     <div class="header px-4 py-6 pb-3">
       <div class="flex items-center gap-2">
         <button
@@ -89,8 +89,8 @@
           <fa-icon [icon]="faChevronLeft" [fixedWidth]="true"></fa-icon>
         </button>
         <img
-          class="w-8 aspect-square rounded-lg"
-          src="/assets/images/placeholder/dummy-photo.png"
+          class="aspect-square w-8 rounded-lg"
+          src="/assets/images/placeholder/dummy-photo.webp"
           alt="" />
         <div>
           <p class="text-xs">{{ user.name }}</p>
@@ -103,7 +103,7 @@
         <button
           (click)="showThemes = !showThemes"
           type="button"
-          class="flex gap-3 py-2 px-2 hover:bg-light-low dark:hover:bg-dark-low rounded-md w-full text-left">
+          class="flex w-full gap-3 rounded-md px-2 py-2 text-left hover:bg-light-low dark:hover:bg-dark-low">
           <ng-container *ngIf="darkMode.mode != 'system' && darkMode.isDark">
             <fa-icon [icon]="faMoon" [fixedWidth]="true"></fa-icon>
             <span class="flex-1"> Dark </span>
@@ -134,17 +134,18 @@
         }">
         <div
           class="options grid grid-cols-3 transition duration-500 ease-in-out"
-          [ngClass]="{ '-translate-y-full ': !showThemes,
-          ' delay-75': showThemes,
-         }">
+          [ngClass]="{
+            '-translate-y-full ': !showThemes,
+            ' delay-75': showThemes
+          }">
           <button
             type="button"
             (click)="changeDarkMode('dark')"
-            class="text-center flex justify-center items-center p-1"
+            class="flex items-center justify-center p-1 text-center"
             [ngClass]="{
-              'bg-light-low dark:bg-dark-low hover:opacity-100 opacity-60':
+              'bg-light-low opacity-60 hover:opacity-100 dark:bg-dark-low':
                 darkMode.mode == 'system' || !darkMode.isDark,
-              'bg-primary-light/80 dark:bg-primary-dark/80 text-white':
+              'bg-primary-light/80 text-white dark:bg-primary-dark/80':
                 darkMode.mode != 'system' && darkMode.isDark
             }">
             <div
@@ -162,15 +163,15 @@
           <button
             type="button"
             (click)="changeDarkMode('system')"
-            class="text-center flex justify-center items-center p-1"
+            class="flex items-center justify-center p-1 text-center"
             [ngClass]="{
-              'bg-light-low dark:bg-dark-low hover:opacity-100 opacity-60':
+              'bg-light-low opacity-60 hover:opacity-100 dark:bg-dark-low':
                 darkMode.mode != 'system',
-              'bg-primary-light/80 dark:bg-primary-dark/80 text-white':
+              'bg-primary-light/80 text-white dark:bg-primary-dark/80':
                 darkMode.mode == 'system'
             }">
             <div
-              class="h-full shadow-sm w-full p-2 text-lg"
+              class="h-full w-full p-2 text-lg shadow-sm"
               [ngClass]="{
                 'bg-light-high dark:bg-dark-high': darkMode.mode != 'system',
                 'bg-primary-dark': darkMode.mode == 'system'
@@ -184,11 +185,11 @@
           <button
             type="button"
             (click)="changeDarkMode('light')"
-            class="text-center flex justify-center items-center p-1"
+            class="flex items-center justify-center p-1 text-center"
             [ngClass]="{
-              'bg-light-low dark:bg-dark-low hover:opacity-100 opacity-60':
+              'bg-light-low opacity-60 hover:opacity-100 dark:bg-dark-low':
                 darkMode.mode == 'system' || darkMode.isDark,
-              'bg-primary-light/80 dark:bg-primary-dark/80 text-white':
+              'bg-primary-light/80 text-white dark:bg-primary-dark/80':
                 darkMode.mode != 'system' && !darkMode.isDark
             }">
             <div
@@ -207,11 +208,11 @@
       </div>
     </div>
 
-    <div class="menus px-2 mb-3">
+    <div class="menus mb-3 px-2">
       <div class="md:hidden">
         <button
           type="button"
-          class="flex gap-3 py-2 px-2 hover:bg-light-low dark:hover:bg-dark-low rounded-md w-full text-left"
+          class="flex w-full gap-3 rounded-md px-2 py-2 text-left hover:bg-light-low dark:hover:bg-dark-low"
           (click)="showMenus = !showMenus">
           <fa-icon [icon]="faBars"></fa-icon>
           <span class="flex-1"> Menu </span>
@@ -233,14 +234,15 @@
             }">
             <div
               class="options transition duration-500 ease-in-out"
-              [ngClass]="{ '-translate-y-full ': !showMenus,
-          ' delay-75': showMenus,
-         }">
+              [ngClass]="{
+                '-translate-y-full ': !showMenus,
+                ' delay-75': showMenus
+              }">
               <ng-container *ngFor="let menu of menus">
                 <ng-container *ngIf="!menu.parentRoute">
                   <button
                     type="button"
-                    class="flex gap-3 py-2 px-2 hover:bg-light-low dark:hover:bg-dark-low rounded-md w-full text-left"
+                    class="flex w-full gap-3 rounded-md px-2 py-2 text-left hover:bg-light-low dark:hover:bg-dark-low"
                     [routerLink]="[menu.route]"
                     (click)="userDrawer.hide()">
                     {{ menu.name }}
@@ -249,7 +251,7 @@
                 <ng-container *ngIf="menu.parentRoute">
                   <button
                     type="button"
-                    class="flex gap-3 py-2 px-2 hover:bg-light-low dark:hover:bg-dark-low rounded-md w-full text-left"
+                    class="flex w-full gap-3 rounded-md px-2 py-2 text-left hover:bg-light-low dark:hover:bg-dark-low"
                     [routerLink]="[subMenu.route]"
                     (click)="userDrawer.hide()"
                     *ngFor="let subMenu of menu.subMenus">
@@ -267,58 +269,21 @@
         <fa-icon [icon]="faLineChart"></fa-icon>
         Activity Log
       </button> -->
-      <button
+      <!-- <button
         type="button"
-        class="flex gap-3 py-2 px-2 hover:bg-light-low dark:hover:bg-dark-low rounded-md w-full text-left"
+        class="flex w-full gap-3 rounded-md px-2 py-2 text-left hover:bg-light-low dark:hover:bg-dark-low"
         [routerLink]="['/user-profile']"
         (click)="userDrawer.hide()">
         <fa-icon [icon]="faCog"></fa-icon>
         User Settings
-      </button>
+      </button> -->
       <button
         type="button"
-        class="flex gap-3 py-2 px-2 hover:bg-light-low dark:hover:bg-dark-low rounded-md w-full text-left"
+        class="flex w-full gap-3 rounded-md px-2 py-2 text-left hover:bg-light-low dark:hover:bg-dark-low"
         (click)="logout()">
         <fa-icon [icon]="faPowerOff"></fa-icon>
         Logout
       </button>
-    </div>
-    <div class="w-full h-[1px] bg-light-lowest dark:bg-dark-lowest"></div>
-    <div class="notifications p-5 h-full overflow-y-auto">
-      <div class="notification-header flex mb-3">
-        <div class="title flex-1">
-          <h3 class="text-xs font-bold">Notifications</h3>
-          <p class="text-2xs">
-            {{ notifications.length }} unread notifications
-          </p>
-        </div>
-        <div class="actions">
-          <button
-            type="button"
-            class="flex gap-3 py-1 text-2xs bg-light-low dark:bg-dark-low px-3 hover:bg-light-lowest dark:hover:bg-dark-lowest rounded-md w-full text-left">
-            Clear All
-          </button>
-        </div>
-      </div>
-      <div class="grid gap-3">
-        <div
-          class="notification text-center p-3 rounded-xl bg-gradient-to-b from-light-low to-light-high dark:from-dark-low dark:to-dark-high"
-          *ngFor="let item of notifications">
-          <h4 class="text-xs font-bold mb-1">
-            New Student Registered {{ item }}
-          </h4>
-          <p class="text-2xs mb-1">
-            New student with name faisal has been registered on 21 June 2023.
-          </p>
-          <div class="actions flex justify-center gap-2">
-            <button
-              type="button"
-              class="flex gap-3 py-1 text-2xs text-white bg-primary-light dark:bg-primary-dark px-3 rounded-md">
-              View
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </fc-drawer>

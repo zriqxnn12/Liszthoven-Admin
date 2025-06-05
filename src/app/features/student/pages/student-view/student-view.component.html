@@ -1,1 +1,90 @@
-<p>student-view works!</p>
+<div class="flex h-full flex-col space-y-3">
+  <app-fc-action-bar
+    [isHasBackButton]="!quickView"
+    [actionButtons]="actionButtons"></app-fc-action-bar>
+
+  <div
+    class="body flex w-full flex-1 flex-col overflow-y-auto rounded-b-md rounded-tr-md border p-2 text-xs @container dark:border-dark-lowest">
+    <form [formGroup]="studentForm" class="flex flex-col gap-4">
+      <div class="flex flex-col items-start gap-3 @2xl:flex-row">
+        <!-- KIRI: Upload Gambar -->
+        <div class="w-full @2xl:w-[350px]">
+          <fc-file-input>
+            <button
+              type="button"
+              class="flex h-[200px] w-full flex-col items-center justify-center gap-2 overflow-y-auto rounded-md border bg-light-low p-5 dark:border-dark-low dark:bg-dark-low">
+              <fa-icon class="text-3xl" [icon]="faCloudArrowUp" />
+              <p>Drag or Upload Image Here</p>
+            </button>
+          </fc-file-input>
+        </div>
+
+        <!-- KANAN: Semua Form Input -->
+        <div class="grid flex-1 gap-3 @2xl:grid-cols-2">
+          <!-- user form -->
+          <div formGroupName="user" class="contents">
+            <fc-input-text
+              title="Name"
+              formControlName="name"
+              placeholder="Enter Name" />
+            <fc-input-text
+              title="Email"
+              formControlName="email"
+              placeholder="Enter email" />
+            <fc-input-text
+              title="Username"
+              formControlName="username"
+              placeholder="Enter username" />
+            <fc-input-text
+              title="Phone Number"
+              formControlName="phone_no"
+              placeholder="Enter number" />
+            <fc-input-text
+              title="Address"
+              formControlName="address"
+              placeholder="Enter address" />
+            <div class="grid grid-cols-2 gap-3">
+              <fc-input-text
+                title="Birth place"
+                formControlName="birth_place"
+                placeholder="Enter birth place" />
+              <fc-datepicker
+                title="Birth date"
+                formControlName="birth_date"></fc-datepicker>
+            </div>
+          </div>
+
+          <!-- form lainnya -->
+          <fc-input-text
+            title="Gender"
+            formControlName="gender"
+            placeholder="Enter gender" />
+          <fc-input-text
+            title="Religion"
+            formControlName="religion"
+            placeholder="Enter religion" />
+          <fc-input-text
+            title="School"
+            formControlName="school"
+            placeholder="Enter school" />
+          <fc-input-text
+            title="Province"
+            formControlName="province"
+            placeholder="Enter province" />
+          <fc-input-text
+            title="City"
+            formControlName="city"
+            placeholder="Enter city" />
+          <fc-input-text
+            title="Whatsapp Number"
+            formControlName="whatsapp_number"
+            placeholder="Enter whatsapp number" />
+          <fc-input-text
+            title="Note"
+            formControlName="note"
+            placeholder="Enter note" />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -24,7 +24,7 @@ const routes: Routes = [
         component: StudentAddComponent,
       },
       {
-        path: 'view/:studentId',
+        path: 'view/:id',
         component: StudentViewComponent,
       },
     ],

@@ -4,30 +4,109 @@
     <app-fc-action-bar
       [actionButtons]="actionButtons"
       [filterButtons]="filterButtons"></app-fc-action-bar>
-    <div class="body flex h-full w-full gap-3 overflow-y-auto text-xs">
-      <div class="w-full space-y-2 overflow-y-auto py-2">
-        <div
-          class="fc-animate-translate-up grid cursor-pointer grid-cols-1 items-center justify-between rounded-md border border-light-low bg-light-low p-3 hover:border-primary-light @lg:flex dark:border-dark-low dark:bg-dark-low hover:dark:border-primary-light">
-          <div class="grid flex-1 gap-1 space-y-1">
-            <div class="flex gap-3">
-              <fa-icon [fixedWidth]="true" [icon]="faUser"></fa-icon>
-              <p>Mohd Azriqin</p>
-            </div>
-            <div class="flex gap-3">
-              <fa-icon [fixedWidth]="true" [icon]="faPhone"></fa-icon>
-              <p>081371962017</p>
-            </div>
-            <div class="flex gap-3">
-              <fa-icon [fixedWidth]="true" [icon]="faLocationDot"></fa-icon>
-              <p>Perumahan KDA</p>
-            </div>
-          </div>
-          <div class="flex w-full justify-end @lg:w-[150px]">
-            <button type="button" class="btn btn-high">
-              <fa-icon [fixedWidth]="true" [icon]="faEye"></fa-icon>
-            </button>
-          </div>
+    <div class="body flex h-full w-full flex-col gap-3 overflow-y-auto text-xs">
+      <div
+        class="hidden h-8 w-full items-center gap-2 rounded-lg border border-light-lowest bg-light-low px-3 @lg:flex dark:border-dark-lowest dark:bg-dark-low">
+        <div class="flex-1 @2xl:max-w-[20rem]">
+          <p class="list-value text-xs text-gray-700 dark:text-gray-300">
+            Date of Birth
+          </p>
         </div>
+        <div class="flex-1 @2xl:max-w-[20rem]">
+          <p class="list-value text-xs text-gray-700 dark:text-gray-300">
+            Student
+          </p>
+        </div>
+        <div class="flex-1 @2xl:max-w-[20rem]">
+          <p class="list-value text-xs text-gray-700 dark:text-gray-300">
+            Place of Birth
+          </p>
+        </div>
+        <div class="flex-1 @2xl:max-w-[20rem]">
+          <p class="list-value text-xs text-gray-700 dark:text-gray-300">
+            School
+          </p>
+        </div>
+        <div class="flex-1 @2xl:max-w-[20rem]">
+          <p class="list-value text-xs text-gray-700 dark:text-gray-300">
+            Race
+          </p>
+        </div>
+        <div class="flex-1 @2xl:max-w-[20rem]">
+          <p class="list-value text-xs text-gray-700 dark:text-gray-300">
+            Religion
+          </p>
+        </div>
+        <div class="flex-1 @2xl:max-w-[20rem]">
+          <p class="list-value text-xs text-gray-700 dark:text-gray-300">
+            Actions
+          </p>
+        </div>
+      </div>
+
+      <div class="w-full space-y-2 overflow-y-auto py-2">
+        <ng-container *ngFor="let student of students">
+          <div
+            (dblclick)="navigateToDetail(student)"
+            class="fc-animate-translate-up grid cursor-pointer items-center gap-2 rounded-md border border-light-low bg-light-low p-3 hover:border-primary-light @lg:flex dark:border-dark-lowest dark:bg-dark-low hover:dark:border-primary-light">
+            <div class="w-full @2xl:max-w-[20rem]">
+              <p class="block font-medium capitalize text-gray-500 @2xl:hidden">
+                Birth Date
+              </p>
+              <p class="list-value text-xs text-gray-700 dark:text-gray-300">
+                {{ student.user.birth_date || '-' }}
+              </p>
+            </div>
+            <div class="w-full @2xl:max-w-[20rem]">
+              <p class="block font-medium capitalize text-gray-500 @2xl:hidden">
+                Student
+              </p>
+              <p class="list-value text-xs text-gray-700 dark:text-gray-300">
+                {{ student.user.name }}
+              </p>
+            </div>
+            <div class="w-full @2xl:max-w-[20rem]">
+              <p class="block font-medium capitalize text-gray-500 @2xl:hidden">
+                place of birth
+              </p>
+              <p class="list-value text-xs text-gray-700 dark:text-gray-300">
+                {{ student.user.birth_place || '-' }}
+              </p>
+            </div>
+            <div class="w-full @2xl:max-w-[20rem]">
+              <p class="block font-medium capitalize text-gray-500 @2xl:hidden">
+                school
+              </p>
+              <p class="list-value text-xs text-gray-700 dark:text-gray-300">
+                {{ student.school }}
+              </p>
+            </div>
+            <div class="w-full @2xl:max-w-[20rem]">
+              <p class="block font-medium capitalize text-gray-500 @2xl:hidden">
+                phone_no
+              </p>
+              <p class="list-value text-xs text-gray-700 dark:text-gray-300">
+                {{ student.user.phone_no }}
+              </p>
+            </div>
+            <div class="w-full @2xl:max-w-[20rem]">
+              <p class="block font-medium capitalize text-gray-500 @2xl:hidden">
+                religion
+              </p>
+              <p class="list-value text-xs text-gray-700 dark:text-gray-300">
+                {{ student.religion || '-' }}
+              </p>
+            </div>
+            <div class="w-full @2xl:max-w-[20rem]">
+              <button
+                (click)="navigateToDetail(student)"
+                type="button"
+                class="btn btn-high">
+                <fa-icon [fixedWidth]="true" [icon]="faEye"></fa-icon>
+              </button>
+            </div>
+          </div>
+        </ng-container>
       </div>
     </div>
   </div>

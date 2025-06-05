@@ -1,1 +1,78 @@
-<p>student-add works!</p>
+<div class="flex h-full flex-col space-y-3">
+  <app-fc-action-bar [isHasBackButton]="true" [actionButtons]="actionButtons">
+  </app-fc-action-bar>
+  <div class="body h-full w-full overflow-y-auto py-5 text-xs">
+    <form [formGroup]="registerForm" class="grid w-full gap-3 lg:grid-cols-2">
+      <fc-input-text
+        title="Name"
+        formControlName="name"
+        placeholder="Enter Name"></fc-input-text>
+      <fc-input-text
+        title="Email"
+        formControlName="email"
+        placeholder="Enter Email"></fc-input-text>
+      <fc-input-text
+        title="Username"
+        formControlName="username"
+        placeholder="Enter Username"></fc-input-text>
+      <fc-input-text
+        title="Password"
+        type="password"
+        formControlName="password"
+        placeholder="Enter Password"></fc-input-text>
+      <div class="grid w-full gap-3 lg:grid-cols-2">
+        <fc-input-text
+          title="Phone Number"
+          formControlName="phone_no"
+          placeholder="Enter phone number"></fc-input-text>
+        <fc-input-text
+          title="Birth Place"
+          formControlName="birth_place"
+          placeholder="Enter phone number"></fc-input-text>
+      </div>
+      <div class="grid w-full gap-3 lg:grid-cols-2">
+        <fc-datepicker
+          title="Birth date"
+          formControlName="birth_date"></fc-datepicker>
+        <fc-input-text
+          title="Address"
+          formControlName="address"
+          placeholder="Enter Address"></fc-input-text>
+      </div>
+      <ng-container formGroupName="student">
+        <fc-input-text
+          title="Gender"
+          formControlName="gender"
+          placeholder="Enter gender"></fc-input-text>
+        <fc-input-text
+          title="Religion"
+          formControlName="religion"
+          placeholder="Enter religion"></fc-input-text>
+        <div class="grid w-full gap-3 lg:grid-cols-2">
+          <fc-input-text
+            title="School"
+            formControlName="school"
+            placeholder="Enter school"></fc-input-text>
+          <fc-input-text
+            title="Whatsapp number"
+            formControlName="whatsapp_number"
+            placeholder="Enter number"></fc-input-text>
+        </div>
+        <div class="grid w-full gap-3 lg:grid-cols-2">
+          <fc-input-text
+            title="Province"
+            formControlName="province"
+            placeholder="Enter province"></fc-input-text>
+          <fc-input-text
+            title="City"
+            formControlName="city"
+            placeholder="Enter city"></fc-input-text>
+        </div>
+        <fc-textarea
+          title="Note"
+          formControlName="note"
+          placeholder="Enter Student Note"></fc-textarea>
+      </ng-container>
+    </form>
+  </div>
+</div>
