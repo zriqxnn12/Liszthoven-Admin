@@ -28,14 +28,6 @@
               formControlName="name"
               placeholder="Enter Name" />
             <fc-input-text
-              title="Email"
-              formControlName="email"
-              placeholder="Enter email" />
-            <fc-input-text
-              title="Username"
-              formControlName="username"
-              placeholder="Enter username" />
-            <fc-input-text
               title="Phone Number"
               formControlName="phone_no"
               placeholder="Enter number" />
@@ -55,14 +47,24 @@
           </div>
 
           <!-- form lainnya -->
-          <fc-input-text
-            title="Gender"
+          <fc-select-option
+            [options]="gender"
             formControlName="gender"
-            placeholder="Enter gender" />
-          <fc-input-text
-            title="Religion"
+            [optionValue]="'value'"
+            [optionLabel]="'label'"
+            title="Gender"
+            [placeholder]="'Select Gender'"
+            [desktopView]="'overlay'"
+            [mobileView]="'dialog'" />
+          <fc-select-option
+            [options]="religion"
             formControlName="religion"
-            placeholder="Enter religion" />
+            [optionValue]="'value'"
+            [optionLabel]="'label'"
+            title="Religion"
+            [placeholder]="'Select Religion'"
+            [desktopView]="'overlay'"
+            [mobileView]="'dialog'" />
           <fc-input-text
             title="School"
             formControlName="school"
@@ -79,10 +81,10 @@
             title="Whatsapp Number"
             formControlName="whatsapp_number"
             placeholder="Enter whatsapp number" />
-          <fc-input-text
+          <fc-textarea
             title="Note"
             formControlName="note"
-            placeholder="Enter note" />
+            placeholder="Enter Student Note"></fc-textarea>
         </div>
       </div>
     </form>

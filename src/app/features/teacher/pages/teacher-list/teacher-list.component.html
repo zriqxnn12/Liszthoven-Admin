@@ -9,32 +9,27 @@
         class="hidden h-8 w-full items-center gap-2 rounded-lg border border-light-lowest bg-light-low px-3 @lg:flex dark:border-dark-lowest dark:bg-dark-low">
         <div class="flex-1 @2xl:max-w-[20rem]">
           <p class="list-value text-xs text-gray-700 dark:text-gray-300">
-            Date of Birth
+            Name
           </p>
         </div>
         <div class="flex-1 @2xl:max-w-[20rem]">
           <p class="list-value text-xs text-gray-700 dark:text-gray-300">
-            Student
+            Type
           </p>
         </div>
         <div class="flex-1 @2xl:max-w-[20rem]">
           <p class="list-value text-xs text-gray-700 dark:text-gray-300">
-            Place of Birth
+            Email
           </p>
         </div>
         <div class="flex-1 @2xl:max-w-[20rem]">
           <p class="list-value text-xs text-gray-700 dark:text-gray-300">
-            School
+            Phone Number
           </p>
         </div>
         <div class="flex-1 @2xl:max-w-[20rem]">
           <p class="list-value text-xs text-gray-700 dark:text-gray-300">
-            Race
-          </p>
-        </div>
-        <div class="flex-1 @2xl:max-w-[20rem]">
-          <p class="list-value text-xs text-gray-700 dark:text-gray-300">
-            Religion
+            Branch
           </p>
         </div>
         <div class="flex-1 @2xl:max-w-[20rem]">
@@ -43,68 +38,61 @@
           </p>
         </div>
       </div>
-
       <div class="w-full space-y-2 overflow-y-auto py-2">
-        <ng-container *ngFor="let student of students">
+        <ng-container *ngFor="let teacher of teachers">
           <div
-            (dblclick)="navigateToDetail(student)"
+            (dblclick)="navigateToDetail(teacher)"
             class="fc-animate-translate-up grid cursor-pointer items-center gap-2 rounded-md border border-light-low bg-light-low p-3 hover:border-primary-light @lg:flex dark:border-dark-lowest dark:bg-dark-low hover:dark:border-primary-light">
             <div class="w-full @2xl:max-w-[20rem]">
               <p class="block font-medium capitalize text-gray-500 @2xl:hidden">
-                Birth Date
+                Name
               </p>
               <p class="list-value text-xs text-gray-700 dark:text-gray-300">
-                {{
-                  student.user.birth_date
-                    ? (student.user.birth_date | date: 'dd-MM-yyyy')
-                    : '-'
-                }}
+                {{ teacher.staff.user.name }}
               </p>
             </div>
             <div class="w-full @2xl:max-w-[20rem]">
               <p class="block font-medium capitalize text-gray-500 @2xl:hidden">
-                Student
+                Type
               </p>
               <p class="list-value text-xs text-gray-700 dark:text-gray-300">
-                {{ student.user.name }}
+                {{ teacher.type_name }}
               </p>
             </div>
             <div class="w-full @2xl:max-w-[20rem]">
               <p class="block font-medium capitalize text-gray-500 @2xl:hidden">
-                place of birth
+                Email
               </p>
               <p class="list-value text-xs text-gray-700 dark:text-gray-300">
-                {{ student.user.birth_place || '-' }}
+                {{ teacher.staff.user.email }}
               </p>
             </div>
             <div class="w-full @2xl:max-w-[20rem]">
               <p class="block font-medium capitalize text-gray-500 @2xl:hidden">
-                school
+                Phone Number
               </p>
               <p class="list-value text-xs text-gray-700 dark:text-gray-300">
-                {{ student.school }}
+                {{ teacher.staff.user.phone_no || '-' }}
               </p>
             </div>
             <div class="w-full @2xl:max-w-[20rem]">
               <p class="block font-medium capitalize text-gray-500 @2xl:hidden">
-                phone_no
+                Branch
               </p>
-              <p class="list-value text-xs text-gray-700 dark:text-gray-300">
-                {{ student.user.phone_no }}
+              <p
+                *ngIf="teacher.branch"
+                class="list-value text-xs text-gray-700 dark:text-gray-300">
+                {{ teacher.branch.name }}
+              </p>
+              <p
+                *ngIf="!teacher.branch"
+                class="list-value text-xs text-gray-700 dark:text-gray-300">
+                -
               </p>
             </div>
             <div class="w-full @2xl:max-w-[20rem]">
-              <p class="block font-medium capitalize text-gray-500 @2xl:hidden">
-                religion
-              </p>
-              <p class="list-value text-xs text-gray-700 dark:text-gray-300">
-                {{ student.religion || '-' }}
-              </p>
-            </div>
-            <div
-              class="flex w-full justify-end @2xl:max-w-[20rem] lg:justify-start">
               <button
-                (click)="navigateToDetail(student)"
+                (click)="navigateToDetail(teacher)"
                 type="button"
                 class="btn btn-high">
                 <fa-icon [fixedWidth]="true" [icon]="faEye"></fa-icon>

@@ -21,4 +21,12 @@ export class StudentService {
   addStudent(data: any) {
     return this.http.post(`${ROOT_API}/auth/register`, data);
   }
+
+  updateStudent(id: number, data: any) {
+    return this.http.put(`${ROOT_API}/admin/students/${id}`, data);
+  }
+
+  deleteStudent(id: number) {
+    return this.http.delete(`${ROOT_API}/admin/students/${id}`);
+  }
 }

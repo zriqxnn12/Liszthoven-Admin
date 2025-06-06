@@ -1,10 +1,36 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FcFilterDateService {
+  datePresets: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   constructor() {}
+
+  getPresetDates() {
+    if (this.datePresets.value == null) {
+      let preset = [
+        { label: 'Today', value: 0 },
+        { label: 'Yesterday', value: 1 },
+        { label: 'Last 7 days', value: 2 },
+        { label: 'Last 14 days', value: 3 },
+        { label: 'Last 30 days', value: 4 },
+        { label: 'This week', value: 5 },
+        { label: 'Last week', value: 6 },
+        { label: 'This month', value: 7 },
+        { label: 'Last month', value: 8 },
+        { label: 'Maximum', value: 99 },
+      ];
+      preset.forEach((item: any) => {
+        item.dateRange = this.getPresetDate(item.value);
+      });
+      this.datePresets.next(preset);
+      return of(this.datePresets.value);
+    } else {
+      return of(this.datePresets.value);
+    }
+  }
 
   getPresetDate(preset: number) {
     let tmpDate = new Date();

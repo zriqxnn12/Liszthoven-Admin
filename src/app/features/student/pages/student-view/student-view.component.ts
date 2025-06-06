@@ -34,15 +34,53 @@ export class StudentViewComponent {
       label: 'Save',
       icon: faSave,
       action: () => {
-        // this.submit();
+        this.submit();
       },
     },
     {
       label: 'Delete',
       icon: faTrash,
       action: () => {
-        // this.delete();
+        this.delete();
       },
+    },
+  ];
+
+  gender = [
+    {
+      label: 'Male',
+      value: 'Male',
+    },
+    {
+      label: 'Female',
+      value: 'Female',
+    },
+  ];
+
+  religion = [
+    {
+      label: 'Islam',
+      value: 'Islam',
+    },
+    {
+      label: 'Christianity',
+      value: 'Christianity',
+    },
+    {
+      label: 'Catholic',
+      value: 'Catholic',
+    },
+    {
+      label: 'Hinduism',
+      value: 'Hinduism',
+    },
+    {
+      label: 'Buddhism',
+      value: 'Buddhism',
+    },
+    {
+      label: 'Other',
+      value: 'Other',
     },
   ];
 
@@ -74,13 +112,10 @@ export class StudentViewComponent {
       note: new FormControl(''),
       user: new FormGroup({
         name: new FormControl('', Validators.required),
-        email: new FormControl('', Validators.required),
-        username: new FormControl('', Validators.required),
         phone_no: new FormControl(''),
         address: new FormControl(''),
         birth_place: new FormControl(''),
         birth_date: new FormControl(null),
-        profile_file_path: new FormControl(null),
       }),
     });
   }
@@ -114,15 +149,67 @@ export class StudentViewComponent {
       });
       this.userForm.patchValue({
         name: this.student.user.name,
-        email: this.student.user.email,
-        username: this.student.user.username,
         phone_no: this.student.user.phone_no,
         address: this.student.user.address,
         birth_place: this.student.user.birth_place,
         birth_date: this.student.user.birth_date,
-        profile_file_path: this.student.user.profile_file_path,
       });
       this.loading = false;
+    });
+  }
+
+  submit() {
+    this.actionButtons[0].loading = true;
+    const updatedData = this.studentForm.value;
+    this.studentService.updateStudent(this.student.id, updatedData).subscribe({
+      next: () => {
+        this.actionButtons[0].loading = false;
+        this.fcToastService.add({
+          severity: 'success',
+          header: 'Success',
+          message: 'Student updated successfully',
+        });
+      },
+      error: (err) => {
+        this.actionButtons[0].loading = false;
+        this.fcToastService.clear();
+        this.fcToastService.add({
+          severity: 'error',
+          header: 'Error',
+          message: err.message,
+        });
+      },
+    });
+  }
+
+  delete() {
+    this.fcConfirmService.open({
+      message: 'Are you sure that you want to delete this student?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      accept: () => {
+        this.actionButtons[1].loading = true;
+        this.studentService.deleteStudent(this.student.id).subscribe({
+          next: (res: any) => {
+            this.actionButtons[1].loading = false;
+            this.fcToastService.clear();
+            this.fcToastService.add({
+              severity: 'success',
+              header: 'Success',
+              message: res.message,
+            });
+          },
+          error: (err) => {
+            this.actionButtons[1].loading = false;
+            this.fcToastService.clear();
+            this.fcToastService.add({
+              severity: 'error',
+              header: 'Student',
+              message: err.message,
+            });
+          },
+        });
+      },
     });
   }
 }

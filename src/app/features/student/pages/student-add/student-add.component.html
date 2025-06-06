@@ -40,14 +40,32 @@
           placeholder="Enter Address"></fc-input-text>
       </div>
       <ng-container formGroupName="student">
-        <fc-input-text
+        <!-- <fc-input-text
           title="Gender"
           formControlName="gender"
-          placeholder="Enter gender"></fc-input-text>
-        <fc-input-text
+          placeholder="Enter gender"></fc-input-text> -->
+        <fc-select-option
+          [options]="gender"
+          formControlName="gender"
+          [optionValue]="'value'"
+          [optionLabel]="'label'"
+          title="Gender"
+          [placeholder]="'Select Gender'"
+          [desktopView]="'overlay'"
+          [mobileView]="'dialog'" />
+        <fc-select-option
+          [options]="religion"
+          formControlName="religion"
+          [optionValue]="'value'"
+          [optionLabel]="'label'"
+          title="Religion"
+          [placeholder]="'Select Religion'"
+          [desktopView]="'overlay'"
+          [mobileView]="'dialog'" />
+        <!-- <fc-input-text
           title="Religion"
           formControlName="religion"
-          placeholder="Enter religion"></fc-input-text>
+          placeholder="Enter religion"></fc-input-text> -->
         <div class="grid w-full gap-3 lg:grid-cols-2">
           <fc-input-text
             title="School"

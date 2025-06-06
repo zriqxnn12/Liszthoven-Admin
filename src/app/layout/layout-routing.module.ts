@@ -47,6 +47,13 @@ const routes: Routes = [
             (m) => m.StudentModule
           ),
       },
+      {
+        path: 'teacher',
+        loadChildren: () =>
+          import('../features/teacher/teacher.module').then(
+            (m) => m.TeacherModule
+          ),
+      },
     ],
   },
 ];

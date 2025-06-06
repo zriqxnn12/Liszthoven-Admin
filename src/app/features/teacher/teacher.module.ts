@@ -1,30 +1,30 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { StudentRoutingModule } from './student-routing.module';
-import { StudentComponent } from './student.component';
-import { StudentListComponent } from './pages/student-list/student-list.component';
-import { StudentAddComponent } from './pages/student-add/student-add.component';
-import { StudentViewComponent } from './pages/student-view/student-view.component';
+import { TeacherRoutingModule } from './teacher-routing.module';
+import { TeacherListComponent } from './pages/teacher-list/teacher-list.component';
+import { TeacherAddComponent } from './pages/teacher-add/teacher-add.component';
+import { TeacherViewComponent } from './pages/teacher-view/teacher-view.component';
 import { SharedModule } from '@shared/shared.module';
 import { FcPaginationModule } from '@shared/components/fc-pagination/fc-pagination.module';
 import { FcInputTextModule } from '@shared/components/fc-input-text/fc-input-text.module';
-import { FcFilterDialogModule } from '@shared/components/fc-filter-dialog/fc-filter-dialog.module';
 import { FcInputNumberModule } from '@shared/components/fc-input-number/fc-input-number.module';
 import { FcDatepickerModule } from '@shared/components/fc-datepicker/fc-datepicker.module';
 import { FcFileInputModule } from '@shared/components/fc-file-input/fc-file-input.module';
 import { FcTextareaModule } from '@shared/components/fc-textarea/fc-textarea.module';
+import { FcFilterDialogModule } from '@shared/components/fc-filter-dialog/fc-filter-dialog.module';
+import { TeacherComponent } from './teacher.component';
 
 @NgModule({
   declarations: [
-    StudentComponent,
-    StudentListComponent,
-    StudentAddComponent,
-    StudentViewComponent,
+    TeacherComponent,
+    TeacherListComponent,
+    TeacherAddComponent,
+    TeacherViewComponent,
   ],
   imports: [
     CommonModule,
-    StudentRoutingModule,
+    TeacherRoutingModule,
     SharedModule,
     FcPaginationModule,
     FcInputTextModule,
@@ -35,4 +35,4 @@ import { FcTextareaModule } from '@shared/components/fc-textarea/fc-textarea.mod
     FcFilterDialogModule,
   ],
 })
-export class StudentModule {}
+export class TeacherModule {}

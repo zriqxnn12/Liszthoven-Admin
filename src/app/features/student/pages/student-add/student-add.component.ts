@@ -34,6 +34,45 @@ export class StudentAddComponent {
     },
   ];
   registerForm: FormGroup;
+
+  gender = [
+    {
+      label: 'Male',
+      value: 'Male',
+    },
+    {
+      label: 'Female',
+      value: 'Female',
+    },
+  ];
+
+  religion = [
+    {
+      label: 'Islam',
+      value: 'Islam',
+    },
+    {
+      label: 'Christianity',
+      value: 'Christianity',
+    },
+    {
+      label: 'Catholic',
+      value: 'Catholic',
+    },
+    {
+      label: 'Hinduism',
+      value: 'Hinduism',
+    },
+    {
+      label: 'Buddhism',
+      value: 'Buddhism',
+    },
+    {
+      label: 'Other',
+      value: 'Other',
+    },
+  ];
+
   constructor(
     private layoutService: LayoutService,
     private dialogService: DialogService,
@@ -56,8 +95,8 @@ export class StudentAddComponent {
       birth_place: new FormControl(''),
       birth_date: new FormControl(null),
       student: new FormGroup({
-        gender: new FormControl('', Validators.required),
-        religion: new FormControl(''),
+        gender: new FormControl('Male', Validators.required),
+        religion: new FormControl('Islam'),
         school: new FormControl(''),
         province: new FormControl(''),
         city: new FormControl(''),
