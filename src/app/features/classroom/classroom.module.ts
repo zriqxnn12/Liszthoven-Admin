@@ -28,5 +28,6 @@ import { FcTextareaModule } from '@shared/components/fc-textarea/fc-textarea.mod
     FcInputTextModule,
     FcTextareaModule,
   ],
+  exports: [ClassroomSelectDialogComponent],
 })
 export class ClassroomModule {}

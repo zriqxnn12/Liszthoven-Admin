@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BranchSelectDialogComponent } from '@features/branch/components/branch-select-dialog/branch-select-dialog.component';
+import { ClassroomSelectDialogComponent } from '@features/classroom/components/classroom-select-dialog/classroom-select-dialog.component';
 import { TeacherService } from '@features/teacher/services/teacher.service';
 import {
   faChevronDown,
@@ -99,7 +100,8 @@ export class TeacherAddComponent {
           type: new FormControl(0, Validators.required),
           description: new FormControl('-'),
           qualify: new FormControl('-'),
-          branch: new FormControl(''),
+          branch: new FormControl(null),
+          classroom: new FormControl(null),
         }),
       }),
     });
@@ -121,6 +123,37 @@ export class TeacherAddComponent {
 
   get teacherForm(): FormGroup {
     return this.staffForm.get('teacher') as FormGroup;
+  }
+
+  onSelectClassroom() {
+    const ref = this.dialogService.open(ClassroomSelectDialogComponent, {
+      data: {
+        title: 'Select Classroom',
+      },
+      showHeader: false,
+      contentStyle: {
+        padding: '0',
+      },
+      style: {
+        overflow: 'hidden',
+      },
+      styleClass: 'rounded-sm',
+      dismissableMask: true,
+      width: '450px',
+    });
+    ref.onClose.subscribe((classroom) => {
+      if (classroom) {
+        this.teacherForm.patchValue({
+          classroom: classroom,
+        });
+      }
+    });
+  }
+
+  removeClassroom() {
+    this.teacherForm.patchValue({
+      classroom: null,
+    });
   }
 
   onSelectBranch() {

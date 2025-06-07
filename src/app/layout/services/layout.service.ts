@@ -83,17 +83,17 @@ export class LayoutService {
       //   route: '/supplier',
       //   name: 'Example Feature',
       // },
-      {
-        name: 'Sub menus',
-        parentRoute: 'purchase',
-        showRoutes: false,
-        subMenus: [
-          {
-            name: 'sub menu',
-            route: '/dropdown',
-          },
-        ],
-      },
+      // {
+      //   name: 'Sub menus',
+      //   parentRoute: 'purchase',
+      //   showRoutes: false,
+      //   subMenus: [
+      //     {
+      //       name: 'sub menu',
+      //       route: '/dropdown',
+      //     },
+      //   ],
+      // },
       {
         route: '/template-ui',
         name: 'Template UI',

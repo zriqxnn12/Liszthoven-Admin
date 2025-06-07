@@ -109,6 +109,35 @@
               </button>
             </div>
           </div>
+          <!-- select classroom -->
+          <div
+            class="form-input flex flex-1 cursor-pointer items-center rounded-lg border border-light-lowest bg-light-high p-2 dark:border-dark-lowest dark:bg-dark-low dark:hover:bg-dark-lowest">
+            <div class="flex flex-1 flex-col" (click)="onSelectClassroom()">
+              <p
+                class="m-0 block p-0 text-2xs font-medium leading-5 text-dark-lowest dark:text-white/60">
+                Classroom
+              </p>
+              <p *ngIf="teacherForm.value.classroom" class="text-xs">
+                {{ teacherForm.value.classroom.room }}
+              </p>
+              <p
+                *ngIf="!teacherForm.value.classroom"
+                class="text-xs dark:text-gray-400">
+                Select Classroom
+              </p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button
+                *ngIf="teacherForm.value.classroom"
+                type="button"
+                (click)="removeClassroom()">
+                <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>
+              </button>
+              <button type="button" (click)="onSelectClassroom()">
+                <fa-icon [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
+              </button>
+            </div>
+          </div>
         </div>
       </ng-container>
     </ng-container>
