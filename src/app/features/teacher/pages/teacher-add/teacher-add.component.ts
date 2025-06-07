@@ -1,10 +1,115 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { TeacherService } from '@features/teacher/services/teacher.service';
+import {
+  faChevronDown,
+  faSave,
+  faTimes,
+} from '@fortawesome/free-solid-svg-icons';
+import { FcToastService } from '@shared/components/fc-toast/fc-toast.service';
+import { DialogService } from 'primeng/dynamicdialog';
+import { Subject } from 'rxjs';
+import { LayoutService } from 'src/app/layout/services/layout.service';
 
 @Component({
   selector: 'app-teacher-add',
   templateUrl: './teacher-add.component.html',
-  styleUrls: ['./teacher-add.component.css']
+  styleUrls: ['./teacher-add.component.css'],
 })
 export class TeacherAddComponent {
+  private readonly destroy$ = new Subject<void>();
+  faChevronDown = faChevronDown;
+  faTimes = faTimes;
 
+  actionButtons: any[] = [
+    {
+      label: 'Save',
+      icon: faSave,
+      action: () => {
+        // this.submit();
+      },
+    },
+  ];
+
+  status = [
+    {
+      value: 0,
+      label: 'Active',
+    },
+    {
+      value: 1,
+      label: 'Resign',
+    },
+  ];
+
+  teacherType = [
+    {
+      value: 0,
+      label: 'Permanent',
+    },
+    {
+      value: 1,
+      label: 'Part Time',
+    },
+  ];
+
+  role = [
+    {
+      value: 0,
+      label: 'Developer',
+    },
+    {
+      value: 1,
+      label: 'Teacher',
+    },
+    {
+      value: 2,
+      label: 'Admin',
+    },
+  ];
+  registerForm: FormGroup;
+  constructor(
+    private layoutService: LayoutService,
+    private dialogService: DialogService,
+    private teacherService: TeacherService,
+    private fcToastService: FcToastService,
+    private router: Router
+  ) {
+    this.layoutService.setHeaderConfig({
+      title: 'Teacher Add',
+      icon: '',
+      showHeader: true,
+    });
+    this.registerForm = new FormGroup({
+      name: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.required),
+      username: new FormControl('', Validators.required),
+      password: new FormControl('asdqwe123'),
+      phone_no: new FormControl(''),
+      address: new FormControl(''),
+      birth_place: new FormControl(''),
+      birth_date: new FormControl(null),
+      staff: new FormGroup({
+        role: new FormControl(0, Validators.required),
+        status: new FormControl(0, Validators.required),
+        note: new FormControl('-'),
+        teacher: new FormGroup({
+          type: new FormControl(0, Validators.required),
+          description: new FormControl('-'),
+          qualify: new FormControl('-'),
+        }),
+      }),
+    });
+  }
+
+  ngOnInit(): void {
+    this.layoutService.setSearchConfig({ hide: true });
+  }
+
+  ngAfterContentInit(): void {}
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }

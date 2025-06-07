@@ -1,0 +1,33 @@
+<div class="flex h-full gap-3 @container">
+  <div
+    class="flex h-full w-full flex-col gap-3 transition-all duration-700 ease-in-out @container">
+    <app-fc-action-bar
+      [actionButtons]="actionButtons"
+      [filterButtons]="filterButtons"></app-fc-action-bar>
+    <div class="body flex h-full w-full gap-3 overflow-y-auto text-xs">
+      <div class="w-full space-y-2 overflow-y-auto py-2">
+        <ng-container *ngFor="let branch of branches">
+          <div
+            class="fc-animate-translate-up grid cursor-pointer grid-cols-1 items-center justify-between rounded-md border border-light-low bg-light-low p-3 hover:border-primary-light @lg:flex dark:border-dark-low dark:bg-dark-low hover:dark:border-primary-light">
+            <div class="flex flex-1 flex-col gap-3">
+              <p class="text-xs font-bold">{{ branch.name }}</p>
+              <div class="flex flex-1 gap-3">
+                <fa-icon class="" [icon]="faLocationDot"></fa-icon>
+                <p>{{ branch.address }}</p>
+              </div>
+            </div>
+
+            <div class="flex w-full justify-end @lg:w-[150px]">
+              <button
+                type="button"
+                class="btn btn-high"
+                (click)="navigateToDetail(branch)">
+                <fa-icon [fixedWidth]="true" [icon]="faEye"></fa-icon>
+              </button>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

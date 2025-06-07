@@ -54,6 +54,13 @@ const routes: Routes = [
             (m) => m.TeacherModule
           ),
       },
+      {
+        path: 'branch',
+        loadChildren: () =>
+          import('../features/branch/branch.module').then(
+            (m) => m.BranchModule
+          ),
+      },
     ],
   },
 ];

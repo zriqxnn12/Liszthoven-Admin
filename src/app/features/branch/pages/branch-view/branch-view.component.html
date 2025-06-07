@@ -1,0 +1,16 @@
+<div class="flex h-full flex-col space-y-3">
+  <app-fc-action-bar [isHasBackButton]="true" [actionButtons]="actionButtons">
+  </app-fc-action-bar>
+  <div class="body h-full w-full overflow-y-auto text-xs">
+    <form [formGroup]="branchForm" class="grid w-full gap-3 lg:grid-cols-2">
+      <fc-input-text
+        title="Name"
+        formControlName="name"
+        placeholder="Enter Name"></fc-input-text>
+      <fc-input-text
+        title="Address"
+        formControlName="address"
+        placeholder="Enter Address"></fc-input-text>
+    </form>
+  </div>
+</div>

@@ -71,6 +71,10 @@ export class LayoutService {
         route: '/teacher',
         name: 'Teacher',
       },
+      {
+        route: '/branch',
+        name: 'Branch',
+      },
       // {
       //   route: '/supplier',
       //   name: 'Example Feature',
