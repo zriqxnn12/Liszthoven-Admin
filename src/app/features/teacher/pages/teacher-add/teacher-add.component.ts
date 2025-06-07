@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { BranchSelectDialogComponent } from '@features/branch/components/branch-select-dialog/branch-select-dialog.component';
 import { TeacherService } from '@features/teacher/services/teacher.service';
 import {
   faChevronDown,
@@ -98,6 +99,7 @@ export class TeacherAddComponent {
           type: new FormControl(0, Validators.required),
           description: new FormControl('-'),
           qualify: new FormControl('-'),
+          branch: new FormControl(''),
         }),
       }),
     });
@@ -111,5 +113,44 @@ export class TeacherAddComponent {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  get staffForm(): FormGroup {
+    return this.registerForm.get('staff') as FormGroup;
+  }
+
+  get teacherForm(): FormGroup {
+    return this.staffForm.get('teacher') as FormGroup;
+  }
+
+  onSelectBranch() {
+    const ref = this.dialogService.open(BranchSelectDialogComponent, {
+      data: {
+        title: 'Select Branch',
+      },
+      showHeader: false,
+      contentStyle: {
+        padding: '0',
+      },
+      style: {
+        overflow: 'hidden',
+      },
+      styleClass: 'rounded-sm',
+      dismissableMask: true,
+      width: '450px',
+    });
+    ref.onClose.subscribe((branch) => {
+      if (branch) {
+        this.teacherForm.patchValue({
+          branch: branch,
+        });
+      }
+    });
+  }
+
+  removeBranch() {
+    this.teacherForm.patchValue({
+      branch: null,
+    });
   }
 }

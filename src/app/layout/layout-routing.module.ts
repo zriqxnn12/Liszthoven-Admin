@@ -61,6 +61,13 @@ const routes: Routes = [
             (m) => m.BranchModule
           ),
       },
+      {
+        path: 'classroom',
+        loadChildren: () =>
+          import('../features/classroom/classroom.module').then(
+            (m) => m.ClassroomModule
+          ),
+      },
     ],
   },
 ];

@@ -8,10 +8,12 @@ const ROOT_API = environment.API_URL;
 @Injectable({
   providedIn: 'root',
 })
-export class BranchService {
+export class ClassroomService {
   constructor(private http: HttpClient) {}
 
-  getBranches(dataListParameter: DataListParameter = {} as DataListParameter) {
+  getClassrooms(
+    dataListParameter: DataListParameter = {} as DataListParameter
+  ) {
     let param = '';
     if (dataListParameter.rows && dataListParameter.page) {
       param = param.concat(
@@ -32,22 +34,22 @@ export class BranchService {
         param = param.concat('&q=' + dataListParameter.searchQuery);
       }
     }
-    return this.http.get(`${ROOT_API}/admin/branches${param}`);
+    return this.http.get(`${ROOT_API}/admin/classrooms${param}`);
   }
 
-  getBranch(id: number) {
-    return this.http.get(`${ROOT_API}/admin/branches/${id}`);
+  getClassroom(id: number) {
+    return this.http.get(`${ROOT_API}/admin/classrooms/${id}`);
   }
 
-  addBranch(data: any) {
-    return this.http.post(`${ROOT_API}/admin/branches`, data);
+  addClassroom(data: any) {
+    return this.http.post(`${ROOT_API}/admin/classrooms`, data);
   }
 
-  updateBranch(id: number, data: any) {
-    return this.http.put(`${ROOT_API}/admin/branches/${id}`, data);
+  updateClassroom(id: number, data: any) {
+    return this.http.put(`${ROOT_API}/admin/classrooms/${id}`, data);
   }
 
-  deleteBranch(id: number) {
-    return this.http.delete(`${ROOT_API}/admin/branches/${id}`);
+  deleteClassroom(id: number) {
+    return this.http.delete(`${ROOT_API}/admin/classrooms/${id}`);
   }
 }

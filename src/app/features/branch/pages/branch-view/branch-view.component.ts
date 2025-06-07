@@ -121,7 +121,7 @@ export class BranchViewComponent {
             this.fcToastService.add({
               severity: 'success',
               header: 'Success',
-              message: 'Student deleted',
+              message: 'Branch deleted',
             });
             this.router.navigate(['/branch/list']);
           },

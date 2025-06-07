@@ -57,6 +57,7 @@ export class BranchAddComponent {
   }
 
   submit() {
+    this.actionButtons[0].loading = true;
     const formValue = { ...this.branchForm.value };
 
     this.branchService.addBranch(formValue).subscribe({
