@@ -10,6 +10,7 @@ import {
   faRefresh,
 } from '@fortawesome/free-solid-svg-icons';
 import { FcFilterDialogService } from '@shared/components/fc-filter-dialog/services/fc-filter-dialog.service';
+import { DataListParameter } from '@shared/interfaces/data-list-parameter.interface';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Subject, take, takeUntil } from 'rxjs';
 import { LayoutService } from 'src/app/layout/services/layout.service';
@@ -54,6 +55,12 @@ export class TeacherListComponent {
   ];
   teachers: Teacher[] = [];
   loading: boolean = false;
+  searchQuery: string = '';
+  totalRecords = 0;
+  totalPages = 1;
+  page = 1;
+  rows = 10;
+
   constructor(
     private layoutService: LayoutService,
     private router: Router,
@@ -79,13 +86,24 @@ export class TeacherListComponent {
     this.destroy$.complete();
   }
 
-  loadData() {
+  loadData(page: number = 0, searchQuery: string = this.searchQuery) {
+    this.loading = true;
+    let dataListParameter: DataListParameter = {} as DataListParameter;
+    dataListParameter.rows = this.rows;
+    dataListParameter.page = this.page;
+    dataListParameter.sortBy = 'order_by=id&direction=asc&with_filter=1';
+    dataListParameter.searchQuery = searchQuery;
     this.loading = true;
     this.teacherService
-      .getTeachers()
+      .getTeachers(dataListParameter)
       .pipe(take(1), takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
+          this.totalRecords = res.data.count;
+          this.totalPages =
+            this.totalRecords > this.rows
+              ? Math.ceil(this.totalRecords / this.rows)
+              : 1;
           this.teachers = res.data.teachers;
           this.loading = false;
         },
@@ -96,6 +114,18 @@ export class TeacherListComponent {
           });
         },
       });
+  }
+
+  onPageUpdate(pagination: any) {
+    let page = pagination.page;
+    let rows = pagination.rows;
+    this.rows = rows;
+    if (page > 0) {
+      this.page = page;
+    } else {
+      this.page = 1;
+    }
+    this.loadData(this.page);
   }
 
   navigateToDetail(teacher: Teacher) {

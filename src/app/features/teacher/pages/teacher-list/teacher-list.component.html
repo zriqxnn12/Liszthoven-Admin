@@ -103,5 +103,15 @@
         </ng-container>
       </div>
     </div>
+    <div class="flex justify-end gap-3">
+      <div class="w-full @lg:w-96">
+        <fc-pagination
+          [rows]="rows"
+          [page]="page"
+          [totalPages]="totalPages"
+          [totalRecords]="totalRecords"
+          (onPageUpdate)="onPageUpdate($event)"></fc-pagination>
+      </div>
+    </div>
   </div>
 </div>
