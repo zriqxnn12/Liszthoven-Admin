@@ -29,7 +29,7 @@ export class TeacherAddComponent {
       label: 'Save',
       icon: faSave,
       action: () => {
-        // this.submit();
+        this.submit();
       },
     },
   ];
@@ -123,6 +123,57 @@ export class TeacherAddComponent {
 
   get teacherForm(): FormGroup {
     return this.staffForm.get('teacher') as FormGroup;
+  }
+
+  submit() {
+    let formValue = { ...this.registerForm.value };
+    this.actionButtons[0].loading = true;
+    const payload = {
+      name: formValue.name,
+      email: formValue.email,
+      username: formValue.username,
+      password: formValue.password,
+      phone_no: formValue.phone_no,
+      address: formValue.address,
+      birth_place: formValue.birth_place,
+      birth_date: formValue.birth_date
+        ? new Date(formValue.birth_date).toISOString()
+        : null,
+      staff: {
+        role: formValue.staff.role,
+        status: formValue.staff.status,
+        note: formValue.staff.note,
+        teacher: {
+          type: formValue.staff.teacher.type,
+          qualify: formValue.staff.teacher.qualify,
+          description: formValue.staff.teacher.description,
+          branch_id: formValue.staff.teacher.branch?.id ?? null,
+          classroom_id: formValue.staff.teacher.classroom?.id ?? null,
+        },
+      },
+    };
+
+    this.teacherService.addTeacher(payload).subscribe({
+      next: () => {
+        this.actionButtons[0].loading = false;
+        this.fcToastService.clear();
+        this.fcToastService.add({
+          severity: 'success',
+          header: 'Success',
+          message: 'Teacher added successfully',
+        });
+        this.router.navigate(['/teacher/list']);
+      },
+      error: (err) => {
+        this.actionButtons[0].loading = false;
+        this.fcToastService.clear();
+        this.fcToastService.add({
+          severity: 'error',
+          header: 'Error',
+          message: err.message,
+        });
+      },
+    });
   }
 
   onSelectClassroom() {

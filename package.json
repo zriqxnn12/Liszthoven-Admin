@@ -24,6 +24,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@tailwindcss/container-queries": "^0.1.1",
+    "country-codes-list": "^2.0.0",
     "lottie-web": "^5.12.2",
     "mathjs": "^11.9.1",
     "moment": "^2.30.1",

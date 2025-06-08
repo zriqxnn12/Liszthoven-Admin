@@ -34,4 +34,8 @@ export class TeacherService {
     }
     return this.http.get(`${ROOT_API}/admin/teachers${param}`);
   }
+
+  addTeacher(data: any) {
+    return this.http.post(`${ROOT_API}/admin/auth/register`, data);
+  }
 }

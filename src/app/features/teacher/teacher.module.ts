@@ -14,6 +14,7 @@ import { FcFileInputModule } from '@shared/components/fc-file-input/fc-file-inpu
 import { FcTextareaModule } from '@shared/components/fc-textarea/fc-textarea.module';
 import { FcFilterDialogModule } from '@shared/components/fc-filter-dialog/fc-filter-dialog.module';
 import { TeacherComponent } from './teacher.component';
+import { FcInputTelModule } from '@shared/components/fc-input-tel/fc-input-tel.module';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,8 @@ import { TeacherComponent } from './teacher.component';
     FcFileInputModule,
     FcTextareaModule,
     FcFilterDialogModule,
+    FcInputTelModule,
   ],
+  exports: [],
 })
 export class TeacherModule {}
