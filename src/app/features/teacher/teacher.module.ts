@@ -15,6 +15,7 @@ import { FcTextareaModule } from '@shared/components/fc-textarea/fc-textarea.mod
 import { FcFilterDialogModule } from '@shared/components/fc-filter-dialog/fc-filter-dialog.module';
 import { TeacherComponent } from './teacher.component';
 import { FcInputTelModule } from '@shared/components/fc-input-tel/fc-input-tel.module';
+import { TeacherSelectDialogComponent } from './components/teacher-select-dialog/teacher-select-dialog.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { FcInputTelModule } from '@shared/components/fc-input-tel/fc-input-tel.m
     TeacherListComponent,
     TeacherAddComponent,
     TeacherViewComponent,
+    TeacherSelectDialogComponent,
   ],
   imports: [
     CommonModule,

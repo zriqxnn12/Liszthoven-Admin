@@ -35,7 +35,19 @@ export class TeacherService {
     return this.http.get(`${ROOT_API}/admin/teachers${param}`);
   }
 
+  getTeacher(id: number) {
+    return this.http.get(`${ROOT_API}/admin/teachers/${id}`);
+  }
+
   addTeacher(data: any) {
     return this.http.post(`${ROOT_API}/admin/auth/register`, data);
+  }
+
+  updateTeacher(id: number, data: any) {
+    return this.http.put(`${ROOT_API}/admin/teachers/${id}`, data);
+  }
+
+  deleteTeacher(id: number) {
+    return this.http.delete(`${ROOT_API}/admin/teachers/${id}`);
   }
 }

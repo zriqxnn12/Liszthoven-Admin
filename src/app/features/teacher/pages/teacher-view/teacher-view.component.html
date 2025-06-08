@@ -1,1 +1,154 @@
-<p>teacher-view works!</p>
+<div class="flex h-full flex-col space-y-3">
+  <app-fc-action-bar
+    [isHasBackButton]="true"
+    [actionButtons]="actionButtons"></app-fc-action-bar>
+
+  <div
+    class="body flex w-full flex-1 flex-col overflow-y-auto rounded-b-md rounded-tr-md border p-2 text-xs @container dark:border-dark-lowest">
+    <form [formGroup]="teacherForm" class="flex flex-col gap-4">
+      <div class="flex flex-col items-start gap-3 @2xl:flex-row">
+        <!-- KIRI: Upload Gambar -->
+        <div class="w-full @2xl:w-[350px]">
+          <fc-file-input>
+            <button
+              type="button"
+              class="flex h-[200px] w-full flex-col items-center justify-center gap-2 overflow-y-auto rounded-md border bg-light-low p-5 dark:border-dark-low dark:bg-dark-low">
+              <fa-icon class="text-3xl" [icon]="faCloudArrowUp" />
+              <p>Drag or Upload Image Here</p>
+            </button>
+          </fc-file-input>
+        </div>
+
+        <!-- KANAN: Semua Form Input -->
+        <div class="grid flex-1 gap-3 @2xl:grid-cols-2">
+          <ng-container formGroupName="staff">
+            <!-- user form -->
+            <div formGroupName="user" class="contents">
+              <fc-input-text
+                title="Name"
+                formControlName="name"
+                placeholder="Enter Name" />
+              <fc-input-text
+                title="Phone Number"
+                formControlName="phone_no"
+                placeholder="Enter number" />
+              <fc-input-text
+                title="Address"
+                formControlName="address"
+                placeholder="Enter address" />
+              <div class="grid grid-cols-2 gap-3">
+                <fc-input-text
+                  title="Birth place"
+                  formControlName="birth_place"
+                  placeholder="Enter birth place" />
+                <fc-datepicker
+                  title="Birth date"
+                  formControlName="birth_date"></fc-datepicker>
+              </div>
+            </div>
+            <!-- staff form -->
+            <fc-select-option
+              [options]="role"
+              formControlName="role"
+              [optionValue]="'value'"
+              [optionLabel]="'label'"
+              title="Role"
+              [placeholder]="'Select Role'"
+              [desktopView]="'overlay'"
+              [mobileView]="'dialog'" />
+            <fc-select-option
+              class="hidden"
+              [options]="status"
+              formControlName="status"
+              [optionValue]="'value'"
+              [optionLabel]="'label'"
+              title="Status"
+              [placeholder]="'Select Status'"
+              [desktopView]="'overlay'"
+              [mobileView]="'dialog'" />
+            <fc-input-text
+              class="hidden"
+              title="Note"
+              formControlName="note"
+              placeholder="Enter note"></fc-input-text>
+          </ng-container>
+          <fc-select-option
+            [options]="teacherType"
+            formControlName="type"
+            [optionValue]="'value'"
+            [optionLabel]="'label'"
+            title="Teacher Type"
+            [placeholder]="'Select Type'"
+            [desktopView]="'overlay'"
+            [mobileView]="'dialog'" />
+          <!-- select branch -->
+          <div
+            class="form-input flex flex-1 cursor-pointer items-center rounded-lg border border-light-lowest bg-light-high p-2 dark:border-dark-lowest dark:bg-dark-low dark:hover:bg-dark-lowest">
+            <div class="flex flex-1 flex-col" (click)="onSelectBranch()">
+              <p
+                class="m-0 block p-0 text-2xs font-medium leading-5 text-dark-lowest dark:text-white/60">
+                Branch
+              </p>
+              <p *ngIf="teacherForm.value.branch" class="text-xs">
+                {{ teacherForm.value.branch.name }}
+              </p>
+              <p
+                *ngIf="!teacherForm.value.branch"
+                class="text-xs dark:text-gray-400">
+                Select Branch
+              </p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button
+                *ngIf="teacherForm.value.branch"
+                type="button"
+                (click)="removeBranch()">
+                <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>
+              </button>
+              <button type="button" (click)="onSelectBranch()">
+                <fa-icon [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
+              </button>
+            </div>
+          </div>
+          <!-- select classroom -->
+          <div
+            class="form-input flex flex-1 cursor-pointer items-center rounded-lg border border-light-lowest bg-light-high p-2 dark:border-dark-lowest dark:bg-dark-low dark:hover:bg-dark-lowest">
+            <div class="flex flex-1 flex-col" (click)="onSelectClassroom()">
+              <p
+                class="m-0 block p-0 text-2xs font-medium leading-5 text-dark-lowest dark:text-white/60">
+                Classroom
+              </p>
+              <p *ngIf="teacherForm.value.classroom" class="text-xs">
+                {{ teacherForm.value.classroom.room }}
+              </p>
+              <p
+                *ngIf="!teacherForm.value.classroom"
+                class="text-xs dark:text-gray-400">
+                Select Classroom
+              </p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button
+                *ngIf="teacherForm.value.classroom"
+                type="button"
+                (click)="removeClassroom()">
+                <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>
+              </button>
+              <button type="button" (click)="onSelectClassroom()">
+                <fa-icon [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
+              </button>
+            </div>
+          </div>
+          <fc-textarea
+            title="Qualify"
+            formControlName="qualify"
+            placeholder="Enter Qualify Note"></fc-textarea>
+          <fc-textarea
+            title="Description"
+            formControlName="description"
+            placeholder="Enter Description"></fc-textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
