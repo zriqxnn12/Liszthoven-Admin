@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Teacher } from '@features/teacher/interfaces/teacher';
-import { TeacherService } from '@features/teacher/services/teacher.service';
+import { Instrument } from '@features/instrument/interfaces/instrument';
+import { InstrumentService } from '@features/instrument/services/instrument.service';
 import {
-  faBars,
   faEye,
-  faFilter,
+  faMusic,
   faPlus,
   faRefresh,
 } from '@fortawesome/free-solid-svg-icons';
@@ -16,22 +15,21 @@ import { Subject, take, takeUntil } from 'rxjs';
 import { LayoutService } from 'src/app/layout/services/layout.service';
 
 @Component({
-  selector: 'app-teacher-list',
-  templateUrl: './teacher-list.component.html',
-  styleUrls: ['./teacher-list.component.css'],
+  selector: 'app-instrument-list',
+  templateUrl: './instrument-list.component.html',
+  styleUrls: ['./instrument-list.component.css'],
 })
-export class TeacherListComponent {
+export class InstrumentListComponent {
   private readonly destroy$ = new Subject<void>();
   faEye = faEye;
+  faMusic = faMusic;
 
   actionButtons: any[] = [
     {
       label: 'Add',
       icon: faPlus,
-      route: ['/teacher/add'],
-      action: () => {
-        // this.navigateToAdd();
-      },
+      route: ['/instrument/add'],
+      action: () => {},
     },
   ];
   filterButtons: any[] = [
@@ -42,18 +40,9 @@ export class TeacherListComponent {
         // this.loadData();
       },
     },
-    {
-      label: 'Filter',
-      icon: faFilter,
-      action: () => {},
-    },
-    {
-      label: 'Quick View',
-      icon: faBars,
-      action: () => {},
-    },
   ];
-  teachers: Teacher[] = [];
+
+  instruments: Instrument[] = [];
   loading: boolean = false;
   searchQuery: string = '';
   totalRecords = 0;
@@ -67,10 +56,10 @@ export class TeacherListComponent {
     private route: ActivatedRoute,
     private fcFilterDialogService: FcFilterDialogService,
     private dialogService: DialogService,
-    private teacherService: TeacherService
+    private instrumentService: InstrumentService
   ) {
     this.layoutService.setHeaderConfig({
-      title: 'Teachers',
+      title: 'Instruments',
       icon: '',
       showHeader: true,
     });
@@ -93,8 +82,8 @@ export class TeacherListComponent {
     dataListParameter.page = this.page;
     dataListParameter.sortBy = 'order_by=id&direction=asc&with_filter=1';
     dataListParameter.searchQuery = searchQuery;
-    this.teacherService
-      .getTeachers(dataListParameter)
+    this.instrumentService
+      .getInstruments(dataListParameter)
       .pipe(take(1), takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
@@ -103,7 +92,7 @@ export class TeacherListComponent {
             this.totalRecords > this.rows
               ? Math.ceil(this.totalRecords / this.rows)
               : 1;
-          this.teachers = res.data.teachers;
+          this.instruments = res.data.instruments;
           this.loading = false;
         },
         error: (err: any) => {
@@ -127,7 +116,7 @@ export class TeacherListComponent {
     this.loadData(this.page);
   }
 
-  navigateToDetail(teacher: Teacher) {
-    this.router.navigate(['/teacher/view/', teacher.id]);
+  navigateToDetail(instrument: Instrument) {
+    this.router.navigate(['/instrument/view/', instrument.id]);
   }
 }

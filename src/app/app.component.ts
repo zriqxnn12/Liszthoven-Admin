@@ -9,7 +9,7 @@ import { DarkModeService } from './shared/services/dark-mode.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'zet-admin';
+  title = 'liszthoven-admin';
   darkMode: any;
   dirtyState: boolean = false;
 

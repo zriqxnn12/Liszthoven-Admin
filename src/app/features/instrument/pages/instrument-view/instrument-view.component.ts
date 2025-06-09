@@ -1,15 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BranchSelectDialogComponent } from '@features/branch/components/branch-select-dialog/branch-select-dialog.component';
-import { Classroom } from '@features/classroom/interfaces/classroom';
-import { ClassroomService } from '@features/classroom/services/classroom.service';
-import {
-  faChevronDown,
-  faSave,
-  faTimes,
-  faTrash,
-} from '@fortawesome/free-solid-svg-icons';
+import { Instrument } from '@features/instrument/interfaces/instrument';
+import { InstrumentService } from '@features/instrument/services/instrument.service';
+import { faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FcConfirmService } from '@shared/components/fc-confirm/fc-confirm.service';
 import { FcFilterDialogService } from '@shared/components/fc-filter-dialog/services/fc-filter-dialog.service';
 import { FcToastService } from '@shared/components/fc-toast/fc-toast.service';
@@ -18,14 +12,12 @@ import { Subject } from 'rxjs';
 import { LayoutService } from 'src/app/layout/services/layout.service';
 
 @Component({
-  selector: 'app-classroom-view',
-  templateUrl: './classroom-view.component.html',
-  styleUrls: ['./classroom-view.component.css'],
+  selector: 'app-instrument-view',
+  templateUrl: './instrument-view.component.html',
+  styleUrls: ['./instrument-view.component.css'],
 })
-export class ClassroomViewComponent {
+export class InstrumentViewComponent {
   private readonly destroy$ = new Subject<void>();
-  faTimes = faTimes;
-  faChevronDown = faChevronDown;
 
   actionButtons: any[] = [
     {
@@ -44,30 +36,29 @@ export class ClassroomViewComponent {
     },
   ];
 
-  @Input() classroom: Classroom = {} as Classroom;
+  @Input() instrument: Instrument = {} as Instrument;
   loading = true;
 
-  classroomForm: FormGroup;
+  instrumentForm: FormGroup;
   constructor(
     private layoutService: LayoutService,
     private router: Router,
     private route: ActivatedRoute,
     private fcToastService: FcToastService,
     private fcFilterDialogService: FcFilterDialogService,
-    private fcConfirmService: FcConfirmService,
     private dialogService: DialogService,
-    private classroomService: ClassroomService
+    private fcConfirmService: FcConfirmService,
+    private instrumentService: InstrumentService
   ) {
-    this.classroom.id = Number(this.route.snapshot.paramMap.get('id'));
+    this.instrument.id = Number(this.route.snapshot.paramMap.get('id'));
     this.layoutService.setHeaderConfig({
-      title: 'Classroom View',
+      title: 'Instrument View',
       icon: '',
       showHeader: true,
     });
-    this.classroomForm = new FormGroup({
-      room: new FormControl('', Validators.required),
-      location: new FormControl('', Validators.required),
-      branch: new FormControl(null, Validators.required),
+    this.instrumentForm = new FormGroup({
+      name: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
     });
   }
 
@@ -83,35 +74,35 @@ export class ClassroomViewComponent {
 
   loadData() {
     this.loading = true;
-    this.classroomService
-      .getClassroom(this.classroom.id)
+    this.instrumentService
+      .getInstrument(this.instrument.id)
       .subscribe((res: any) => {
-        this.classroom = res.data;
-        this.classroomForm.patchValue({
-          room: this.classroom.room,
-          location: this.classroom.location,
-          branch: this.classroom.branch,
+        this.loading = false;
+        this.instrument = res.data;
+        this.instrumentForm.patchValue({
+          name: this.instrument.name,
+          description: this.instrument.description,
         });
       });
   }
 
   submit() {
     this.actionButtons[0].loading = true;
-    const updatedData = this.classroomForm.value;
-    const bodyReq = {
-      room: updatedData.room,
-      location: updatedData.location,
-      branch_id: updatedData.branch.id,
+    const updatedData = this.instrumentForm.value;
+    const bodyreq = {
+      name: updatedData.name,
+      description: updatedData.description,
     };
-    this.classroomService
-      .updateClassroom(this.classroom.id, bodyReq)
+
+    this.instrumentService
+      .updateInstrument(this.instrument.id, bodyreq)
       .subscribe({
         next: () => {
           this.actionButtons[0].loading = false;
           this.fcToastService.add({
             severity: 'success',
             header: 'Success',
-            message: 'Student updated successfully',
+            message: 'Instrument updated successfully',
           });
         },
         error: (err) => {
@@ -133,16 +124,16 @@ export class ClassroomViewComponent {
       icon: 'pi pi-info-circle',
       accept: () => {
         this.actionButtons[1].loading = true;
-        this.classroomService.deleteClassroom(this.classroom.id).subscribe({
+        this.instrumentService.deleteInstrument(this.instrument.id).subscribe({
           next: (res: any) => {
             this.actionButtons[1].loading = false;
             this.fcToastService.clear();
             this.fcToastService.add({
               severity: 'success',
               header: 'Success',
-              message: 'Classroom deleted',
+              message: 'Instrument deleted',
             });
-            this.router.navigate(['/classroom/list']);
+            this.router.navigate(['/instrument/list']);
           },
           error: (err) => {
             this.actionButtons[1].loading = false;
@@ -155,37 +146,6 @@ export class ClassroomViewComponent {
           },
         });
       },
-    });
-  }
-
-  onSelectBranch() {
-    const ref = this.dialogService.open(BranchSelectDialogComponent, {
-      data: {
-        title: 'Select Branch',
-      },
-      showHeader: false,
-      contentStyle: {
-        padding: '0',
-      },
-      style: {
-        overflow: 'hidden',
-      },
-      styleClass: 'rounded-sm',
-      dismissableMask: true,
-      width: '450px',
-    });
-    ref.onClose.subscribe((branch) => {
-      if (branch) {
-        this.classroomForm.patchValue({
-          branch: branch,
-        });
-      }
-    });
-  }
-
-  removeBranch() {
-    this.classroomForm.patchValue({
-      branch: null,
     });
   }
 }

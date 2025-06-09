@@ -1,3 +1,5 @@
+import { staff } from '@features/staff/interfaces/staff';
+
 export interface User {
   id: string;
   name: string;
@@ -11,4 +13,5 @@ export interface User {
   created_at: string;
   updated_at: string;
   deleted_at: any;
+  staff: staff;
 }

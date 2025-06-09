@@ -68,6 +68,13 @@ const routes: Routes = [
             (m) => m.ClassroomModule
           ),
       },
+      {
+        path: 'instrument',
+        loadChildren: () =>
+          import('../features/instrument/instrument.module').then(
+            (m) => m.InstrumentModule
+          ),
+      },
     ],
   },
 ];

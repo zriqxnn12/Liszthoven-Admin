@@ -21,6 +21,7 @@ import { DarkModeService } from '@shared/services/dark-mode.service';
 import { Subject, takeUntil } from 'rxjs';
 import { HeaderConfig } from '../../interfaces/header-config.intercface';
 import { LayoutService } from '../../services/layout.service';
+import { User } from '@features/user-profile/interfaces/user-profile';
 
 @Component({
   selector: 'app-header',
@@ -57,29 +58,7 @@ export class HeaderComponent {
   searchConfig: any = {};
 
   menus: any = [];
-  user: any = {
-    id: 6,
-    name: 'Muhammad Faishal',
-    phone_no: '0822223334',
-    address: 'Earth',
-    email: 'tes3@folxcode.com',
-    is_verified: false,
-    created_at: '2023-05-24T05:02:34.000Z',
-    updated_at: '2023-07-10T10:16:18.000Z',
-    deleted_at: null,
-    staff: {
-      role_name: 'Accounting',
-      id: 4,
-      user_id: 6,
-      note: 'nullable',
-      role: 2,
-      created_at: '2023-05-24T05:02:35.000Z',
-      updated_at: '2023-05-29T13:50:57.000Z',
-      deleted_at: null,
-      business_units: [],
-      teacher: null,
-    },
-  };
+  user: any = {} as User;
   notifications = [1, 2, 3, 4, 5];
   constructor(
     private layoutService: LayoutService,

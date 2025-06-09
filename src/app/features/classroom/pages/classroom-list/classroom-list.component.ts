@@ -40,7 +40,7 @@ export class ClassroomListComponent {
       label: 'Refresh',
       icon: faRefresh,
       action: () => {
-        // this.loadData();
+        this.loadData();
       },
     },
     // {
