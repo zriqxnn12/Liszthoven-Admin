@@ -93,7 +93,6 @@ export class StudentViewComponent {
     private route: ActivatedRoute,
     private fcToastService: FcToastService,
     private fcConfirmService: FcConfirmService,
-    private dialogService: DialogService,
     private studentService: StudentService
   ) {
     this.student.id = Number(this.route.snapshot.paramMap.get('id'));

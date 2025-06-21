@@ -1,0 +1,110 @@
+<div class="flex h-full gap-3 @container">
+  <div
+    class="flex h-full w-full flex-col gap-3 transition-all duration-700 ease-in-out @container">
+    <app-fc-action-bar
+      [actionButtons]="actionButtons"
+      [filterButtons]="filterButtons"></app-fc-action-bar>
+    <div class="body flex h-full w-full gap-3 overflow-y-auto text-xs">
+      <ng-container *ngIf="!loading && serviceInvoices.length > 0">
+        <div class="w-full space-y-2 py-2">
+          <ng-container *ngFor="let invoice of serviceInvoices">
+            <div
+              class="fc-animate-translate-up cursor-pointer rounded-md border border-light-low bg-light-low @container hover:border-primary-light dark:border-dark-low dark:bg-dark-low hover:dark:border-primary-light">
+              <div
+                (click)="navigateToDetail(invoice)"
+                class="hidden items-center gap-3 p-3 @2xl:flex">
+                <div class="w-full @lg:w-[150px]">
+                  <p class="text-2xs">{{ invoice.invoice_no }}</p>
+                  <p class="text-2xs">{{ invoice.student.user.name }}</p>
+                </div>
+                <div class="w-full @2xl:w-[100px]">
+                  <div
+                    [ngClass]="getStatusColor(invoice.status)"
+                    class="w-fit rounded-md px-2 py-1">
+                    {{ invoice.status_name }}
+                  </div>
+                </div>
+                <div class="flex-1">
+                  <p class="text-2xs">Date</p>
+                  <p class="mt-1">{{ invoice.date | date: 'dd MMMM yyyy' }}</p>
+                </div>
+                <div class="flex-1">
+                  <p class="text-2xs">Due Date</p>
+                  <p class="mt-1">
+                    {{ invoice.due_date | date: 'dd MMMM yyyy' }}
+                  </p>
+                </div>
+                <div class="flex-1 text-right">
+                  <p>{{ invoice.grand_total | fcCurrency }}</p>
+                </div>
+                <div class="flex w-full justify-end @2xl:w-fit">
+                  <button
+                    (click)="navigateToDetail(invoice)"
+                    type="button"
+                    class="btn btn-high">
+                    <fa-icon [fixedWidth]="true" [icon]="faEye"></fa-icon>
+                  </button>
+                </div>
+              </div>
+              <div class="gird gap-3 p-2 @2xl:hidden">
+                <div class="flex w-full items-center justify-between">
+                  <div class="flex-1">
+                    <p class="text-2xs">{{ invoice.invoice_no }}</p>
+                    <p class="text-2xs">{{ invoice.student.user.name }}</p>
+                  </div>
+                  <div class="flex items-center justify-end gap-2">
+                    <div
+                      class="w-fit rounded-md px-2 py-1"
+                      [ngClass]="getStatusColor(invoice.status)">
+                      {{ invoice.status_name }}
+                    </div>
+                    <button
+                      type="button"
+                      class="btn btn-high"
+                      (click)="navigateToDetail(invoice)">
+                      <fa-icon [fixedWidth]="true" [icon]="faEye"></fa-icon>
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="my-2 h-0.5 w-full bg-light-lowest/50 dark:bg-dark-lowest/50"></div>
+                <div class="flex w-full gap-3">
+                  <div class="flex-1">
+                    <p class="text-2xs">Date</p>
+                    <p>
+                      {{ invoice.date | date: 'dd MMMM yyyy' }}
+                    </p>
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-2xs">Due Date</p>
+                    <p>
+                      {{ invoice.due_date | date: 'dd MMMM yyyy' }}
+                    </p>
+                  </div>
+                </div>
+                <div class="flex-1 text-right text-base">
+                  <p>{{ invoice.grand_total | fcCurrency }}</p>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!loading && serviceInvoices.length == 0">
+        <div class="w-full py-[20vh] text-center">
+          <p>No data found</p>
+        </div>
+      </ng-container>
+    </div>
+    <div class="flex justify-end gap-3">
+      <div class="w-full @lg:w-96">
+        <fc-pagination
+          [rows]="rows"
+          [page]="page"
+          [totalPages]="totalPages"
+          [totalRecords]="totalRecords"
+          (onPageUpdate)="onPageUpdate($event)"></fc-pagination>
+      </div>
+    </div>
+  </div>
+</div>

@@ -27,6 +27,11 @@
             </div>
           </div>
         </ng-container>
+        <ng-container *ngIf="!loading && branches.length == 0">
+          <div class="w-full py-[20vh] text-center">
+            <p>No data found</p>
+          </div>
+        </ng-container>
       </div>
     </div>
   </div>

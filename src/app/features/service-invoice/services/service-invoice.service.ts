@@ -8,10 +8,12 @@ const ROOT_API = environment.API_URL;
 @Injectable({
   providedIn: 'root',
 })
-export class StudentService {
+export class ServiceInvoiceService {
   constructor(private http: HttpClient) {}
 
-  getStudents(dataListParameter: DataListParameter = {} as DataListParameter) {
+  getServiceInvoices(
+    dataListParameter: DataListParameter = {} as DataListParameter
+  ) {
     let param = '';
     if (dataListParameter.rows && dataListParameter.page) {
       param = param.concat(
@@ -32,22 +34,14 @@ export class StudentService {
         param = param.concat('&q=' + dataListParameter.searchQuery);
       }
     }
-    return this.http.get(`${ROOT_API}/admin/students${param}`);
+    return this.http.get(`${ROOT_API}/admin/service-invoices${param}`);
   }
 
-  getStudent(id: number) {
-    return this.http.get(`${ROOT_API}/admin/students/${id}`);
+  getServiceInvoice(id: number) {
+    return this.http.get(`${ROOT_API}/admin/service-invoices/${id}`);
   }
 
-  addStudent(data: any) {
-    return this.http.post(`${ROOT_API}/auth/register`, data);
-  }
-
-  updateStudent(id: number, data: any) {
-    return this.http.put(`${ROOT_API}/admin/students/${id}`, data);
-  }
-
-  deleteStudent(id: number) {
-    return this.http.delete(`${ROOT_API}/admin/students/${id}`);
+  addServiceInvoice(data: any) {
+    return this.http.post(`${ROOT_API}/admin/service-invoices`, data);
   }
 }

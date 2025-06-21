@@ -14,6 +14,7 @@ import { FcInputNumberModule } from '@shared/components/fc-input-number/fc-input
 import { FcDatepickerModule } from '@shared/components/fc-datepicker/fc-datepicker.module';
 import { FcFileInputModule } from '@shared/components/fc-file-input/fc-file-input.module';
 import { FcTextareaModule } from '@shared/components/fc-textarea/fc-textarea.module';
+import { SelectStudentDialogComponent } from './components/select-student-dialog/select-student-dialog.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { FcTextareaModule } from '@shared/components/fc-textarea/fc-textarea.mod
     StudentListComponent,
     StudentAddComponent,
     StudentViewComponent,
+    SelectStudentDialogComponent,
   ],
   imports: [
     CommonModule,

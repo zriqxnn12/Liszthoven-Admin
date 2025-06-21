@@ -10,9 +10,10 @@ import { FcTextareaModule } from '@shared/components/fc-textarea/fc-textarea.mod
 import { InstrumentListComponent } from './pages/instrument-list/instrument-list.component';
 import { InstrumentAddComponent } from './pages/instrument-add/instrument-add.component';
 import { InstrumentViewComponent } from './pages/instrument-view/instrument-view.component';
+import { SelectInstrumentDialogComponent } from './components/select-instrument-dialog/select-instrument-dialog.component';
 
 @NgModule({
-  declarations: [InstrumentComponent, InstrumentListComponent, InstrumentAddComponent, InstrumentViewComponent],
+  declarations: [InstrumentComponent, InstrumentListComponent, InstrumentAddComponent, InstrumentViewComponent, SelectInstrumentDialogComponent],
   imports: [
     CommonModule,
     InstrumentRoutingModule,

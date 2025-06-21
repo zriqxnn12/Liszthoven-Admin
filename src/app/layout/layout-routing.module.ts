@@ -75,6 +75,13 @@ const routes: Routes = [
             (m) => m.InstrumentModule
           ),
       },
+      {
+        path: 'service-invoice',
+        loadChildren: () =>
+          import('../features/service-invoice/service-invoice.module').then(
+            (m) => m.ServiceInvoiceModule
+          ),
+      },
     ],
   },
 ];

@@ -1,0 +1,120 @@
+<div class="flex h-full flex-col space-y-3">
+  <app-fc-action-bar [isHasBackButton]="true" [actionButtons]="actionButtons">
+  </app-fc-action-bar>
+  <div class="body h-full w-full overflow-y-auto text-xs">
+    <form [formGroup]="serviceInvoiceForm">
+      <div class="grid w-full gap-3 lg:grid-cols-2">
+        <fc-input-text
+          title="Invoice number"
+          formControlName="invoice_no"
+          placeholder="Enter Invoice Number"></fc-input-text>
+        <!-- select student -->
+        <div
+          class="form-input flex flex-1 cursor-pointer items-center rounded-lg border border-light-lowest bg-light-high p-2 dark:border-dark-lowest dark:bg-dark-low dark:hover:bg-dark-lowest">
+          <div class="flex flex-1 flex-col" (click)="onSelectStudent()">
+            <p
+              class="m-0 block p-0 text-2xs font-medium leading-5 text-dark-lowest dark:text-white/60">
+              Student
+            </p>
+            <p *ngIf="serviceInvoiceForm.value.student" class="text-xs">
+              {{ serviceInvoiceForm.value.student.user.name }}
+            </p>
+            <p
+              *ngIf="!serviceInvoiceForm.value.student"
+              class="text-xs dark:text-gray-400">
+              Select Student
+            </p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button
+              *ngIf="serviceInvoiceForm.value.student"
+              type="button"
+              (click)="removeStudent()">
+              <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>
+            </button>
+            <button type="button" (click)="onSelectStudent()">
+              <fa-icon [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
+            </button>
+          </div>
+        </div>
+        <fc-datepicker title="Date" formControlName="date"></fc-datepicker>
+        <fc-datepicker
+          title="Due Date"
+          formControlName="due_date"></fc-datepicker>
+        <fc-input-number
+          formControlName="status"
+          class="hidden"></fc-input-number>
+      </div>
+      <!-- service invoice detail section -->
+      <div class="mt-6 grid w-full gap-3">
+        <div class="relative flex-1">
+          <div class="mb-3 flex items-center justify-between">
+            <p>Service Invoice Details</p>
+            <div>
+              <button
+                type="button"
+                (click)="addServiceInvoiceDetail()"
+                class="flex items-center gap-1 rounded-md p-2 text-xs text-gray-800 hover:bg-light-lowest dark:text-white dark:hover:bg-dark-lowest">
+                <fa-icon [fixedWidth]="true" [icon]="faPlus"></fa-icon>
+                <p>Add Item</p>
+              </button>
+            </div>
+          </div>
+          <div
+            *ngIf="serviceInvoiceDetailFormArray.value.length"
+            class="grid gap-2">
+            <ng-container
+              *ngFor="
+                let serviceInvoiceDetail of serviceInvoiceDetailFormArray.value;
+                let i = index
+              ">
+              <div
+                class="fc-animate-translate-up cursor-pointer justify-between rounded-md border border-light-low bg-light-low p-3 @container hover:border-primary-light dark:border-dark-low dark:bg-dark-low hover:dark:border-primary-light">
+                <div class="grid items-center gap-3 @3xl:flex">
+                  <div class="flex-1">
+                    <p class="text-sm font-bold">
+                      {{ serviceInvoiceDetail.item }}
+                    </p>
+                    <p class="text-2xs font-bold">
+                      {{ serviceInvoiceDetail.price | fcCurrency }}
+                    </p>
+                  </div>
+                  <div class="flex justify-end gap-2">
+                    <button
+                      (click)="editServiceInvoiceDetail(i)"
+                      type="button"
+                      class="btn-high flex rounded-lg p-2">
+                      <fa-icon class="text-xs" [icon]="faPencil"></fa-icon>
+                    </button>
+                    <button
+                      (click)="removeServiceInvoiceDetail(i)"
+                      type="button"
+                      class="btn-high flex rounded-lg p-2">
+                      <fa-icon class="text-xs" [icon]="faTrash"></fa-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+          <div
+            *ngIf="!serviceInvoiceDetailFormArray.value.length"
+            class="flex h-10 w-full items-center justify-center text-center">
+            No Service Invoice Detail Data
+          </div>
+          <div
+            *ngIf="serviceInvoiceDetailFormArray.value.length"
+            class="mt-5 flex justify-end @container">
+            <div
+              class="w-full rounded-md bg-light-low p-3 @xl:w-96 dark:bg-dark-low">
+              <div class="flex items-center justify-between px-1 font-bold">
+                <p class="">Grand Total</p>
+                <p>{{ grandTotal | fcCurrency }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
