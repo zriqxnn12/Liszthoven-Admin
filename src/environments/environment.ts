@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  appName: 'Zet Admin',
+  appName: 'Liszthoven Admin',
   // appVersion: require('../../package.json').version + '-dev',
   // API_URL: 'https://api.zet-admin.id/api/v1',
   API_URL: 'http://localhost:3000/api/v1',

@@ -62,7 +62,7 @@
           </div>
           <div
             *ngIf="serviceInvoiceDetailFormArray.value.length"
-            class="grid gap-2">
+            class="mb-2 grid gap-2">
             <ng-container
               *ngFor="
                 let serviceInvoiceDetail of serviceInvoiceDetailFormArray.value;
@@ -102,9 +102,22 @@
             class="flex h-10 w-full items-center justify-center text-center">
             No Service Invoice Detail Data
           </div>
+          <!-- foto bukti pembayaran -->
+          <div *ngIf="imageUrl" class="mt-3 flex justify-end @container">
+            <div
+              class="w-full rounded-md bg-light-low p-3 @xl:w-96 dark:bg-dark-low">
+              <div class="aspect-square h-20 w-20">
+                <fc-image-preview
+                  [src]="imageUrl"
+                  [preview]="true"
+                  [alt]="'image'">
+                </fc-image-preview>
+              </div>
+            </div>
+          </div>
           <div
             *ngIf="serviceInvoiceDetailFormArray.value.length"
-            class="mt-5 flex justify-end @container">
+            class="flex justify-end @container">
             <div
               class="w-full rounded-md bg-light-low p-3 @xl:w-96 dark:bg-dark-low">
               <div class="flex items-center justify-between px-1 font-bold">

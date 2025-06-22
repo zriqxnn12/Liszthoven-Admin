@@ -1,11 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from '@env';
 import { ServiceInvoiceDetailAddDialogComponent } from '@features/service-invoice/components/service-invoice-detail-add-dialog/service-invoice-detail-add-dialog.component';
 import { ServiceInvoice } from '@features/service-invoice/interfaces/service-invoice';
 import { ServiceInvoiceService } from '@features/service-invoice/services/service-invoice.service';
 import { SelectStudentDialogComponent } from '@features/student/components/select-student-dialog/select-student-dialog.component';
 import {
+  faCheck,
   faChevronDown,
   faPencil,
   faPlus,
@@ -36,19 +38,38 @@ export class ServiceInvoiceViewComponent {
     {
       label: 'Save',
       icon: faSave,
+      hidden: true,
       action: () => {
         // this.submit();
       },
     },
     {
+      label: 'Approve',
+      icon: faCheck,
+      hidden: true,
+      action: () => {
+        this.approveServiceInvoice();
+      },
+    },
+    {
+      label: 'Cancel',
+      icon: faTimes,
+      hidden: true,
+      action: () => {
+        this.cancel();
+      },
+    },
+    {
       label: 'Delete',
       icon: faTrash,
+      hidden: true,
       action: () => {
         // this.delete();
       },
     },
   ];
 
+  imageUrl: string = '';
   @Input() serviceInvoice: ServiceInvoice = {} as ServiceInvoice;
   loading = true;
   serviceInvoiceForm: FormGroup;
@@ -58,6 +79,7 @@ export class ServiceInvoiceViewComponent {
     private fcToastService: FcToastService,
     private fcConfirmService: FcConfirmService,
     private dialogService: DialogService,
+    private router: Router,
     private serviceInvoiceService: ServiceInvoiceService
   ) {
     this.serviceInvoice.id = Number(this.route.snapshot.paramMap.get('id'));
@@ -100,6 +122,12 @@ export class ServiceInvoiceViewComponent {
     );
   }
 
+  getImageFullUrl(filePath: string): string {
+    if (!filePath) return '';
+    // sesuaikan base url ini dengan URL API-mu atau public URL penyimpanan file
+    return `https://practice1337.s3.ap-southeast-1.amazonaws.com/${filePath}`;
+  }
+
   generateServiceInvoiceDetail(serviceInvoiceDetail: any): FormGroup {
     return new FormGroup({
       item: new FormControl(serviceInvoiceDetail.item),
@@ -107,11 +135,48 @@ export class ServiceInvoiceViewComponent {
     });
   }
 
+  generateHeader() {
+    this.layoutService.setHeaderConfig({
+      title: `Service Invoice (${this.serviceInvoice.status_name})`,
+      icon: '',
+      showHeader: true,
+    });
+  }
+
+  generateActionButtons() {
+    this.actionButtons[0].hidden = true; // save
+    this.actionButtons[1].hidden = true; // approval request
+    this.actionButtons[2].hidden = true; // cancel
+    this.actionButtons[3].hidden = true; // delete
+
+    switch (this.serviceInvoice.status) {
+      case 0: // pending
+        this.actionButtons[0].hidden = false;
+        this.actionButtons[1].hidden = true;
+        this.actionButtons[2].hidden = true;
+        this.actionButtons[3].hidden = false;
+        break;
+      case 1: // approval request
+        this.actionButtons[0].hidden = false;
+        this.actionButtons[1].hidden = false;
+        this.actionButtons[2].hidden = false;
+        this.actionButtons[3].hidden = false;
+        break;
+      case 2: // approved
+        break;
+      case 3: // cancelled
+        break;
+      default:
+        break;
+    }
+  }
+
   loadData() {
     this.loading = true;
     this.serviceInvoiceService
       .getServiceInvoice(this.serviceInvoice.id)
       .subscribe((res: any) => {
+        this.loading = false;
         this.serviceInvoice = res.data;
         this.serviceInvoiceForm.patchValue({
           status: this.serviceInvoice.status,
@@ -120,6 +185,7 @@ export class ServiceInvoiceViewComponent {
           due_date: this.serviceInvoice.due_date,
           student: this.serviceInvoice.student,
         });
+        // set detail lists
         this.serviceInvoice.service_invoice_details.forEach(
           (serviceInvoice) => [
             this.serviceInvoiceDetailFormArray.push(
@@ -127,6 +193,13 @@ export class ServiceInvoiceViewComponent {
             ),
           ]
         );
+        // Set service invoice document image URL
+        this.imageUrl = this.getImageFullUrl(
+          this.serviceInvoice.service_invoice_document?.file_path
+        );
+        console.log(this.imageUrl);
+        this.generateHeader();
+        this.generateActionButtons();
       });
   }
 
@@ -231,7 +304,73 @@ export class ServiceInvoiceViewComponent {
     });
   }
 
-  submit() {
-    this.actionButtons[0].loading = true;
+  approveServiceInvoice() {
+    this.fcConfirmService.open({
+      header: 'Confirmation',
+      message: 'Are you sure to approve this invoice?',
+      accept: () => {
+        this.actionButtons[1].loading = true;
+        this.serviceInvoiceService
+          .updateStatusToApproved(this.serviceInvoice.id)
+          .subscribe({
+            next: (res: any) => {
+              this.actionButtons[1].loading = false;
+              this.generateActionButtons();
+              this.generateHeader();
+              this.fcToastService.add({
+                severity: 'success',
+                header: 'Approve Service Invoice',
+                message: res.message,
+              });
+              this.router.navigate(['/service-invoice/list']);
+            },
+            error: (err) => {
+              this.actionButtons[1].loading = false;
+              this.fcToastService.add({
+                severity: 'error',
+                header: 'fail Approve',
+                message: err.message,
+              });
+            },
+          });
+      },
+    });
   }
+
+  cancel() {
+    this.fcConfirmService.open({
+      header: 'Confirmation',
+      message: 'Are you sure to approve this invoice?',
+      accept: () => {
+        this.actionButtons[2].loading = true;
+        this.serviceInvoiceService
+          .updateStatusToCancelled(this.serviceInvoice.id)
+          .subscribe({
+            next: (res: any) => {
+              this.actionButtons[2].loading = false;
+              this.generateActionButtons();
+              this.generateHeader();
+              this.fcToastService.add({
+                severity: 'success',
+                header: 'Approve Service Invoice',
+                message: res.message,
+              });
+              this.router.navigate(['/service-invoice/list']);
+            },
+            error: (err) => {
+              this.actionButtons[2].loading = false;
+              this.fcToastService.add({
+                severity: 'error',
+                header: 'fail to cancel',
+                message: err.message,
+              });
+            },
+          });
+      },
+    });
+  }
+
+  // submit() {
+  //   this.actionButtons[0].loading = true;
+  // }
 }

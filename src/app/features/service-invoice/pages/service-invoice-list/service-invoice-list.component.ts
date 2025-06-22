@@ -108,7 +108,7 @@ export class ServiceInvoiceListComponent {
       case 2:
         return 'border border-green-600 dark:border-green-700 bg-green-100 dark:bg-green-700/20 text-green-500';
       case 3:
-        return 'border border-emerald-600 dark:border-emerald-700 bg-emerald-100 dark:bg-emerald-700/20 text-emerald-500';
+        return 'border border-red-600 dark:border-red-700 bg-red-100 dark:bg-red-700/20 text-red-500';
       default:
         return '';
     }
