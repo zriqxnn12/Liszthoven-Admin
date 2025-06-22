@@ -64,7 +64,7 @@ export class ServiceInvoiceViewComponent {
       icon: faTrash,
       hidden: true,
       action: () => {
-        // this.delete();
+        this.delete();
       },
     },
   ];
@@ -340,7 +340,7 @@ export class ServiceInvoiceViewComponent {
   cancel() {
     this.fcConfirmService.open({
       header: 'Confirmation',
-      message: 'Are you sure to approve this invoice?',
+      message: 'Are you sure to cancel this invoice?',
       accept: () => {
         this.actionButtons[2].loading = true;
         this.serviceInvoiceService
@@ -362,6 +362,38 @@ export class ServiceInvoiceViewComponent {
               this.fcToastService.add({
                 severity: 'error',
                 header: 'fail to cancel',
+                message: err.message,
+              });
+            },
+          });
+      },
+    });
+  }
+
+  delete() {
+    this.fcConfirmService.open({
+      header: 'Confirmation',
+      message: 'Are you sure to delete this invoice?',
+      accept: () => {
+        this.actionButtons[3].loading = true;
+        this.serviceInvoiceService
+          .deleteServiceInvoice(this.serviceInvoice.id)
+          .subscribe({
+            next: (res: any) => {
+              this.actionButtons[3].loading = false;
+              this.fcToastService.add({
+                severity: 'success',
+                header: 'Service invoice deleted',
+                message: res.message,
+              });
+              this.router.navigate(['/service-invoice/list']);
+            },
+            error: (err) => {
+              this.actionButtons[3].loading = false;
+              this.fcToastService.clear();
+              this.fcToastService.add({
+                severity: 'error',
+                header: 'error',
                 message: err.message,
               });
             },
