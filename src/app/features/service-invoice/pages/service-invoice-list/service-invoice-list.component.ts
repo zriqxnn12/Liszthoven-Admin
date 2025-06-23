@@ -32,7 +32,7 @@ export class ServiceInvoiceListComponent {
       label: 'Refresh',
       icon: faRefresh,
       action: () => {
-        // this.loadData();
+        this.loadData();
       },
     },
   ];

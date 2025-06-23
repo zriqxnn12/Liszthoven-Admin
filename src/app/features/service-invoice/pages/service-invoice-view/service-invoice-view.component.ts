@@ -40,7 +40,7 @@ export class ServiceInvoiceViewComponent {
       icon: faSave,
       hidden: true,
       action: () => {
-        // this.submit();
+        this.submit();
       },
     },
     {
@@ -402,7 +402,38 @@ export class ServiceInvoiceViewComponent {
     });
   }
 
-  // submit() {
-  //   this.actionButtons[0].loading = true;
-  // }
+  submit() {
+    this.actionButtons[0].loading = true;
+    const updatedData = this.serviceInvoiceForm.value;
+    const payload = {
+      invoice_no: updatedData.invoice_no,
+      status: updatedData.status,
+      date: updatedData.date,
+      due_date: updatedData.due_date,
+      service_invoice_details: updatedData.service_invoice_details,
+      student_id: updatedData.student?.id || null,
+    };
+
+    this.serviceInvoiceService
+      .updateServiceInvoice(this.serviceInvoice.id, payload)
+      .subscribe({
+        next: (res: any) => {
+          this.actionButtons[0].loading = false;
+          this.fcToastService.add({
+            severity: 'success',
+            header: 'Success',
+            message: 'Service Invoice updated',
+          });
+        },
+        error: (err) => {
+          this.actionButtons[0].loading = false;
+          this.fcToastService.clear();
+          this.fcToastService.add({
+            severity: 'error',
+            header: 'Error',
+            message: err.message,
+          });
+        },
+      });
+  }
 }
