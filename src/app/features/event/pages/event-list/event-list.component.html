@@ -45,7 +45,8 @@
                     <div class="flex w-full items-center gap-1">
                       <fa-icon [fixedWidth]="true" [icon]="faClock"></fa-icon>
                       <p class="text-xs">
-                        {{ event.start_time }} - {{ event.end_time }}
+                        {{ event.start_time | timeFormat }} -
+                        {{ event.end_time | timeFormat }}
                       </p>
                     </div>
                   </div>

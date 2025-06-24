@@ -44,6 +44,7 @@ import { TimeFormatPipe } from './pipes/time-format.pipe';
     FormsModule,
     ReactiveFormsModule,
     FcCurrencyPipe,
+    TimeFormatPipe,
     AutoFocusModule,
     CalendarModule,
     TooltipModule,

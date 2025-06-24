@@ -41,7 +41,7 @@ export class EventListComponent {
       label: 'Refresh',
       icon: faRefresh,
       action: () => {
-        // this.loadData();
+        this.loadData();
       },
     },
   ];
@@ -84,11 +84,11 @@ export class EventListComponent {
     return `https://practice1337.s3.ap-southeast-1.amazonaws.com/${filePath}`;
   }
 
-  formatTime(time: string): string {
-    if (!time) return '';
-    const [hours, minutes] = time.split(':');
-    return `${hours}:${minutes}`;
-  }
+  // formatTime(time: string): string {
+  //   if (!time) return '';
+  //   const [hours, minutes] = time.split(':');
+  //   return `${hours}:${minutes}`;
+  // }
 
   loadData(page: number = 0, searchQuery: string = this.searchQuery) {
     this.loading = true;
@@ -107,13 +107,7 @@ export class EventListComponent {
             this.totalRecords > this.rows
               ? Math.ceil(this.totalRecords / this.rows)
               : 1;
-          this.events = res.data.events.map((event: any) => {
-            return {
-              ...event,
-              start_time: this.formatTime(event.start_time),
-              end_time: this.formatTime(event.end_time),
-            };
-          });
+          this.events = res.data.events;
           this.loading = false;
         },
         error: (err: any) => {
