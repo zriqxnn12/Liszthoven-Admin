@@ -82,6 +82,11 @@ const routes: Routes = [
             (m) => m.ServiceInvoiceModule
           ),
       },
+      {
+        path: 'event',
+        loadChildren: () =>
+          import('../features/event/event.module').then((m) => m.EventModule),
+      },
     ],
   },
 ];

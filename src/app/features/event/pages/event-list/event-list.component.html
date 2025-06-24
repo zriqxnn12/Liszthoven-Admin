@@ -1,0 +1,88 @@
+<div class="flex h-full gap-3 @container">
+  <div
+    class="flex h-full w-full flex-col gap-3 transition-all duration-700 ease-in-out @container">
+    <app-fc-action-bar
+      [actionButtons]="actionButtons"
+      [filterButtons]="filterButtons"></app-fc-action-bar>
+    <div class="body flex h-full w-full gap-3 overflow-y-auto text-xs">
+      <div
+        class="grid h-fit w-full gap-2 py-2 @xl:grid-cols-2 @3xl:grid-cols-3">
+        <ng-container *ngFor="let event of events">
+          <div
+            class="fc-animate-translate-up grid cursor-pointer grid-cols-1 items-center justify-between rounded-md border border-light-low bg-light-low p-2 hover:border-primary-light dark:border-dark-low dark:bg-dark-low hover:dark:border-primary-light lg:flex">
+            <div class="flex w-full items-center justify-between">
+              <div class="flex w-full flex-1 items-center gap-5">
+                <div
+                  class="aspect-square w-16 flex-none rounded-lg bg-white object-cover px-4 py-2">
+                  <fc-image-preview
+                    [preview]="true"
+                    [src]="getImageFullUrl(event.file_path)" />
+                </div>
+                <div class="flex flex-col gap-1">
+                  <p class="text-sm font-bold capitalize">{{ event.title }}</p>
+
+                  <div class="flex flex-col">
+                    <p *ngIf="event.type === 0" class="text-sky-500">
+                      Student Event
+                    </p>
+                    <p *ngIf="event.type === 1" class="text-sky-500">
+                      Teacher Event
+                    </p>
+                    <div class="flex items-center gap-1">
+                      <fa-icon
+                        [fixedWidth]="true"
+                        [icon]="faLocationDot"></fa-icon>
+                      <p class="text-xs">{{ event.address }}</p>
+                    </div>
+                    <div class="flex items-center gap-1">
+                      <fa-icon
+                        [fixedWidth]="true"
+                        [icon]="faCalendarDays"></fa-icon>
+                      <p class="text-xs">
+                        {{ event.date | date: 'dd MMMM yyyy' }}
+                      </p>
+                    </div>
+                    <div class="flex w-full items-center gap-1">
+                      <fa-icon [fixedWidth]="true" [icon]="faClock"></fa-icon>
+                      <p class="text-xs">
+                        {{ event.start_time }} - {{ event.end_time }}
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex w-full items-center gap-1 text-sm">
+                    <p class="text-green-500 dark:text-green-600">
+                      {{ event.fee | fcCurrency }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="flex w-fit justify-end">
+                <button
+                  (click)="navigateToDetail(event)"
+                  type="button"
+                  class="btn btn-high">
+                  <fa-icon [fixedWidth]="true" [icon]="faEye"></fa-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!loading && events.length == 0">
+          <div class="w-full py-[20vh] text-center">
+            <p>No data found</p>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="flex justify-end gap-3">
+      <div class="w-full @lg:w-96">
+        <fc-pagination
+          [rows]="rows"
+          [page]="page"
+          [totalPages]="totalPages"
+          [totalRecords]="totalRecords"
+          (onPageUpdate)="onPageUpdate($event)"></fc-pagination>
+      </div>
+    </div>
+  </div>
+</div>

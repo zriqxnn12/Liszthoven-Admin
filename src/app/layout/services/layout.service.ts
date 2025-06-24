@@ -72,6 +72,10 @@ export class LayoutService {
         name: 'Teacher',
       },
       {
+        route: '/event',
+        name: 'Event',
+      },
+      {
         route: '/service-invoice',
         name: 'Service Invoice',
       },
