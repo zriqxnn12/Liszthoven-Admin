@@ -91,6 +91,10 @@ export class LayoutService {
         route: '/instrument',
         name: 'Instrument',
       },
+      {
+        route: '/feedback',
+        name: 'Feedback',
+      },
       // {
       //   route: '/supplier',
       //   name: 'Example Feature',

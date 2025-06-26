@@ -1,0 +1,40 @@
+<div class="flex h-full flex-col space-y-3">
+  <app-fc-action-bar
+    [isHasBackButton]="true"
+    [actionButtons]="actionButtons"></app-fc-action-bar>
+  <form
+    *ngIf="!loading"
+    class="body relative h-full w-full overflow-y-auto text-xs @container"
+    [formGroup]="feedbackForm">
+    <div class="grid w-full items-start gap-3 @xl:grid-cols-2">
+      <div
+        class="form-input flex flex-1 cursor-pointer items-center rounded-lg border border-light-lowest bg-light-high p-2 dark:border-dark-lowest dark:bg-dark-low">
+        <div class="flex flex-1 flex-col">
+          <p
+            class="m-0 block p-0 text-2xs font-medium leading-5 text-dark-lowest dark:text-white/60">
+            From
+          </p>
+          <p *ngIf="!feedbackForm.value.is_anonymous" class="text-xs">
+            {{ feedbackForm.value.user.name }}
+          </p>
+          <p
+            *ngIf="feedbackForm.value.is_anonymous"
+            class="text-xs dark:text-gray-400">
+            Anonymous User
+          </p>
+        </div>
+      </div>
+      <fc-input-text
+        class="flex-1"
+        [disabled]="true"
+        title="To"
+        formControlName="name"
+        placeholder="Enter Name" />
+      <fc-textarea
+        [disabled]="true"
+        title="Note"
+        formControlName="note"
+        placeholder="Enter Description" />
+    </div>
+  </form>
+</div>

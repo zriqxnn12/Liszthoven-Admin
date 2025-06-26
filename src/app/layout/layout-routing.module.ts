@@ -87,6 +87,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('../features/event/event.module').then((m) => m.EventModule),
       },
+      {
+        path: 'feedback',
+        loadChildren: () =>
+          import('../features/feedback/feedback.module').then(
+            (m) => m.FeedbackModule
+          ),
+      },
     ],
   },
 ];
