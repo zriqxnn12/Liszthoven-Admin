@@ -17,6 +17,7 @@ import {
   faSpinner,
   faTimes,
   faTrash,
+  faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { FcConfirmService } from '@shared/components/fc-confirm/fc-confirm.service';
 import { FcToastService } from '@shared/components/fc-toast/fc-toast.service';
@@ -45,6 +46,7 @@ export class EventViewComponent {
   faCloudArrowUp = faCloudArrowUp;
   faReceipt = faReceipt;
   faEnvelope = faEnvelope;
+  faXmark = faXmark;
 
   actionButtons: any[] = [
     {
@@ -260,6 +262,34 @@ export class EventViewComponent {
               this.fcToastService.add({
                 severity: 'error',
                 header: 'fail Accept',
+                message: err.message,
+              });
+            },
+          });
+      },
+    });
+  }
+
+  rejectParticipant(participant: EventParticipant) {
+    this.fcConfirmService.open({
+      header: 'Confirmation',
+      message: 'Are you sure to reject this participant?',
+      accept: () => {
+        this.eventService
+          .updateParticipantToRejected(this.event.id, participant.id)
+          .subscribe({
+            next: (res: any) => {
+              this.fcToastService.add({
+                severity: 'success',
+                header: 'Participant Rejected',
+                message: res.message,
+              });
+              this.refresh();
+            },
+            error: (err) => {
+              this.fcToastService.add({
+                severity: 'error',
+                header: 'fail to generate',
                 message: err.message,
               });
             },

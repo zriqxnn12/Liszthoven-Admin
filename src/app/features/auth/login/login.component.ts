@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       next: (res: any) => {
         this.loading = false;
         if (res) {
-          this.router.navigate(['/']);
+          this.router.navigate(['/student/list']);
         }
       },
       error: (err) => {

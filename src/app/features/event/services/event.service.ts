@@ -91,6 +91,13 @@ export class EventService {
     );
   }
 
+  updateParticipantToRejected(eventId: number, id: number) {
+    return this.http.put(
+      `${ROOT_API}/admin/events/${eventId}/participants/${id}/reject`,
+      {}
+    );
+  }
+
   updateParticipantToPaid(eventId: number, id: number) {
     return this.http.put(
       `${ROOT_API}/admin/events/${eventId}/participants/${id}/paid`,
