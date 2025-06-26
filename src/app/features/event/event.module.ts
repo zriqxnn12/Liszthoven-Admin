@@ -17,6 +17,7 @@ import { FcFilterDialogModule } from '@shared/components/fc-filter-dialog/fc-fil
 import { FcImagePreviewModule } from '@shared/components/fc-image-preview/fc-image-preview.module';
 import { FcTimepickerModule } from '@shared/components/fc-timepicker/fc-timepicker.module';
 import { EventParticipantAddDialogComponent } from './components/event-participant-add-dialog/event-participant-add-dialog.component';
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { EventParticipantAddDialogComponent } from './components/event-participa
     FcFilterDialogModule,
     FcImagePreviewModule,
     FcTimepickerModule,
+    ImageModule,
   ],
 })
 export class EventModule {}

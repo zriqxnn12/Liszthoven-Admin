@@ -97,6 +97,7 @@ export class EventViewComponent {
   ];
 
   imageUrl: string = '';
+  paymentImgUrl: string = '';
   @Input() event: Event = {} as Event;
   loading = false;
   eventForm: FormGroup;
@@ -259,6 +260,34 @@ export class EventViewComponent {
               this.fcToastService.add({
                 severity: 'error',
                 header: 'fail Accept',
+                message: err.message,
+              });
+            },
+          });
+      },
+    });
+  }
+
+  generateToPaid(participant: EventParticipant) {
+    this.fcConfirmService.open({
+      header: 'Confirmation',
+      message: 'Are you sure to accept this participant?',
+      accept: () => {
+        this.eventService
+          .updateParticipantToPaid(this.event.id, participant.id)
+          .subscribe({
+            next: (res: any) => {
+              this.fcToastService.add({
+                severity: 'success',
+                header: 'Participant Paid',
+                message: res.message,
+              });
+              this.refresh();
+            },
+            error: (err) => {
+              this.fcToastService.add({
+                severity: 'error',
+                header: 'fail to generate',
                 message: err.message,
               });
             },

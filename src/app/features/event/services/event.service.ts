@@ -90,4 +90,11 @@ export class EventService {
       {}
     );
   }
+
+  updateParticipantToPaid(eventId: number, id: number) {
+    return this.http.put(
+      `${ROOT_API}/admin/events/${eventId}/participants/${id}/paid`,
+      {}
+    );
+  }
 }

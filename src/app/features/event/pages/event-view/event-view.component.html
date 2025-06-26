@@ -143,33 +143,49 @@
                             </div>
                             <div
                               class="flex w-fit items-center justify-end gap-2">
-                              <button
-                                *ngIf="participant.status == 0"
-                                type="button"
-                                (click)="acceptParticipant(participant)"
-                                class="flex items-center gap-2 rounded-md bg-yellow-500 p-2 hover:bg-yellow-600 dark:bg-yellow-600 dark:hover:bg-yellow-700">
-                                <fa-icon
-                                  [fixedWidth]="true"
-                                  [icon]="faEnvelope"></fa-icon>
-                                <p class="hidden @lg:block">Send Invitation</p>
-                              </button>
-                              <button
-                                *ngIf="participant.status == 3"
-                                [disabled]="participant.loading"
-                                [ngClass]="{
-                                  'opacity-50': participant.loading
-                                }"
-                                type="button"
-                                class="flex items-center gap-2 rounded-md bg-sky-500 p-1 hover:bg-sky-600 dark:bg-sky-600 dark:hover:bg-sky-700">
-                                <fa-icon
-                                  [fixedWidth]="true"
-                                  [icon]="
-                                    participant.loading ? faSpinner : faReceipt
-                                  "></fa-icon>
-                                <span class="hidden @lg:block"
-                                  >Approve Payment</span
-                                >
-                              </button>
+                              <ng-container *ngIf="participant.status == 0">
+                                <button
+                                  type="button"
+                                  (click)="acceptParticipant(participant)"
+                                  class="flex items-center gap-2 rounded-md bg-yellow-500 p-2 hover:bg-yellow-600 dark:bg-yellow-600 dark:hover:bg-yellow-700">
+                                  <fa-icon
+                                    [fixedWidth]="true"
+                                    [icon]="faEnvelope"></fa-icon>
+                                  <p class="hidden @lg:block">
+                                    Send Invitation
+                                  </p>
+                                </button>
+                              </ng-container>
+                              <ng-container *ngIf="participant.status == 3">
+                                <label
+                                  [for]="i + 'participant'"
+                                  class="btn btn-high flex cursor-pointer items-center gap-2">
+                                  <fa-icon [icon]="faReceipt"></fa-icon>
+                                  <span class="hidden @lg:block"
+                                    >Payment Proof</span
+                                  >
+                                  <p-image
+                                    [id]="i + 'eventParticipant'"
+                                    class="absolute h-full w-full opacity-0"
+                                    [preview]="true"
+                                    [appendTo]="'body'"
+                                    [src]="
+                                      participant.file_path
+                                        ? getImageFullUrl(participant.file_path)
+                                        : ''
+                                    "
+                                    alt="Image"></p-image>
+                                </label>
+                                <button
+                                  (click)="generateToPaid(participant)"
+                                  type="button"
+                                  class="flex items-center gap-2 rounded-md bg-sky-500 p-1 hover:bg-sky-600 dark:bg-sky-600 dark:hover:bg-sky-700">
+                                  <fa-icon [icon]="faReceipt"></fa-icon>
+                                  <span class="hidden @lg:block"
+                                    >Approve Payment</span
+                                  >
+                                </button>
+                              </ng-container>
                             </div>
                           </div>
                         </div>
