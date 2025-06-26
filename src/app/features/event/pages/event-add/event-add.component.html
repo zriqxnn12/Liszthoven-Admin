@@ -1,1 +1,87 @@
-<p>event-add works!</p>
+<div class="flex h-full flex-col space-y-3 @container">
+  <app-fc-action-bar
+    [isHasBackButton]="true"
+    [actionButtons]="actionButtons"></app-fc-action-bar>
+  <div class="body h-full w-full overflow-y-auto text-xs">
+    <form class="mx-auto mt-2 grid w-full gap-3" [formGroup]="eventForm">
+      <div class="flex w-full flex-col gap-3 @lg:flex-row">
+        <div class="w-full @lg:w-[350px]">
+          <fc-file-input
+            *ngIf="!eventForm.value.file_path"
+            (onInput)="addImage($event)">
+            <div
+              class="flex h-[200px] flex-col items-center justify-center gap-2 overflow-y-auto rounded-md border border-light-lowest bg-light-low p-5 dark:border-dark-lowest dark:bg-dark-low">
+              <fa-icon class="text-3xl" [icon]="faCloudArrowUp" />
+              <p>Drag or Upload Logo Here</p>
+            </div>
+          </fc-file-input>
+          <div class="flex flex-col gap-2" *ngIf="eventForm.value.file_path">
+            <fc-image-preview
+              class="w-full"
+              [preview]="true"
+              [src]="eventForm.value.file_path.img_src"
+              [alt]="'Happy Beauty'">
+            </fc-image-preview>
+            <fc-file-input (onInput)="addImage($event)">
+              <button
+                type="button"
+                class="flex w-full items-center justify-center gap-2 rounded-md bg-light-low p-2 text-sm hover:bg-light-lowest dark:bg-dark-low hover:dark:bg-dark-lowest">
+                <fa-icon [fixedWidth]="true" [icon]="faCloudArrowUp"></fa-icon>
+                Upload Again
+              </button>
+            </fc-file-input>
+          </div>
+        </div>
+        <div class="w-full">
+          <div class="grid w-full grid-cols-1 gap-3 @lg:flex-1 @lg:grid-cols-2">
+            <fc-input-text
+              title="Title"
+              formControlName="title"
+              placeholder="Enter Event Title" />
+            <fc-input-number
+              title="Quota"
+              formControlName="quota"
+              placeholder="Enter maximal participant" />
+            <fc-input-text
+              title="Address"
+              formControlName="address"
+              placeholder="Enter Location" />
+            <fc-datepicker
+              [placeholder]="'Enter Event Date'"
+              title="Event Date"
+              formControlName="date" />
+            <fc-timepicker
+              title="Event Start Time"
+              formControlName="start_time"
+              placeholder="Select Start Time" />
+            <fc-timepicker
+              title="Event end Time"
+              formControlName="end_time"
+              placeholder="Select Start Time" />
+            <fc-input-number
+              class="flex-1"
+              title="Fee"
+              formControlName="fee"
+              placeholder="Enter fee" />
+            <fc-select-option
+              class="flex-1"
+              [options]="types"
+              formControlName="type"
+              [optionValue]="'value'"
+              [optionLabel]="'label'"
+              title="Type"
+              [placeholder]="'Select Type'"
+              [desktopView]="'overlay'"
+              [mobileView]="'dialog'" />
+            <div class="@lg:col-span-2">
+              <fc-textarea
+                title="Description"
+                formControlName="description"
+                placeholder="Enter Description" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

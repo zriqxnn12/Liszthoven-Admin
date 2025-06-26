@@ -1,1 +1,208 @@
-<p>event-view works!</p>
+<div class="flex h-full flex-col space-y-3 @container">
+  <app-fc-action-bar
+    [isHasBackButton]="true"
+    [actionButtons]="actionButtons"></app-fc-action-bar>
+  <div class="body h-full w-full overflow-y-auto text-xs">
+    <form class="mx-auto mt-2 grid w-full gap-3" [formGroup]="eventForm">
+      <div class="flex w-full flex-col gap-3 @lg:flex-row">
+        <div class="w-full @lg:w-[350px]">
+          <fc-file-input
+            *ngIf="!eventForm.value.file_path"
+            (onInput)="addImage($event)">
+            <div
+              class="flex h-[200px] flex-col items-center justify-center gap-2 overflow-y-auto rounded-md border border-light-lowest bg-light-low p-5 dark:border-dark-lowest dark:bg-dark-low">
+              <fa-icon class="text-3xl" [icon]="faCloudArrowUp" />
+              <p>Drag or Upload Logo Here</p>
+            </div>
+          </fc-file-input>
+          <div class="flex flex-col gap-2" *ngIf="eventForm.value.file_path">
+            <fc-image-preview
+              class="w-full"
+              [preview]="true"
+              [src]="imageUrl"
+              [alt]="'Happy Beauty'">
+            </fc-image-preview>
+            <fc-file-input (onInput)="addImage($event)">
+              <button
+                type="button"
+                class="flex w-full items-center justify-center gap-2 rounded-md bg-light-low p-2 text-sm hover:bg-light-lowest dark:bg-dark-low hover:dark:bg-dark-lowest">
+                <fa-icon [fixedWidth]="true" [icon]="faCloudArrowUp"></fa-icon>
+                Upload Again
+              </button>
+            </fc-file-input>
+          </div>
+        </div>
+        <div class="w-full">
+          <div class="grid w-full grid-cols-1 gap-3 @lg:flex-1 @lg:grid-cols-2">
+            <fc-input-text
+              title="Title"
+              formControlName="title"
+              placeholder="Enter Event Title" />
+            <fc-input-number
+              title="Quota"
+              formControlName="quota"
+              placeholder="Enter maximal participant" />
+            <fc-input-text
+              title="Address"
+              formControlName="address"
+              placeholder="Enter Location" />
+            <fc-datepicker
+              [placeholder]="'Enter Event Date'"
+              title="Event Date"
+              formControlName="date" />
+            <fc-timepicker
+              title="Event Start Time"
+              formControlName="start_time"
+              placeholder="Select Start Time" />
+            <fc-timepicker
+              title="Event end Time"
+              formControlName="end_time"
+              placeholder="Select Start Time" />
+            <fc-input-number
+              class="flex-1"
+              title="Fee"
+              formControlName="fee"
+              placeholder="Enter fee" />
+            <fc-select-option
+              class="flex-1"
+              [options]="types"
+              formControlName="type"
+              [optionValue]="'value'"
+              [optionLabel]="'label'"
+              title="Type"
+              [placeholder]="'Select Type'"
+              [desktopView]="'overlay'"
+              [mobileView]="'dialog'" />
+            <div class="@lg:col-span-2">
+              <fc-textarea
+                title="Description"
+                formControlName="description"
+                placeholder="Enter Description" />
+              <!-- Event Participants -->
+              <div class="mt-3 w-full">
+                <div class="mb-2 flex items-center justify-between gap-2">
+                  <p>Event Participants</p>
+                  <button
+                    (click)="assignUsertoEventParticipant()"
+                    type="button"
+                    class="flex gap-1 rounded-lg p-2 hover:bg-light-lowest dark:hover:bg-dark-lowest">
+                    <fa-icon [fixedWidth]="true" [icon]="faPlus"></fa-icon>
+                    <p>Assign {{ event.type == 0 ? 'Student' : 'Teacher' }}</p>
+                  </button>
+                </div>
+                <!-- select tab -->
+                <div class="mb-4 flex gap-2">
+                  <button
+                    class="flex gap-2 border-b p-2 text-dark-lowest hover:bg-light-lowest dark:text-light-lowest dark:hover:bg-dark-lowest"
+                    [ngClass]="{ 'border-primary-light': tab == selectedTab }"
+                    (click)="onSelectTab(tab)"
+                    *ngFor="let tab of eventParticipantsNavigationTabs">
+                    {{ tab.label }}
+                  </button>
+                </div>
+                <ng-container *ngIf="!loadingEventParticipant">
+                  <ng-container *ngIf="event.event_participants.length">
+                    <div class="grid gap-2">
+                      <ng-container
+                        *ngFor="
+                          let participant of event.event_participants;
+                          let i = index
+                        ">
+                        <div
+                          class="fc-animate-translate-up grid cursor-pointer grid-cols-1 items-center justify-between rounded-md border border-light-low bg-light-low p-2 hover:border-primary-light @lg:flex dark:border-dark-low dark:bg-dark-low hover:dark:border-primary-light">
+                          <div class="flex w-full items-center gap-3">
+                            <div class="w-10">
+                              <img
+                                src="assets/images/placeholder/dummy-photo.webp"
+                                alt="photo"
+                                class="h-10 w-10 rounded-full border object-cover" />
+                            </div>
+                            <div class="flex flex-1 flex-col">
+                              <p
+                                class="text-2xs text-slate-400 dark:text-slate-500">
+                                {{
+                                  participant.created_at | date: 'dd MMMM yyyy'
+                                }}
+                              </p>
+                              <p class="text-sm font-bold">
+                                {{ participant.user.name }}
+                              </p>
+                              <p
+                                [ngClass]="statusColor(participant.status)"
+                                class="text-green-500 dark:text-green-600">
+                                {{ participant.status_name }}
+                              </p>
+                              <p
+                                class="text-2xs text-slate-400 dark:text-slate-500">
+                                Last update :
+                                {{
+                                  participant.updated_at
+                                    | date: 'dd MMMM yyyy HH:mm'
+                                }}
+                              </p>
+                            </div>
+                            <div
+                              class="flex w-fit items-center justify-end gap-2">
+                              <button
+                                *ngIf="participant.status == 0"
+                                type="button"
+                                (click)="acceptParticipant(participant)"
+                                class="flex items-center gap-2 rounded-md bg-yellow-500 p-2 hover:bg-yellow-600 dark:bg-yellow-600 dark:hover:bg-yellow-700">
+                                <fa-icon
+                                  [fixedWidth]="true"
+                                  [icon]="faEnvelope"></fa-icon>
+                                <p class="hidden @lg:block">Send Invitation</p>
+                              </button>
+                              <button
+                                *ngIf="participant.status == 3"
+                                [disabled]="participant.loading"
+                                [ngClass]="{
+                                  'opacity-50': participant.loading
+                                }"
+                                type="button"
+                                class="flex items-center gap-2 rounded-md bg-sky-500 p-1 hover:bg-sky-600 dark:bg-sky-600 dark:hover:bg-sky-700">
+                                <fa-icon
+                                  [fixedWidth]="true"
+                                  [icon]="
+                                    participant.loading ? faSpinner : faReceipt
+                                  "></fa-icon>
+                                <span class="hidden @lg:block"
+                                  >Approve Payment</span
+                                >
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="!event.event_participants.length">
+                    <div class="w-full text-center">
+                      <p>No Event Participant Data</p>
+                    </div>
+                  </ng-container>
+                </ng-container>
+                <div
+                  class="py-[5vh] text-center"
+                  *ngIf="loadingEventParticipant">
+                  <fc-loading></fc-loading>
+                </div>
+                <!-- pagination here -->
+                <div class="mt-3 flex justify-end gap-3">
+                  <div class="w-full @lg:w-96">
+                    <fc-pagination
+                      [rows]="rows"
+                      [page]="page"
+                      [totalPages]="totalPages"
+                      [totalRecords]="totalRecords"
+                      (onPageUpdate)="onPageUpdate($event)"></fc-pagination>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

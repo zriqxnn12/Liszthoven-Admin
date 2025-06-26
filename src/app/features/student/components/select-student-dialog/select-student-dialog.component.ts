@@ -66,7 +66,7 @@ export class SelectStudentDialogComponent {
     let dataListParameter: DataListParameter = {} as DataListParameter;
     dataListParameter.rows = this.rows;
     dataListParameter.page = this.page;
-    dataListParameter.sortBy = 'order_by=id&direction=asc&with_filter=1';
+    dataListParameter.sortBy = 'order_by=id&direction=desc&with_filter=1';
     dataListParameter.searchQuery = searchQuery;
     this.studentService
       .getStudents(dataListParameter)

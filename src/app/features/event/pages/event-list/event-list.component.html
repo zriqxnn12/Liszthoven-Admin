@@ -9,6 +9,7 @@
         class="grid h-fit w-full gap-2 py-2 @xl:grid-cols-2 @3xl:grid-cols-3">
         <ng-container *ngFor="let event of events">
           <div
+            (dblclick)="navigateToDetail(event)"
             class="fc-animate-translate-up grid cursor-pointer grid-cols-1 items-center justify-between rounded-md border border-light-low bg-light-low p-2 hover:border-primary-light dark:border-dark-low dark:bg-dark-low hover:dark:border-primary-light lg:flex">
             <div class="flex w-full items-center justify-between">
               <div class="flex w-full flex-1 items-center gap-5">

@@ -1,0 +1,78 @@
+<div
+  class="space-y-3 rounded-lg bg-light-highest p-3 backdrop-blur-sm @container dark:bg-dark-highest">
+  <div class="flex items-center">
+    <h3 class="flex-1 text-sm font-medium">{{ title }}</h3>
+    <button
+      class="rounded-md p-2 hover:bg-light-lowest hover:dark:bg-dark-lowest"
+      (click)="onClose()">
+      <fa-icon [fixedWidth]="true" [icon]="faTimes"></fa-icon>
+    </button>
+  </div>
+
+  <form [formGroup]="eventParticipantForm" class="grid gap-3 @lg:grid-cols-2">
+    <div class="@lg:col-span-2">
+      <div class="mb-1 flex justify-end">
+        <button
+          (click)="event.type == 1 ? onSelectTeacher() : onSelectStudent()"
+          class="flex gap-1 rounded-lg p-2 text-xs hover:bg-light-lowest dark:hover:bg-dark-lowest">
+          <fa-icon [fixedWidth]="true" [icon]="faPlus"></fa-icon>
+          Add {{ event.type == 1 ? 'Teacher' : 'Student' }}
+        </button>
+      </div>
+      <div *ngIf="eventParticipantForm.value.length > 0" class="space-y-2">
+        <div
+          *ngFor="let role of eventParticipantForm.value"
+          class="fc-animate-translate-up grid cursor-pointer grid-cols-1 items-center justify-between rounded-md border border-light-low bg-light-low p-2 hover:border-primary-light @lg:flex dark:border-dark-low dark:bg-dark-low hover:dark:border-primary-light">
+          <div class="flex w-full items-center gap-3">
+            <div class="flex flex-1 flex-col">
+              <p class="text-xs dark:text-gray-400">
+                {{ event.type == 1 ? 'Teacher' : 'Student' }} :
+              </p>
+              <p class="text-sm">
+                {{ role.user.name }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p *ngIf="!eventParticipantForm.value.length" class="py-2 text-center">
+        No {{ event.type == 1 ? 'Teacher' : 'Student' }} selected
+      </p>
+    </div>
+    <ng-container>
+      <div class="flex w-full items-center gap-2">
+        <ng-container *ngFor="let paidStatus of paidStatuses">
+          <button
+            type="button"
+            (click)="
+              eventParticipantForm.patchValue({ is_paid: paidStatus.value })
+            "
+            [ngClass]="{
+              'bg-primary text-white dark:bg-primary-light':
+                paidStatus.value == eventParticipantForm.value.is_paid
+            }"
+            class="h-full flex-1 rounded-md border border-slate-300 p-2 text-center dark:border-slate-500">
+            {{ paidStatus.label }}
+          </button>
+        </ng-container>
+      </div>
+    </ng-container>
+
+    <div class="flex items-center justify-end gap-2 @lg:col-span-2">
+      <button
+        [ngClass]="{
+          'opacity-50': loading
+        }"
+        [disabled]="loading"
+        type="button"
+        class="fc-animate-translate-up flex items-center gap-2 rounded-md bg-light-lowest p-2 text-sm dark:bg-dark-lowest">
+        <fa-icon
+          *ngIf="loading"
+          [spin]="loading"
+          [fixedWidth]="true"
+          [icon]="faSpinner" />
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

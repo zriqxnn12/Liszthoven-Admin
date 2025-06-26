@@ -15,6 +15,8 @@ import { FcFileInputModule } from '@shared/components/fc-file-input/fc-file-inpu
 import { FcTextareaModule } from '@shared/components/fc-textarea/fc-textarea.module';
 import { FcFilterDialogModule } from '@shared/components/fc-filter-dialog/fc-filter-dialog.module';
 import { FcImagePreviewModule } from '@shared/components/fc-image-preview/fc-image-preview.module';
+import { FcTimepickerModule } from '@shared/components/fc-timepicker/fc-timepicker.module';
+import { EventParticipantAddDialogComponent } from './components/event-participant-add-dialog/event-participant-add-dialog.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { FcImagePreviewModule } from '@shared/components/fc-image-preview/fc-ima
     EventListComponent,
     EventAddComponent,
     EventViewComponent,
+    EventParticipantAddDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +38,7 @@ import { FcImagePreviewModule } from '@shared/components/fc-image-preview/fc-ima
     FcTextareaModule,
     FcFilterDialogModule,
     FcImagePreviewModule,
+    FcTimepickerModule,
   ],
 })
 export class EventModule {}
