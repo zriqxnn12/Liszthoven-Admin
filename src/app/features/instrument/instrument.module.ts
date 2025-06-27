@@ -13,7 +13,13 @@ import { InstrumentViewComponent } from './pages/instrument-view/instrument-view
 import { SelectInstrumentDialogComponent } from './components/select-instrument-dialog/select-instrument-dialog.component';
 
 @NgModule({
-  declarations: [InstrumentComponent, InstrumentListComponent, InstrumentAddComponent, InstrumentViewComponent, SelectInstrumentDialogComponent],
+  declarations: [
+    InstrumentComponent,
+    InstrumentListComponent,
+    InstrumentAddComponent,
+    InstrumentViewComponent,
+    SelectInstrumentDialogComponent,
+  ],
   imports: [
     CommonModule,
     InstrumentRoutingModule,
@@ -22,5 +28,6 @@ import { SelectInstrumentDialogComponent } from './components/select-instrument-
     FcInputTextModule,
     FcTextareaModule,
   ],
+  exports: [SelectInstrumentDialogComponent],
 })
 export class InstrumentModule {}

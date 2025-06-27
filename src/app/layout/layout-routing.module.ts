@@ -94,6 +94,13 @@ const routes: Routes = [
             (m) => m.FeedbackModule
           ),
       },
+      {
+        path: 'course-package',
+        loadChildren: () =>
+          import('../features/course-package/course-package.module').then(
+            (m) => m.CoursePackageModule
+          ),
+      },
     ],
   },
 ];

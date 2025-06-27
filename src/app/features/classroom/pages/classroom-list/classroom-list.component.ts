@@ -59,9 +59,6 @@ export class ClassroomListComponent {
   constructor(
     private layoutService: LayoutService,
     private router: Router,
-    private route: ActivatedRoute,
-    private fcFilterDialogService: FcFilterDialogService,
-    private dialogService: DialogService,
     private classroomService: ClassroomService
   ) {
     this.layoutService.setHeaderConfig({

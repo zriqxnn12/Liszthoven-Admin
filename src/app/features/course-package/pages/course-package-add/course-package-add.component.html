@@ -1,0 +1,59 @@
+<div class="flex h-full flex-col space-y-3">
+  <app-fc-action-bar [isHasBackButton]="true" [actionButtons]="actionButtons">
+  </app-fc-action-bar>
+  <div class="body h-full w-full overflow-y-auto text-xs">
+    <form
+      [formGroup]="coursePackageForm"
+      class="grid w-full gap-3 lg:grid-cols-2">
+      <fc-input-text
+        title="Name"
+        formControlName="name"
+        placeholder="Enter Name"></fc-input-text>
+      <!-- select instrument -->
+      <div
+        class="form-input flex flex-1 cursor-pointer items-center rounded-lg border border-light-lowest bg-light-high p-2 dark:border-dark-lowest dark:bg-dark-low dark:hover:bg-dark-lowest">
+        <div class="flex flex-1 flex-col" (click)="onSelectInstrument()">
+          <p
+            class="m-0 block p-0 text-2xs font-medium leading-5 text-dark-lowest dark:text-white/60">
+            Instrument
+          </p>
+          <p *ngIf="coursePackageForm.value.instrument" class="text-xs">
+            {{ coursePackageForm.value.instrument.name }}
+          </p>
+          <p
+            *ngIf="!coursePackageForm.value.instrument"
+            class="text-xs dark:text-gray-400">
+            Select Instrument
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button
+            *ngIf="coursePackageForm.value.instrument"
+            type="button"
+            (click)="removeInstrument()">
+            <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>
+          </button>
+          <button type="button" (click)="onSelectInstrument()">
+            <fa-icon [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <fc-input-number
+        class="flex-1"
+        title="Registration Fee"
+        formControlName="registration_fee"
+        placeholder="Enter fee" />
+      <fc-input-number
+        class="flex-1"
+        title="Duration"
+        formControlName="duration"
+        placeholder="Enter duration" />
+      <div class="@lg:col-span-2">
+        <fc-textarea
+          title="Description"
+          formControlName="description"
+          placeholder="Enter Description" />
+      </div>
+    </form>
+  </div>
+</div>

@@ -28,6 +28,7 @@ export class TeacherSelectDialogComponent {
   faPhone = faPhone;
   faPlus = faPlus;
   faSearch = faSearch;
+  faLocationDot = faLocationDot;
 
   teachers: Teacher[] = [];
   searchQuery: string = '';
@@ -49,6 +50,10 @@ export class TeacherSelectDialogComponent {
     }
   }
 
+  ngOnInit(): void {
+    this.loadData();
+  }
+
   ngAfterContentInit(): void {}
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -60,7 +65,7 @@ export class TeacherSelectDialogComponent {
     let dataListParameter: DataListParameter = {} as DataListParameter;
     dataListParameter.rows = this.rows;
     dataListParameter.page = this.page;
-    dataListParameter.sortBy = 'order_by=id&direction=asc&with_filter=1';
+    dataListParameter.sortBy = 'order_by=id&direction=desc&with_filter=1';
     dataListParameter.searchQuery = searchQuery;
     this.teacherService
       .getTeachers(dataListParameter)

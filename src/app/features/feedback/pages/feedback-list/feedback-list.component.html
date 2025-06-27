@@ -5,43 +5,64 @@
       [actionButtons]="actionButtons"
       [filterButtons]="filterButtons"></app-fc-action-bar>
     <div class="body flex h-full w-full gap-3 overflow-y-auto text-xs">
-      <div
-        class="grid h-fit w-full gap-2 py-2 @xl:grid-cols-2 @3xl:grid-cols-4">
-        <ng-container *ngFor="let feedback of feedbacks">
-          <div
-            class="fc-animate-translate-up grid cursor-pointer grid-cols-1 items-center justify-between rounded-md border border-light-low bg-light-low p-2 hover:border-primary-light dark:border-dark-low dark:bg-dark-low hover:dark:border-primary-light lg:flex">
-            <div class="flex w-full items-center justify-between">
-              <div class="flex w-full flex-col @lg:flex-1">
-                <div class="flex items-center gap-2">
-                  <p *ngIf="feedback.is_anonymous == false" class="text-xs">
-                    By
-                    <span class="text-primary dark:text-primary-light">
-                      {{ feedback.user.name }}
-                    </span>
-                  </p>
-                  <p *ngIf="feedback.is_anonymous == true" class="text-xs">
-                    By
-                    <span class="text-primary dark:text-primary-light">
-                      Anonymous User
-                    </span>
+      <ng-container *ngIf="!loading && feedbacks.length > 0">
+        <div
+          class="grid h-fit w-full gap-2 py-2 @xl:grid-cols-2 @3xl:grid-cols-4">
+          <ng-container *ngFor="let feedback of feedbacks">
+            <div
+              (dblclick)="navigateToDetail(feedback)"
+              class="fc-animate-translate-up grid cursor-pointer grid-cols-1 items-center justify-between rounded-md border border-light-low bg-light-low p-2 hover:border-primary-light dark:border-dark-low dark:bg-dark-low hover:dark:border-primary-light lg:flex">
+              <div class="flex w-full items-center justify-between">
+                <div class="flex w-full flex-col @lg:flex-1">
+                  <div class="flex items-center gap-2">
+                    <p *ngIf="feedback.is_anonymous == false" class="text-xs">
+                      By
+                      <span class="text-primary dark:text-primary-light">
+                        {{ feedback.user.name }}
+                      </span>
+                    </p>
+                    <p *ngIf="feedback.is_anonymous == true" class="text-xs">
+                      By
+                      <span class="text-primary dark:text-primary-light">
+                        Anonymous User
+                      </span>
+                    </p>
+                  </div>
+                  <p class="w-48 truncate text-xs">"{{ feedback.note }}"</p>
+                  <p class="mt-5 text-xs text-slate-400 dark:text-slate-500">
+                    {{ feedback.created_at | date: 'dd MMMM yyyy' }}
                   </p>
                 </div>
-                <p class="w-48 truncate text-xs">"{{ feedback.note }}"</p>
-                <p class="mt-5 text-xs text-slate-400 dark:text-slate-500">
-                  {{ feedback.created_at | date: 'dd MMMM yyyy' }}
-                </p>
-              </div>
-              <div class="flex w-full justify-end @lg:w-fit">
-                <button
-                  (click)="navigateToDetail(feedback)"
-                  type="button"
-                  class="btn btn-high">
-                  <fa-icon [fixedWidth]="true" [icon]="faEye"></fa-icon>
-                </button>
+                <div class="flex w-full justify-end @lg:w-fit">
+                  <button
+                    (click)="navigateToDetail(feedback)"
+                    type="button"
+                    class="btn btn-high">
+                    <fa-icon [fixedWidth]="true" [icon]="faEye"></fa-icon>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </ng-container>
+          </ng-container>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!loading && feedbacks.length == 0">
+        <div class="w-full py-[20vh] text-center">
+          <p>No data found</p>
+        </div>
+      </ng-container>
+      <div class="w-full py-[20vh] text-center" *ngIf="loading">
+        <fc-loading></fc-loading>
+      </div>
+    </div>
+    <div class="flex justify-end gap-3">
+      <div class="w-full @lg:w-96">
+        <fc-pagination
+          [rows]="rows"
+          [page]="page"
+          [totalPages]="totalPages"
+          [totalRecords]="totalRecords"
+          (onPageUpdate)="onPageUpdate($event)"></fc-pagination>
       </div>
     </div>
   </div>

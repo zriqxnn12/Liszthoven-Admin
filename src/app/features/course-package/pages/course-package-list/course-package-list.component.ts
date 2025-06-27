@@ -1,56 +1,69 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { Feedback } from '@features/feedback/interfaces/feedback';
-import { FeedbackService } from '@features/feedback/services/feedback.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CoursePackage } from '@features/course-package/interfaces/course-package';
+import { CoursePackageService } from '@features/course-package/services/course-package.service';
 import {
-  faCalendarDays,
-  faClock,
+  faBook,
+  faBuilding,
   faEye,
   faLocationDot,
   faPlus,
   faRefresh,
 } from '@fortawesome/free-solid-svg-icons';
+import { FcFilterDialogService } from '@shared/components/fc-filter-dialog/services/fc-filter-dialog.service';
 import { DataListParameter } from '@shared/interfaces/data-list-parameter.interface';
+import { DialogService } from 'primeng/dynamicdialog';
 import { Subject, take, takeUntil } from 'rxjs';
 import { LayoutService } from 'src/app/layout/services/layout.service';
 
 @Component({
-  selector: 'app-feedback-list',
-  templateUrl: './feedback-list.component.html',
-  styleUrls: ['./feedback-list.component.css'],
+  selector: 'app-course-package-list',
+  templateUrl: './course-package-list.component.html',
+  styleUrls: ['./course-package-list.component.css'],
 })
-export class FeedbackListComponent {
+export class CoursePackageListComponent {
   private readonly destroy$ = new Subject<void>();
   faEye = faEye;
   faLocationDot = faLocationDot;
-  faCalendarDays = faCalendarDays;
-  faClock = faClock;
+  faBuilding = faBuilding;
+  faBook = faBook;
 
-  actionButtons: any[] = [];
+  actionButtons: any[] = [
+    {
+      label: 'Add',
+      icon: faPlus,
+      route: ['/course-package/add'],
+      action: () => {
+        // this.navigateToAdd();
+      },
+    },
+  ];
   filterButtons: any[] = [
     {
       label: 'Refresh',
       icon: faRefresh,
       action: () => {
-        this.loadData();
+        // this.loadData();
       },
     },
   ];
 
-  feedbacks: Feedback[] = [];
+  coursePackages: CoursePackage[] = [];
   loading: boolean = false;
-  searchQuery: string = '';
   totalRecords = 0;
   totalPages = 1;
   page = 1;
   rows = 10;
   constructor(
     private layoutService: LayoutService,
-    private feedbackService: FeedbackService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private fcFilterDialogService: FcFilterDialogService,
+    private dialogService: DialogService,
+    private coursePackageService: CoursePackageService
   ) {
     this.layoutService.setHeaderConfig({
-      title: 'Feedbacks',
+      title: 'Course Packages',
       icon: '',
       showHeader: true,
     });
@@ -73,13 +86,13 @@ export class FeedbackListComponent {
     dataListParameter.page = this.page;
     dataListParameter.sortBy = 'order_by=id&direction=desc&with_filter=1';
 
-    this.feedbackService
-      .getFeedbacks(dataListParameter)
+    this.coursePackageService
+      .getCoursePackages(dataListParameter)
       .pipe(take(1), takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
           this.loading = false;
-          this.feedbacks = res.data.feedbacks;
+          this.coursePackages = res.data.course_packages;
           this.totalRecords = res.data.count;
           this.totalPages =
             this.totalRecords > this.rows
@@ -95,8 +108,8 @@ export class FeedbackListComponent {
       });
   }
 
-  navigateToDetail(feedback: Feedback) {
-    this.router.navigate(['/feedback/view/', feedback.id]);
+  navigateToDetail(coursePackage: CoursePackage) {
+    this.router.navigate(['/course-package/view/', coursePackage.id]);
   }
 
   onPageUpdate(pagination: any) {

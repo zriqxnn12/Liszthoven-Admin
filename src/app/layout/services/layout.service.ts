@@ -95,6 +95,10 @@ export class LayoutService {
         route: '/feedback',
         name: 'Feedback',
       },
+      {
+        route: '/course-package',
+        name: 'Course Package',
+      },
       // {
       //   route: '/supplier',
       //   name: 'Example Feature',

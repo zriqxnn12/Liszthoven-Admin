@@ -1,1 +1,103 @@
-<p>teacher-select-dialog works!</p>
+<div
+  class="space-y-3 rounded-lg bg-light-highest p-3 backdrop-blur-sm dark:bg-dark-highest">
+  <div class="flex items-center">
+    <h3 class="flex-1 text-sm font-medium">{{ title }}</h3>
+    <button
+      class="rounded-md p-2 hover:bg-light-lowest hover:dark:bg-dark-lowest"
+      (click)="onClose()">
+      <fa-icon [fixedWidth]="true" [icon]="faTimes"></fa-icon>
+    </button>
+  </div>
+  <div class="space-y-3">
+    <div class="student-search mb-4 flex gap-2">
+      <span class="p-input-icon-left w-full">
+        <input
+          pInputText
+          type="text"
+          class="p-input h-8 w-full px-10 text-xs"
+          placeholder="Search Student"
+          [(ngModel)]="searchQuery"
+          fcDebounceKeyup
+          [debounceTime]="900"
+          (onEvent)="search()" />
+        <i class="pi pi-search"></i>
+      </span>
+      <a
+        title="Add Student"
+        class="btn btn-high p-1 text-xs"
+        [routerLink]="['/student/add']"
+        target="_blank">
+        <fa-icon [fixedWidth]="true" [icon]="faPlus"></fa-icon>
+      </a>
+      <button
+        title="Refresh"
+        type="button"
+        [disabled]="loading"
+        class="btn btn-high p-1 text-xs"
+        (click)="loadData()">
+        <fa-icon
+          [fixedWidth]="true"
+          [icon]="faRefresh"
+          [spin]="loading"></fa-icon>
+      </button>
+    </div>
+    <div class="student-list h-[400px] overflow-auto rounded dark:bg-dark-high">
+      <div class="space-y-2" *ngIf="!loading">
+        <ng-container *ngFor="let teacher of teachers">
+          <button
+            class="grid w-full cursor-pointer items-center gap-2 rounded-md border border-light-low bg-light-low p-2 text-left text-xs hover:border-primary-light dark:border-dark-low dark:bg-dark-low hover:dark:border-primary-light"
+            (click)="submit(teacher)">
+            <div class="flex flex-1 items-center gap-2">
+              <!-- <fa-icon
+                *ngIf="multipleSelect"
+                [fixedWidth]="true"
+                [ngClass]="{
+                  'text-primary dark:text-primary-light': student.selected
+                }"
+                [icon]="student.selected ? faSquareCheck : faSquare" /> -->
+              <div class="grid flex-1 gap-1">
+                <div class="flex gap-3">
+                  <fa-icon [fixedWidth]="true" [icon]="faUser"></fa-icon>
+                  <p>{{ teacher.staff.user.name }}</p>
+                </div>
+                <div class="flex gap-3">
+                  <fa-icon [fixedWidth]="true" [icon]="faPhone"></fa-icon>
+                  <p>{{ teacher.staff.user.phone_no }}</p>
+                </div>
+                <div class="flex gap-3">
+                  <fa-icon [fixedWidth]="true" [icon]="faLocationDot"></fa-icon>
+                  <p>{{ teacher.branch.name }}</p>
+                </div>
+              </div>
+            </div>
+          </button>
+        </ng-container>
+      </div>
+      <div class="py-[15vh] text-center" *ngIf="!teachers.length && !loading">
+        <img
+          class="mx-auto w-32 rounded-lg object-cover"
+          src="assets/images/bg/empty.png" />
+        <p>No Student Data</p>
+      </div>
+      <div class="py-[20vh] text-center" *ngIf="loading">
+        <fc-loading></fc-loading>
+      </div>
+    </div>
+    <div class="flex w-full flex-col gap-3">
+      <!-- <div *ngIf="multipleSelect" class="flex w-full items-center justify-end">
+        <button
+          type="button"
+          class="btn btn-high p-2 text-xs"
+          (click)="submit('')">
+          Submit
+        </button>
+      </div> -->
+      <fc-pagination
+        [rows]="rows"
+        [page]="page"
+        [totalPages]="totalPages"
+        [totalRecords]="totalRecords"
+        (onPageUpdate)="onPageUpdate($event)"></fc-pagination>
+    </div>
+  </div>
+</div>
