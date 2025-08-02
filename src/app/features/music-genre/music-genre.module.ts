@@ -28,5 +28,6 @@ import { MusicGenreSelectDialogComponent } from './components/music-genre-select
     FcTextareaModule,
     FcPaginationModule,
   ],
+  exports: [MusicGenreSelectDialogComponent],
 })
 export class MusicGenreModule {}
