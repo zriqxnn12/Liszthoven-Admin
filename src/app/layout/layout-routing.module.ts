@@ -101,6 +101,20 @@ const routes: Routes = [
             (m) => m.CoursePackageModule
           ),
       },
+      {
+        path: 'course',
+        loadChildren: () =>
+          import('../features/course/course.module').then(
+            (m) => m.CourseModule
+          ),
+      },
+      {
+        path: 'music-genre',
+        loadChildren: () =>
+          import('../features/music-genre/music-genre.module').then(
+            (m) => m.MusicGenreModule
+          ),
+      },
     ],
   },
 ];

@@ -57,9 +57,6 @@ export class CoursePackageListComponent {
   constructor(
     private layoutService: LayoutService,
     private router: Router,
-    private route: ActivatedRoute,
-    private fcFilterDialogService: FcFilterDialogService,
-    private dialogService: DialogService,
     private coursePackageService: CoursePackageService
   ) {
     this.layoutService.setHeaderConfig({

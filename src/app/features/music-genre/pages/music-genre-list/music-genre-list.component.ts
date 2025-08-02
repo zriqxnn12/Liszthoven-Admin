@@ -1,29 +1,32 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { InstrumentService } from '@features/instrument/services/instrument.service';
-import { ServiceInvoice } from '@features/service-invoice/interfaces/service-invoice';
-import { ServiceInvoiceService } from '@features/service-invoice/services/service-invoice.service';
-import { faEye, faPlus, faRefresh } from '@fortawesome/free-solid-svg-icons';
-import { FcFilterDialogService } from '@shared/components/fc-filter-dialog/services/fc-filter-dialog.service';
+import { Router } from '@angular/router';
+import { MusicGenre } from '@features/music-genre/interfaces/music-genre';
+import { MusicGenreService } from '@features/music-genre/services/music-genre.service';
+import {
+  faEye,
+  faMusic,
+  faPlus,
+  faRefresh,
+} from '@fortawesome/free-solid-svg-icons';
 import { DataListParameter } from '@shared/interfaces/data-list-parameter.interface';
-import { DialogService } from 'primeng/dynamicdialog';
 import { Subject, take, takeUntil } from 'rxjs';
 import { LayoutService } from 'src/app/layout/services/layout.service';
 
 @Component({
-  selector: 'app-service-invoice-list',
-  templateUrl: './service-invoice-list.component.html',
-  styleUrls: ['./service-invoice-list.component.css'],
+  selector: 'app-music-genre-list',
+  templateUrl: './music-genre-list.component.html',
+  styleUrls: ['./music-genre-list.component.css'],
 })
-export class ServiceInvoiceListComponent {
+export class MusicGenreListComponent {
   private readonly destroy$ = new Subject<void>();
   faEye = faEye;
+  faMusic = faMusic;
 
   actionButtons: any[] = [
     {
       label: 'Add',
       icon: faPlus,
-      route: ['/service-invoice/add'],
+      route: ['/music-genre/add'],
       action: () => {},
     },
   ];
@@ -32,12 +35,12 @@ export class ServiceInvoiceListComponent {
       label: 'Refresh',
       icon: faRefresh,
       action: () => {
-        this.loadData();
+        // this.loadData();
       },
     },
   ];
 
-  serviceInvoices: ServiceInvoice[] = [];
+  musicGenres: MusicGenre[] = [];
   loading: boolean = false;
   searchQuery: string = '';
   totalRecords = 0;
@@ -48,10 +51,10 @@ export class ServiceInvoiceListComponent {
   constructor(
     private layoutService: LayoutService,
     private router: Router,
-    private serviceInvoiceService: ServiceInvoiceService
+    private musicGenreService: MusicGenreService
   ) {
     this.layoutService.setHeaderConfig({
-      title: 'Service Invoices',
+      title: 'Music Genres',
       icon: '',
       showHeader: true,
     });
@@ -74,8 +77,9 @@ export class ServiceInvoiceListComponent {
     dataListParameter.page = this.page;
     dataListParameter.sortBy = 'order_by=id&direction=desc&with_filter=1';
     dataListParameter.searchQuery = searchQuery;
-    this.serviceInvoiceService
-      .getServiceInvoices(dataListParameter)
+
+    this.musicGenreService
+      .getMusicGenres(dataListParameter)
       .pipe(take(1), takeUntil(this.destroy$))
       .subscribe({
         next: (res: any) => {
@@ -84,7 +88,7 @@ export class ServiceInvoiceListComponent {
             this.totalRecords > this.rows
               ? Math.ceil(this.totalRecords / this.rows)
               : 1;
-          this.serviceInvoices = res.data.service_invoices;
+          this.musicGenres = res.data.genres;
           this.loading = false;
         },
         error: (err: any) => {
@@ -96,23 +100,8 @@ export class ServiceInvoiceListComponent {
       });
   }
 
-  getStatusColor(status: number): string {
-    switch (status) {
-      case 0:
-        return 'border border-gray-600 dark:border-gray-700 bg-gray-100 dark:bg-gray-700/20 text-gray-500';
-      case 1:
-        return 'border border-blue-600 dark:border-blue-700 bg-blue-100 dark:bg-blue-700/20 text-blue-500';
-      case 2:
-        return 'border border-green-600 dark:border-green-700 bg-green-100 dark:bg-green-700/20 text-green-500';
-      case 3:
-        return 'border border-red-600 dark:border-red-700 bg-red-100 dark:bg-red-700/20 text-red-500';
-      default:
-        return '';
-    }
-  }
-
-  navigateToDetail(serviceInvoice: ServiceInvoice) {
-    this.router.navigate(['/service-invoice/view/', serviceInvoice.id]);
+  navigateToDetail(musicGenre: MusicGenre) {
+    this.router.navigate(['/music-genre/view/', musicGenre.id]);
   }
 
   onPageUpdate(pagination: any) {

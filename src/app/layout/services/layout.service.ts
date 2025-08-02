@@ -59,10 +59,10 @@ export class LayoutService {
   }
   getRoutes() {
     return [
-      {
-        route: '/dashboard',
-        name: 'Dashboard',
-      },
+      // {
+      //   route: '/dashboard',
+      //   name: 'Dashboard',
+      // },
       {
         route: '/student',
         name: 'Student',
@@ -96,13 +96,17 @@ export class LayoutService {
         name: 'Feedback',
       },
       {
+        route: '/course',
+        name: 'Course Registration',
+      },
+      {
         route: '/course-package',
         name: 'Course Package',
       },
-      // {
-      //   route: '/supplier',
-      //   name: 'Example Feature',
-      // },
+      {
+        route: '/music-genre',
+        name: 'Music Genre',
+      },
       // {
       //   name: 'Sub menus',
       //   parentRoute: 'purchase',
@@ -114,10 +118,6 @@ export class LayoutService {
       //     },
       //   ],
       // },
-      {
-        route: '/template-ui',
-        name: 'Template UI',
-      },
     ];
   }
 }
