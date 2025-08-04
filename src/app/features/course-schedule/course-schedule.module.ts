@@ -10,6 +10,7 @@ import { SharedModule } from '@shared/shared.module';
 import { FcInputTextModule } from '@shared/components/fc-input-text/fc-input-text.module';
 import { FcDatepickerModule } from '@shared/components/fc-datepicker/fc-datepicker.module';
 import { FcTimepickerModule } from '@shared/components/fc-timepicker/fc-timepicker.module';
+import { FcPaginationModule } from '@shared/components/fc-pagination/fc-pagination.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { FcTimepickerModule } from '@shared/components/fc-timepicker/fc-timepick
     FcInputTextModule,
     FcDatepickerModule,
     FcTimepickerModule,
+    FcPaginationModule,
   ],
 })
 export class CourseScheduleModule {}

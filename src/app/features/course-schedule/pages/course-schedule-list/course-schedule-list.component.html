@@ -1,1 +1,132 @@
-<p>course-schedule-list works!</p>
+<div class="flex h-full gap-3 @container">
+  <div
+    class="flex h-full w-full flex-col gap-3 transition-all duration-700 ease-in-out @container">
+    <app-fc-action-bar
+      [actionButtons]="actionButtons"
+      [filterButtons]="filterButtons" />
+    <div class="body flex h-full w-full flex-col gap-3 overflow-y-auto text-xs">
+      <!-- Header -->
+      <div
+        class="hidden h-8 w-full items-center gap-2 rounded-lg border border-light-lowest bg-light-low px-2 @2xl:flex dark:border-dark-lowest dark:bg-dark-low">
+        <div class="w-full @2xl:max-w-[10rem]">
+          <p class="text-2xs font-medium">Status</p>
+        </div>
+        <div class="w-full @2xl:max-w-[10rem]">
+          <p class="text-2xs font-medium">Student</p>
+        </div>
+        <div class="w-full @2xl:max-w-[10rem]">
+          <p class="text-2xs font-medium">Date</p>
+        </div>
+        <div class="w-full @2xl:max-w-[10rem]">
+          <p class="text-2xs font-medium">Start Time</p>
+        </div>
+        <div class="w-full @2xl:max-w-[10rem]">
+          <p class="text-2xs font-medium">End Time</p>
+        </div>
+        <div class="w-full @2xl:max-w-[10rem]">
+          <p class="text-2xs font-medium">Classroom</p>
+        </div>
+        <div class="w-full @2xl:max-w-[10rem]">
+          <p class="text-2xs font-medium">Assigned Teacher</p>
+        </div>
+        <div class="w-full @2xl:max-w-[10rem]">
+          <p class="text-2xs font-medium">Actions</p>
+        </div>
+      </div>
+
+      <ng-container *ngIf="!loading && courseSchedules.length > 0">
+        <div class="w-full space-y-2 overflow-y-auto py-2">
+          <ng-container *ngFor="let courseSchedule of courseSchedules">
+            <div
+              class="fc-animate-translate-up grid cursor-pointer items-center gap-2 rounded-md border border-light-low bg-light-low p-3 hover:border-primary-light @lg:flex dark:border-dark-lowest dark:bg-dark-low hover:dark:border-primary-light">
+              <div class="w-full @2xl:max-w-[10rem]">
+                <p
+                  class="block font-medium capitalize text-gray-500 @2xl:hidden">
+                  Status
+                </p>
+                <div
+                  [ngClass]="getStatusColor(courseSchedule.status)"
+                  class="w-fit rounded-md border px-2 py-1 text-xs">
+                  {{ courseSchedule.status_name }}
+                </div>
+              </div>
+              <div class="w-full @2xl:max-w-[10rem]">
+                <p
+                  class="block font-medium capitalize text-gray-500 @2xl:hidden">
+                  Student
+                </p>
+                <p class="list-value text-xs text-gray-700 dark:text-gray-300">
+                  {{ courseSchedule.course.student.user.name }}
+                </p>
+              </div>
+              <div class="w-full @2xl:max-w-[10rem]">
+                <p
+                  class="block font-medium capitalize text-gray-500 @2xl:hidden">
+                  Date
+                </p>
+                <p class="list-value text-xs text-gray-700 dark:text-gray-300">
+                  {{ courseSchedule.date | date: 'dd MMMM yyyy' }}
+                </p>
+              </div>
+              <div class="w-full @2xl:max-w-[10rem]">
+                <p
+                  class="block font-medium capitalize text-gray-500 @2xl:hidden">
+                  Start Time
+                </p>
+                <p class="list-value text-xs text-gray-700 dark:text-gray-300">
+                  {{ courseSchedule.start_time | timeFormat }}
+                </p>
+              </div>
+              <div class="w-full @2xl:max-w-[10rem]">
+                <p
+                  class="block font-medium capitalize text-gray-500 @2xl:hidden">
+                  End Time
+                </p>
+                <p class="list-value text-xs text-gray-700 dark:text-gray-300">
+                  {{ courseSchedule.end_time | timeFormat }}
+                </p>
+              </div>
+              <div class="w-full @2xl:max-w-[10rem]">
+                <p
+                  class="block font-medium capitalize text-gray-500 @2xl:hidden">
+                  Classroom
+                </p>
+                <p class="list-value text-xs text-gray-700 dark:text-gray-300">
+                  {{ courseSchedule.classroom.room }}
+                </p>
+              </div>
+              <div class="w-full @2xl:max-w-[10rem]">
+                <p
+                  class="block font-medium capitalize text-gray-500 @2xl:hidden">
+                  Assigned Teacher
+                </p>
+                <p class="list-value text-xs text-gray-700 dark:text-gray-300">
+                  {{ courseSchedule.teacher.staff.user.name }}
+                </p>
+              </div>
+              <div
+                class="flex w-full justify-end @2xl:max-w-[10rem] lg:justify-start">
+                <button
+                  (click)="navigateToDetail(courseSchedule)"
+                  type="button"
+                  class="btn btn-high">
+                  <fa-icon [fixedWidth]="true" [icon]="faEye"></fa-icon>
+                </button>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+    <div class="flex justify-end gap-3">
+      <div class="w-full @lg:w-96">
+        <fc-pagination
+          [rows]="rows"
+          [page]="page"
+          [totalPages]="totalPages"
+          [totalRecords]="totalRecords"
+          (onPageUpdate)="onPageUpdate($event)"></fc-pagination>
+      </div>
+    </div>
+  </div>
+</div>

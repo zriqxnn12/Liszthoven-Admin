@@ -1,4 +1,6 @@
+import { Classroom } from '@features/classroom/interfaces/classroom';
 import { Course } from '@features/course/interfaces/course';
+import { Teacher } from '@features/teacher/interfaces/teacher';
 
 export interface CourseSchedule {
   id: number;
@@ -14,5 +16,7 @@ export interface CourseSchedule {
   day: number;
   start_time: string;
   end_time: string;
+  teacher: Teacher;
+  classroom: Classroom;
   course: Course;
 }
