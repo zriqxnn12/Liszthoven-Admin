@@ -97,7 +97,11 @@ export class LayoutService {
       },
       {
         route: '/course',
-        name: 'Course Registration',
+        name: 'Course',
+      },
+      {
+        route: '/course-schedule',
+        name: 'Course Schedule',
       },
       {
         route: '/course-package',

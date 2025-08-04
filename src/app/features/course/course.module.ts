@@ -9,6 +9,7 @@ import { CourseViewComponent } from './pages/course-view/course-view.component';
 import { SharedModule } from '@shared/shared.module';
 import { FcPaginationModule } from '@shared/components/fc-pagination/fc-pagination.module';
 import { FcInputTextModule } from '@shared/components/fc-input-text/fc-input-text.module';
+import { SelectCourseDialogComponent } from './components/select-course-dialog/select-course-dialog.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { FcInputTextModule } from '@shared/components/fc-input-text/fc-input-tex
     CourseListComponent,
     CourseAddComponent,
     CourseViewComponent,
+    SelectCourseDialogComponent,
   ],
   imports: [
     CommonModule,

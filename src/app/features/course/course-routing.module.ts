@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CourseComponent } from './course.component';
 import { CourseListComponent } from './pages/course-list/course-list.component';
 import { CourseAddComponent } from './pages/course-add/course-add.component';
+import { CourseViewComponent } from './pages/course-view/course-view.component';
 
 const routes: Routes = [
   {
@@ -24,7 +25,7 @@ const routes: Routes = [
       },
       {
         path: 'view/:id',
-        component: CourseListComponent,
+        component: CourseViewComponent,
       },
     ],
   },

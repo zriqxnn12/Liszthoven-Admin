@@ -15,6 +15,7 @@ import { FcFileInputModule } from '@shared/components/fc-file-input/fc-file-inpu
 import { FcInputNumberModule } from '@shared/components/fc-input-number/fc-input-number.module';
 import { FcDatepickerModule } from '@shared/components/fc-datepicker/fc-datepicker.module';
 import { FcSelectOptionModule } from '@shared/components/fc-select-option/fc-select-option.module';
+import { SelectCoursePackageDialogComponent } from './components/select-course-package-dialog/select-course-package-dialog.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { FcSelectOptionModule } from '@shared/components/fc-select-option/fc-sel
     CoursePackageListComponent,
     CoursePackageViewComponent,
     CoursePackageAddComponent,
+    SelectCoursePackageDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -36,5 +38,6 @@ import { FcSelectOptionModule } from '@shared/components/fc-select-option/fc-sel
     FcDatepickerModule,
     FcSelectOptionModule,
   ],
+  exports: [SelectCoursePackageDialogComponent],
 })
 export class CoursePackageModule {}

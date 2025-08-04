@@ -1,1 +1,72 @@
-<p>course-list works!</p>
+<div class="flex h-full gap-3 @container">
+  <div
+    class="flex h-full w-full flex-col gap-3 transition-all duration-700 ease-in-out @container">
+    <app-fc-action-bar
+      [actionButtons]="actionButtons"
+      [filterButtons]="filterButtons"></app-fc-action-bar>
+    <div class="body flex h-full w-full gap-3 overflow-y-auto text-xs">
+      <ng-container *ngIf="!loading && courses.length > 0">
+        <div class="w-full space-y-2 overflow-y-auto py-2">
+          <ng-container *ngFor="let course of courses">
+            <div
+              (dblclick)="navigateToDetail(course)"
+              class="fc-animate-translate-up grid cursor-pointer grid-cols-1 items-center justify-between gap-3 rounded-md border border-light-low bg-light-low p-3 hover:border-primary-light @lg:flex dark:border-dark-low dark:bg-dark-low hover:dark:border-primary-light">
+              <div class="w-full space-y-1 @lg:w-[150px]">
+                <p class="text-2xs">
+                  {{ course.created_at | date: 'dd MMMM yyyy' }}
+                </p>
+                <p>{{ course.student.user.name }}</p>
+              </div>
+              <div
+                class="flex w-full items-center gap-2 space-y-1 @lg:w-[150px]">
+                <fa-icon
+                  class="hidden @lg:block"
+                  [fixedWidth]="true"
+                  [icon]="faMusic" />
+                <div class="space-y-1">
+                  <p>{{ course.instrument.name }} (Pop)</p>
+                  <p>{{ course.branch.name }}</p>
+                </div>
+              </div>
+              <div class="w-full items-center gap-2 space-y-1 @lg:w-[150px]">
+                <p class="text-2xs">Branch</p>
+                <p>{{ course.branch.name }}</p>
+              </div>
+              <div class="w-full items-center gap-2 space-y-1 @lg:w-[150px]">
+                <p class="text-2xs">Course Package</p>
+                <p>{{ course.course_package.name }}</p>
+              </div>
+              <div class="w-full items-center gap-2 space-y-1 @lg:w-[150px]">
+                <p class="text-2xs">Registration Fee</p>
+                <p>{{ course.course_package.registration_fee | fcCurrency }}</p>
+              </div>
+              <div class="flex w-full justify-end @lg:w-[150px]">
+                <button
+                  type="button"
+                  (click)="navigateToDetail(course)"
+                  class="btn btn-high">
+                  <fa-icon [fixedWidth]="true" [icon]="faEye"></fa-icon>
+                </button>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!loading && courses.length == 0">
+        <div class="w-full py-[20vh] text-center">
+          <p>No data found</p>
+        </div>
+      </ng-container>
+    </div>
+    <div class="flex justify-end gap-3">
+      <div class="w-full @lg:w-96">
+        <fc-pagination
+          [rows]="rows"
+          [page]="page"
+          [totalPages]="totalPages"
+          [totalRecords]="totalRecords"
+          (onPageUpdate)="onPageUpdate($event)"></fc-pagination>
+      </div>
+    </div>
+  </div>
+</div>

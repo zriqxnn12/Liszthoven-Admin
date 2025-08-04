@@ -109,6 +109,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'course-schedule',
+        loadChildren: () =>
+          import('../features/course-schedule/course-schedule.module').then(
+            (m) => m.CourseScheduleModule
+          ),
+      },
+      {
         path: 'music-genre',
         loadChildren: () =>
           import('../features/music-genre/music-genre.module').then(
