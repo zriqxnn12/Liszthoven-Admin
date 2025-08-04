@@ -1,1 +1,162 @@
-<p>course-view works!</p>
+<div class="flex h-full flex-col space-y-3">
+  <app-fc-action-bar [isHasBackButton]="true" [actionButtons]="actionButtons">
+  </app-fc-action-bar>
+  <div class="body h-full w-full overflow-y-auto text-xs">
+    <form [formGroup]="courseForm" class="grid w-full gap-3 lg:grid-cols-2">
+      <!-- select student -->
+      <div
+        class="form-input flex flex-1 cursor-pointer items-center rounded-lg border border-light-lowest bg-light-high p-2 dark:border-dark-lowest dark:bg-dark-low dark:hover:bg-dark-lowest">
+        <div class="flex flex-1 flex-col" (click)="onSelectStudent()">
+          <p
+            class="m-0 block p-0 text-2xs font-medium leading-5 text-dark-lowest dark:text-white/60">
+            Student
+          </p>
+          <p *ngIf="courseForm.value.student" class="text-xs">
+            {{ courseForm.value.student.user.name }}
+          </p>
+          <p
+            *ngIf="!courseForm.value.student"
+            class="text-xs dark:text-gray-400">
+            Select Student
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button
+            *ngIf="courseForm.value.student"
+            type="button"
+            (click)="removeStudent()">
+            <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>
+          </button>
+          <button type="button" (click)="onSelectStudent()">
+            <fa-icon [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <!-- select instrument -->
+      <div
+        class="form-input flex flex-1 cursor-pointer items-center rounded-lg border border-light-lowest bg-light-high p-2 dark:border-dark-lowest dark:bg-dark-low dark:hover:bg-dark-lowest">
+        <div class="flex flex-1 flex-col" (click)="onSelectInstrument()">
+          <p
+            class="m-0 block p-0 text-2xs font-medium leading-5 text-dark-lowest dark:text-white/60">
+            Instrument
+          </p>
+          <p *ngIf="courseForm.value.instrument" class="text-xs">
+            {{ courseForm.value.instrument.name }}
+          </p>
+          <p
+            *ngIf="!courseForm.value.instrument"
+            class="text-xs dark:text-gray-400">
+            Select Instrument
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button
+            *ngIf="courseForm.value.instrument"
+            type="button"
+            (click)="removeInstrument()">
+            <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>
+          </button>
+          <button type="button" (click)="onSelectInstrument()">
+            <fa-icon [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <!-- select music genre -->
+      <div
+        class="form-input flex flex-1 cursor-pointer items-center rounded-lg border border-light-lowest bg-light-high p-2 dark:border-dark-lowest dark:bg-dark-low dark:hover:bg-dark-lowest">
+        <div class="flex flex-1 flex-col" (click)="onSelectMusicGenre()">
+          <p
+            class="m-0 block p-0 text-2xs font-medium leading-5 text-dark-lowest dark:text-white/60">
+            Music Genre
+          </p>
+          <p *ngIf="courseForm.value.music_genre" class="text-xs">
+            {{ courseForm.value.music_genre.name }}
+          </p>
+          <p
+            *ngIf="!courseForm.value.music_genre"
+            class="text-xs dark:text-gray-400">
+            Select Music Genre
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button
+            *ngIf="courseForm.value.music_genre"
+            type="button"
+            (click)="removeMusicGenre()">
+            <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>
+          </button>
+          <button type="button" (click)="onSelectMusicGenre()">
+            <fa-icon [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <!-- select course package -->
+      <div
+        class="form-input flex flex-1 cursor-pointer items-center rounded-lg border border-light-lowest bg-light-high p-2 dark:border-dark-lowest dark:bg-dark-low dark:hover:bg-dark-lowest">
+        <div class="flex flex-1 flex-col" (click)="onSelectCoursePackage()">
+          <p
+            class="m-0 block p-0 text-2xs font-medium leading-5 text-dark-lowest dark:text-white/60">
+            Course Package
+          </p>
+          <p *ngIf="courseForm.value.course_package" class="text-xs">
+            {{ courseForm.value.course_package.name }}
+          </p>
+          <p
+            *ngIf="!courseForm.value.course_package"
+            class="text-xs dark:text-gray-400">
+            Select Course Package
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button
+            *ngIf="courseForm.value.course_package"
+            type="button"
+            (click)="removeCoursePackage()">
+            <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>
+          </button>
+          <button type="button" (click)="onSelectCoursePackage()">
+            <fa-icon [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <!-- select branch -->
+      <div
+        class="form-input flex flex-1 cursor-pointer items-center rounded-lg border border-light-lowest bg-light-high p-2 dark:border-dark-lowest dark:bg-dark-low dark:hover:bg-dark-lowest">
+        <div class="flex flex-1 flex-col" (click)="onSelectBranch()">
+          <p
+            class="m-0 block p-0 text-2xs font-medium leading-5 text-dark-lowest dark:text-white/60">
+            Branch
+          </p>
+          <p *ngIf="courseForm.value.branch" class="text-xs">
+            {{ courseForm.value.branch.name }}
+          </p>
+          <p
+            *ngIf="!courseForm.value.branch"
+            class="text-xs dark:text-gray-400">
+            Select Branch
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button
+            *ngIf="courseForm.value.branch"
+            type="button"
+            (click)="removeBranch()">
+            <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>
+          </button>
+          <button type="button" (click)="onSelectBranch()">
+            <fa-icon [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <fc-input-text
+        title="Description"
+        formControlName="description"
+        placeholder="Enter Description"></fc-input-text>
+      <fc-input-text
+        class="hidden"
+        title="course status"
+        formControlName="is_active"
+        placeholder="Enter active status"></fc-input-text>
+    </form>
+  </div>
+</div>
