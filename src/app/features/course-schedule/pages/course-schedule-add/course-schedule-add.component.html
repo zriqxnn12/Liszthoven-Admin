@@ -1,1 +1,113 @@
-<p>course-schedule-add works!</p>
+<div class="flex h-full flex-col space-y-3">
+  <app-fc-action-bar [isHasBackButton]="true" [actionButtons]="actionButtons">
+  </app-fc-action-bar>
+  <div class="body h-full w-full overflow-y-auto text-xs">
+    <form
+      [formGroup]="courseScheduleForm"
+      class="grid w-full gap-3 lg:grid-cols-2">
+      <!-- select course -->
+      <div
+        class="form-input flex flex-1 cursor-pointer items-center rounded-lg border border-light-lowest bg-light-high p-2 dark:border-dark-lowest dark:bg-dark-low dark:hover:bg-dark-lowest">
+        <div class="flex flex-1 flex-col" (click)="onSelectCourse()">
+          <p
+            class="m-0 block p-0 text-2xs font-medium leading-5 text-dark-lowest dark:text-white/60">
+            Course
+          </p>
+          <p *ngIf="courseScheduleForm.value.course" class="text-xs">
+            {{ courseScheduleForm.value.course.student.user.name }}
+          </p>
+          <p
+            *ngIf="!courseScheduleForm.value.course"
+            class="text-xs dark:text-gray-400">
+            Select Course
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button
+            *ngIf="courseScheduleForm.value.course"
+            type="button"
+            (click)="removeCourse()">
+            <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>
+          </button>
+          <button type="button" (click)="onSelectCourse()">
+            <fa-icon [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <!-- select teacher -->
+      <div
+        class="form-input flex flex-1 cursor-pointer items-center rounded-lg border border-light-lowest bg-light-high p-2 dark:border-dark-lowest dark:bg-dark-low dark:hover:bg-dark-lowest">
+        <div class="flex flex-1 flex-col" (click)="onSelectTeacher()">
+          <p
+            class="m-0 block p-0 text-2xs font-medium leading-5 text-dark-lowest dark:text-white/60">
+            Teacher
+          </p>
+          <p *ngIf="courseScheduleForm.value.teacher" class="text-xs">
+            {{ courseScheduleForm.value.teacher.staff.user.name }}
+          </p>
+          <p
+            *ngIf="!courseScheduleForm.value.teacher"
+            class="text-xs dark:text-gray-400">
+            Select Teacher
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button
+            *ngIf="courseScheduleForm.value.teacher"
+            type="button"
+            (click)="removeTeacher()">
+            <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>
+          </button>
+          <button type="button" (click)="onSelectTeacher()">
+            <fa-icon [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <!-- select classroom -->
+      <div
+        class="form-input flex flex-1 cursor-pointer items-center rounded-lg border border-light-lowest bg-light-high p-2 dark:border-dark-lowest dark:bg-dark-low dark:hover:bg-dark-lowest">
+        <div class="flex flex-1 flex-col" (click)="onSelectClassroom()">
+          <p
+            class="m-0 block p-0 text-2xs font-medium leading-5 text-dark-lowest dark:text-white/60">
+            Classroom
+          </p>
+          <p *ngIf="courseScheduleForm.value.classroom" class="text-xs">
+            {{ courseScheduleForm.value.classroom.room }}
+          </p>
+          <p
+            *ngIf="!courseScheduleForm.value.classroom"
+            class="text-xs dark:text-gray-400">
+            Select Classroom
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button
+            *ngIf="courseScheduleForm.value.classroom"
+            type="button"
+            (click)="removeClassroom()">
+            <fa-icon [icon]="faTimes" [fixedWidth]="true"></fa-icon>
+          </button>
+          <button type="button" (click)="onSelectClassroom()">
+            <fa-icon [fixedWidth]="true" [icon]="faChevronDown"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <fc-datepicker
+        [placeholder]="'Enter Schedule Date'"
+        title="Schedule Date"
+        formControlName="date" />
+      <fc-timepicker
+        title="Schedule Start Time"
+        formControlName="start_time"
+        placeholder="Select Schedule Time" />
+      <fc-timepicker
+        title="Schedule end Time"
+        formControlName="end_time"
+        placeholder="Select Schedule Time" />
+      <fc-input-number
+        title="Duration"
+        formControlName="duration"
+        placeholder="Enter course duration" />
+    </form>
+  </div>
+</div>

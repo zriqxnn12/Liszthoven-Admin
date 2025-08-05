@@ -1,1 +1,67 @@
-<p>course-schedule-view works!</p>
+<div class="flex h-full flex-col space-y-3 @container">
+  <app-fc-action-bar [isHasBackButton]="true" [actionButtons]="actionButtons">
+  </app-fc-action-bar>
+
+  <div
+    class="body flex w-full flex-1 flex-col overflow-y-auto rounded-b-md rounded-tr-md border p-2 text-sm @container dark:border-dark-lowest">
+    <div class="mx-auto mb-16 mt-2 grid w-full gap-10 md:mb-0 lg:mb-0">
+      <div class="@xl:columns-2">
+        <div class="mb-2 flex items-center gap-1">
+          <fa-icon [icon]="faUser" [fixedWidth]="true"></fa-icon>
+          <p class="w-[120px] flex-none">Teacher</p>
+          <span>:</span>
+          <p>{{ courseSchedule.teacher.staff.user.name }}</p>
+        </div>
+        <div class="mb-2 flex gap-1">
+          <fa-icon [icon]="faUser" [fixedWidth]="true"></fa-icon>
+          <p class="w-[120px] flex-none">Student</p>
+          <span>:</span>
+          <p>{{ courseSchedule.course.student.user.name }}</p>
+        </div>
+
+        <div class="mb-2 flex gap-1">
+          <fa-icon [icon]="faCalendar" [fixedWidth]="true"></fa-icon>
+          <p class="w-[120px] flex-none">Schedule</p>
+          <span>:</span>
+          <p>{{ courseSchedule.date | date: 'dd MMMM yyyy' }}</p>
+        </div>
+
+        <div class="mb-2 flex gap-1">
+          <fa-icon [icon]="faClock" [fixedWidth]="true"></fa-icon>
+          <p class="w-[120px] flex-none">Duration</p>
+          <span>:</span>
+          <p>{{ courseSchedule.duration }} Minutes</p>
+        </div>
+
+        <div class="mb-2 flex gap-1">
+          <fa-icon [icon]="faMusic" [fixedWidth]="true"></fa-icon>
+          <p class="w-[120px] flex-none">Instrument</p>
+          <span>:</span>
+          <p>{{ courseSchedule.course.instrument.name }}</p>
+        </div>
+        <div class="mb-2 flex gap-1">
+          <fa-icon [icon]="faMusic" [fixedWidth]="true"></fa-icon>
+          <p class="w-[120px] flex-none">Music Genre</p>
+          <span>:</span>
+          <p>{{ courseSchedule.course.music_genre.name }}</p>
+        </div>
+        <div class="mb-2 flex gap-1">
+          <fa-icon [icon]="faLocationDot" [fixedWidth]="true"></fa-icon>
+          <span class="w-[120px] flex-none">Classroom</span>
+          <span>:</span>
+          <span>{{ courseSchedule.classroom.room }}</span>
+        </div>
+        <div class="mb-2 flex gap-1">
+          <fa-icon [icon]="faMoneyBill" [fixedWidth]="true"></fa-icon>
+          <p class="w-[120px] flex-none">Registration Fee</p>
+          <span>:</span>
+          <p>
+            {{
+              courseSchedule.course.course_package.registration_fee | fcCurrency
+            }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

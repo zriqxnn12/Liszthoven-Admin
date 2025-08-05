@@ -26,5 +26,6 @@ import { SelectCourseDialogComponent } from './components/select-course-dialog/s
     FcPaginationModule,
     FcInputTextModule,
   ],
+  exports: [SelectCourseDialogComponent],
 })
 export class CourseModule {}

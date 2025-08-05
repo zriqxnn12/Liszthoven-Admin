@@ -38,6 +38,7 @@
         <div class="w-full space-y-2 overflow-y-auto py-2">
           <ng-container *ngFor="let courseSchedule of courseSchedules">
             <div
+              (dblclick)="navigateToDetail(courseSchedule)"
               class="fc-animate-translate-up grid cursor-pointer items-center gap-2 rounded-md border border-light-low bg-light-low p-3 hover:border-primary-light @lg:flex dark:border-dark-lowest dark:bg-dark-low hover:dark:border-primary-light">
               <div class="w-full @2xl:max-w-[10rem]">
                 <p
@@ -115,6 +116,11 @@
               </div>
             </div>
           </ng-container>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!loading && courseSchedules.length == 0">
+        <div class="w-full py-[20vh] text-center">
+          <p>No data found</p>
         </div>
       </ng-container>
     </div>

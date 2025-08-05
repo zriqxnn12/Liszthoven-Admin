@@ -19,4 +19,14 @@ export interface CourseSchedule {
   teacher: Teacher;
   classroom: Classroom;
   course: Course;
+  attendance: Attendance;
+}
+
+export interface Attendance {
+  id: number;
+  status_name: string;
+  status: number;
+  course_schedule_id: number;
+  file_path: string;
+  note: string;
 }

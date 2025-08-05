@@ -44,4 +44,8 @@ export class CourseScheduleService {
   getCourseSchedule(id: number) {
     return this.http.get(`${ROOT_API}/admin/course-schedules/${id}`);
   }
+
+  deleteCourseSchedule(id: number) {
+    return this.http.delete(`${ROOT_API}/admin/course-schedules/${id}`);
+  }
 }
