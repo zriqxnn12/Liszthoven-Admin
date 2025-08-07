@@ -12,6 +12,7 @@ import { FcDatepickerModule } from '@shared/components/fc-datepicker/fc-datepick
 import { FcTimepickerModule } from '@shared/components/fc-timepicker/fc-timepicker.module';
 import { FcPaginationModule } from '@shared/components/fc-pagination/fc-pagination.module';
 import { FcInputNumberModule } from '@shared/components/fc-input-number/fc-input-number.module';
+import { FcImagePreviewModule } from '@shared/components/fc-image-preview/fc-image-preview.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { FcInputNumberModule } from '@shared/components/fc-input-number/fc-input
     FcTimepickerModule,
     FcPaginationModule,
     FcInputNumberModule,
+    FcImagePreviewModule,
   ],
 })
 export class CourseScheduleModule {}

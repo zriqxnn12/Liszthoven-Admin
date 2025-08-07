@@ -53,7 +53,7 @@ export class CourseScheduleListComponent {
     private courseScheduleService: CourseScheduleService
   ) {
     this.layoutService.setHeaderConfig({
-      title: 'Course schedules',
+      title: 'Course Schedules',
       icon: '',
       showHeader: true,
     });

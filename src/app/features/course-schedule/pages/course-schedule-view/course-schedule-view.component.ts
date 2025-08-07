@@ -47,6 +47,7 @@ export class CourseScheduleViewComponent {
     },
   ];
 
+  imageUrl: string = '';
   @Input() courseSchedule: CourseSchedule = {} as CourseSchedule;
   loading = true;
   constructor(
@@ -75,12 +76,31 @@ export class CourseScheduleViewComponent {
     this.destroy$.complete();
   }
 
+  getImageFullUrl(filePath: string): string {
+    if (!filePath) return '';
+    // sesuaikan base url ini dengan URL API-mu atau public URL penyimpanan file
+    return `https://practice1337.s3.ap-southeast-1.amazonaws.com/${filePath}`;
+  }
+
+  generateHeader() {
+    this.layoutService.setHeaderConfig({
+      title: `Course Schedule (${this.courseSchedule.status_name})`,
+      icon: '',
+      showHeader: true,
+    });
+  }
+
   loadData() {
     this.loading = true;
     this.courseScheduleService
       .getCourseSchedule(this.courseSchedule.id)
       .subscribe((res: any) => {
         this.courseSchedule = res.data;
+        // Set service invoice document image URL
+        this.imageUrl = this.getImageFullUrl(
+          this.courseSchedule.attendance?.file_path
+        );
+        this.generateHeader();
       });
   }
 
