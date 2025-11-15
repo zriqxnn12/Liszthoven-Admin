@@ -20,6 +20,7 @@ export interface CourseSchedule {
   classroom: Classroom;
   course: Course;
   attendance: Attendance;
+  course_reschedule: CourseReschedule;
 }
 
 export interface Attendance {
@@ -28,5 +29,16 @@ export interface Attendance {
   status: number;
   course_schedule_id: number;
   file_path: string;
+  note: string;
+}
+
+export interface CourseReschedule {
+  id: number;
+  course_schedule_id: number;
+  date: string;
+  date_start: string;
+  date_end: string;
+  start_time: string;
+  end_time: string;
   note: string;
 }

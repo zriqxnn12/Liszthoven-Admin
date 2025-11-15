@@ -48,4 +48,11 @@ export class CourseScheduleService {
   deleteCourseSchedule(id: number) {
     return this.http.delete(`${ROOT_API}/admin/course-schedules/${id}`);
   }
+
+  updateStatusToRescheduled(id: number) {
+    return this.http.put(
+      `${ROOT_API}/admin/course-schedules/${id}/reschedule`,
+      {}
+    );
+  }
 }

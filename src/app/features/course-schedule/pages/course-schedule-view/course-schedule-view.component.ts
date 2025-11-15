@@ -5,6 +5,7 @@ import { CourseSchedule } from '@features/course-schedule/interfaces/course-sche
 import { CourseScheduleService } from '@features/course-schedule/services/course-schedule.service';
 import {
   faCalendar,
+  faCheck,
   faChevronDown,
   faClock,
   faLocationDot,
@@ -36,6 +37,7 @@ export class CourseScheduleViewComponent {
   faMusic = faMusic;
   faLocationDot = faLocationDot;
   faMoneyBill = faMoneyBill;
+  faCheck = faCheck;
 
   actionButtons: any[] = [
     {
@@ -43,6 +45,14 @@ export class CourseScheduleViewComponent {
       icon: faTrash,
       action: () => {
         this.delete();
+      },
+    },
+    {
+      label: 'Approve Reschedule',
+      icon: faCheck,
+      hidden: true,
+      action: () => {
+        this.approveReschedule();
       },
     },
   ];
@@ -101,7 +111,65 @@ export class CourseScheduleViewComponent {
           this.courseSchedule.attendance?.file_path
         );
         this.generateHeader();
+        this.generateActionButtons();
       });
+  }
+
+  generateActionButtons() {
+    this.actionButtons[1].hidden = true; // approval request
+
+    switch (this.courseSchedule.status) {
+      case 0:
+        this.actionButtons[1].hidden = true;
+        break;
+      case 1:
+        this.actionButtons[1].hidden = true;
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+      case 4:
+        break;
+      case 5:
+        this.actionButtons[1].hidden = false;
+        break;
+      default:
+        break;
+    }
+  }
+
+  approveReschedule() {
+    this.fcConfirmService.open({
+      header: 'Confirmation',
+      message: 'Are you sure to approve this data?',
+      accept: () => {
+        this.actionButtons[1].loading = true;
+        this.courseScheduleService
+          .updateStatusToRescheduled(this.courseSchedule.id)
+          .subscribe({
+            next: (res: any) => {
+              this.actionButtons[1].loading = false;
+              this.generateActionButtons();
+              this.generateHeader();
+              this.fcToastService.add({
+                severity: 'success',
+                header: 'Reschedule data approved',
+                message: res.message,
+              });
+              this.router.navigate(['/course-schedule/list']);
+            },
+            error: (err) => {
+              this.actionButtons[1].loading = false;
+              this.fcToastService.add({
+                severity: 'error',
+                header: 'fail to Approve',
+                message: err.message,
+              });
+            },
+          });
+      },
+    });
   }
 
   delete() {

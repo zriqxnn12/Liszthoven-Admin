@@ -111,6 +111,8 @@ export class CourseScheduleListComponent {
         return 'border-green-600 bg-green-100 text-green-500 dark:border-green-700 dark:bg-green-700/20';
       case 4: // absent
         return 'border-red-600 bg-red-100 text-red-500 dark:border-red-700 dark:bg-red-700/20';
+      case 5: // waiting for request
+        return 'border-yellow-600 bg-yellow-100 text-yellow-500 dark:border-yellow-700 dark:bg-yellow-700/20';
       default:
         return '';
     }

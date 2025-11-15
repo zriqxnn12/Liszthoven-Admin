@@ -64,8 +64,39 @@
       </div>
     </div>
 
+    <div class="mt-2 border dark:border-dark-lowest"></div>
+
+    <div class="mt-5" *ngIf="courseSchedule.course_reschedule">
+      <h2 class="text-lg font-semibold underline">Reschedule request info</h2>
+      <div class="mt-2 @xl:columns-2">
+        <div class="mb-2 flex items-center gap-1">
+          <!-- <fa-icon [icon]="faUser" [fixedWidth]="true"></fa-icon> -->
+          <p class="w-[120px] flex-none">Reschedule date</p>
+          <span>:</span>
+          <p>
+            {{ courseSchedule.course_reschedule.date | date: 'dd MMMM yyyy' }}
+          </p>
+        </div>
+        <div class="mb-2 flex gap-1">
+          <p class="w-[120px] flex-none">Note</p>
+          <span>:</span>
+          <p>
+            {{ courseSchedule.course_reschedule.note }}
+          </p>
+        </div>
+        <div class="mb-2 flex gap-1">
+          <p class="w-[120px] flex-none">Time</p>
+          <span>:</span>
+          <p>
+            {{ courseSchedule.course_reschedule.start_time | timeFormat }} -
+            {{ courseSchedule.course_reschedule.end_time | timeFormat }}
+          </p>
+        </div>
+      </div>
+    </div>
+
     <div class="mt-5">
-      <h2 class="text-lg">Attendance</h2>
+      <h2 class="text-lg font-semibold underline">Attendance</h2>
       <div *ngIf="!courseSchedule.attendance" class="mt-3 text-center">
         <p>No attendance data</p>
       </div>
